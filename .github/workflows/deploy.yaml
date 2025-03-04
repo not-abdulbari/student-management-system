@@ -1,28 +1,33 @@
-name: FTP Deploy
+name: Deploy to InfinityFree FTP
 
 on:
   push:
     branches:
-      - main
+      - main  # or your deployment branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repo
+      # Checkout your repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Replace placeholders in db_connect.php
+      # Create db_connect.php from the template
+      - name: Create db_connect.php from template
         run: |
           cp faculty/db_connect.php.template faculty/db_connect.php
-          sed -i "s/{{DB_HOST}}/${{ secrets.DB_HOST }}/g" faculty/db_connect.php
-          sed -i "s/{{DB_NAME}}/${{ secrets.DB_NAME }}/g" faculty/db_connect.php
-          sed -i "s/{{DB_USER}}/${{ secrets.DB_USER }}/g" faculty/db_connect.php
-          sed -i "s/{{DB_PASS}}/${{ secrets.DB_PASS }}/g" faculty/db_connect.php
+          sed -i "s|{{DB_HOST}}|${{ secrets.DB_HOST }}|g" faculty/db_connect.php
+          sed -i "s|{{DB_NAME}}|${{ secrets.DB_NAME }}|g" faculty/db_connect.php
+          sed -i "s|{{DB_USER}}|${{ secrets.DB_USER }}|g" faculty/db_connect.php
+          sed -i "s|{{DB_PASS}}|${{ secrets.DB_PASS }}|g" faculty/db_connect.php
 
-      - name: Deploy to InfinityFree via FTP
+      # Deploy via FTP
+      - name: Deploy to InfinityFree FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /htdocs/  # Adjust if needed
