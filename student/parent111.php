@@ -262,10 +262,10 @@ table tr:nth-child(even) {
                             echo "<tr><th>Subject Code</th><th>Subject Name</th><th>CAT-1</th><th>CAT-2</th><th>Model Exam</th></tr>";
                             foreach ($data['marks'] as $subject) {
                                 echo "<tr>";
-                                echo "<td>" . htmlspecialchars($subject['subject']) . "</td>";
-                                echo "<td>" . htmlspecialchars($subject['subject_name']) . "</td>";
-                                echo "<td>" . htmlspecialchars($subject['CAT1']) . "</td>";
-                                echo "<td>" . htmlspecialchars($subject['CAT2']) . "</td>";
+                                echo "<td>" . htmlspecialchars($subject['subject']?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($subject['subject_name']?? '') . "</td>";
+                                echo "<td>" . htmlspecialchars($subject['CAT1']?? ''). "</td>";
+                                echo "<td>" . htmlspecialchars($subject['CAT2']?? '') . "</td>";
                                 echo "<td>" . htmlspecialchars($subject['Model'] ?? '') . "</td>";
                                 echo "</tr>";
                             }
