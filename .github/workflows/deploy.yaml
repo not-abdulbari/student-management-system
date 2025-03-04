@@ -8,9 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Replace placeholders in db_connect.php
@@ -21,8 +20,7 @@ jobs:
           sed -i "s/{{DB_USER}}/${{ secrets.DB_USER }}/g" faculty/db_connect.php
           sed -i "s/{{DB_PASS}}/${{ secrets.DB_PASS }}/g" faculty/db_connect.php
 
-
-      - name: Deploy to FTP
+      - name: Deploy to InfinityFree via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
