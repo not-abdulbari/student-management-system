@@ -266,7 +266,7 @@ table tr:nth-child(even) {
                                 echo "<td>" . htmlspecialchars($subject['subject_name']) . "</td>";
                                 echo "<td>" . htmlspecialchars($subject['CAT1']) . "</td>";
                                 echo "<td>" . htmlspecialchars($subject['CAT2']) . "</td>";
-                                echo "<td>" . htmlspecialchars($subject['Model']) . "</td>";
+                                echo "<td>" . htmlspecialchars($subject['Model'] ?? '') . "</td>";
                                 echo "</tr>";
                             }
                             echo "</table>";
