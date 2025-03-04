@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy to InfinityFree FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ftpupload.net
           username: ${{ secrets.if0_38446341 }}
