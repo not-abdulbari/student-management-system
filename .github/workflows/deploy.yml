@@ -16,5 +16,5 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           server: ftp://ftpupload.net
-          username: ${{ secrets.if0_38446341 }}  # Use your secret
-          password: ${{ secrets.kbbTYC7WhoY84W }}  # Use your secret
+          username: ${{secrets.if0_38446341}}  # Use your secret
+          password: ${{secrets.kbbTYC7WhoY84W}}  # Use your secret
