@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db_connect.php'; // Ensure this file correctly connects to the database
+include 'faculty/db_connect.php'; // Ensure this file correctly connects to the database
 
 $error_message = ""; // Default empty error message
 
