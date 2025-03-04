@@ -1,28 +1,27 @@
-name: Deploy to InfinityFree FTP
+name: FTP Deploy
 
 on:
   push:
     branches:
       - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set environment variables
+      - name: Replace secrets in db_connect.php
         run: |
-          echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
-          echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
-          echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
-          echo "DB_PASS=${{ secrets.DB_PASS }}" >> $GITHUB_ENV
+          sed -i 's|{{DB_HOST}}|${{ secrets.DB_HOST }}|g' faculty/db_connect.php
+          sed -i 's|{{DB_NAME}}|${{ secrets.DB_NAME }}|g' faculty/db_connect.php
+          sed -i 's|{{DB_USER}}|${{ secrets.DB_USER }}|g' faculty/db_connect.php
+          sed -i 's|{{DB_PASS}}|${{ secrets.DB_PASS }}|g' faculty/db_connect.php
 
-      - name: Deploy to InfinityFree FTP
+      - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ftpupload.net
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: "/htdocs/"
