@@ -8,20 +8,22 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Replace secrets in db_connect.php
+      - name: Replace placeholders in db_connect.php
         run: |
+          cp faculty/db_connect.php.template faculty/db_connect.php
           sed -i 's|{{DB_HOST}}|${{ secrets.DB_HOST }}|g' faculty/db_connect.php
           sed -i 's|{{DB_NAME}}|${{ secrets.DB_NAME }}|g' faculty/db_connect.php
           sed -i 's|{{DB_USER}}|${{ secrets.DB_USER }}|g' faculty/db_connect.php
           sed -i 's|{{DB_PASS}}|${{ secrets.DB_PASS }}|g' faculty/db_connect.php
 
-      - name: FTP Deploy
+      - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ftpupload.net
+          server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
