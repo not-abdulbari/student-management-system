@@ -1,5 +1,5 @@
 <?php
-include 'db_connect.php';
+include './db_connect.php';
         // Handling form submission
         $marks_data = [];
         $attendance_data = [];
