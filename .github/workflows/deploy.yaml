@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -12,6 +13,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set environment variables
+        run: |
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> $GITHUB_ENV
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
+          echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
+          echo "DB_PASS=${{ secrets.DB_PASS }}" >> $GITHUB_ENV
+
       - name: Deploy to InfinityFree FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
@@ -19,6 +27,3 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: "/htdocs/"
-          
-
-      
