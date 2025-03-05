@@ -1,3 +1,38 @@
+<?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+include 'faculty/db_connect.php'; // Ensure this file correctly connects to the database
+
+$error_message = ""; // Default empty error message
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $input_username = $_POST['username'];
+    $input_password = $_POST['password'];
+
+    // Fetch hashed password from the database
+    $sql = "SELECT hashed_password FROM users WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $input_username);
+    $stmt->execute();
+    $stmt->bind_result($stored_hashed_password);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Verify the password
+    if ($stored_hashed_password && password_verify($input_password, $stored_hashed_password)) {
+        $_SESSION['logged_in'] = true;
+        $_SESSION['username'] = $input_username;
+        header('Location: home.php'); // Redirect to home page on success
+        exit();
+    } else {
+        $error_message = "Invalid username or password!";
+    }
+
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,181 +40,143 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Counsellor's Book</title>
   <style>
- /* Basic Reset */
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #f7f7f7;
-    color: #333;
-}
-
-/* Header Section */
-.header {
-    position: relative;
-    width: 100%;
-    height: 250px;
-    overflow: hidden;
-}
-
-.header img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-}
-
-.header .header-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-/* Banner Section */
-.banner {
-    background-color: #444;
-    color: white;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.banner marquee {
-    font-size: 16px;
-    font-weight: bold;
-}
-
-@keyframes marquee {
-    0% {
-        transform: translateX(100%);
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      color: #333;
     }
-    100% {
-        transform: translateX(-100%);
+    .header {
+      width: 100%;
+      height: 250px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-}
-
-/* Main Container */
-.main-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin: 20px 0;
-    padding: 0 15px;
-}
-
-.container,
-.notice_board {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    padding: 20px;
-    margin: 10px;
-    width: 30%;
-}
-
-h2 {
-    font-size: 22px;
-    color: #444;
-    margin-bottom: 20px;
-}
-
-.btn {
-    padding: 10px 20px;
-    font-size: 14px;
-    border: 1px solid #444;
-    border-radius: 4px;
-    background-color: transparent;
-    color: #444;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-    width: 100%;
-    max-width: 200px;
-}
-
-.btn:hover {
-    background-color: #444;
-    color: white;
-}
-
-/* Notice Board */
-.notice_board marquee {
-    font-size: 14px;
-    color: #d9534f;
-    font-weight: bold;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
+    .header img {
+      width: 90%;
+      height: 90%;
+    }
+    .banner {
+      background-color: #003366;
+      color: white;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .banner marquee {
+      font-size: 16px;
+      font-weight: bold;
+    }
     .main-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      padding: 0 15px;
+    }
+    .container, .notice_board {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 20px;
+      margin: 10px;
+      width: 30%;
+    }
+    h2 {
+      font-size: 22px;
+      color: #6a11cb;
+      margin-bottom: 20px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    input {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      background-color: #f4f4f4;
+      font-size: 1em;
+      color: #333;
+    }
+    button {
+      background-color: #2575fc;
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      font-weight: 600;
+      margin-top: 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #6a11cb;
+    }
+    @media (max-width: 768px) {
+      .main-container {
         flex-direction: column;
         align-items: center;
+      }
+      .container, .notice_board {
+        width: 80%;
+      }
     }
-
-    .container,
-    .notice_board {
-        width: 90%;
-    }
-
-    .header img {
-        height: 200px;
-    }
-
-    .header .header-content {
-        font-size: 18px;
-    }
-}
-
   </style>
 </head>
 <body>
-
-  <!-- Header Section with Image -->
   <div class="header">
-    <img src="assets/logo.jpg" alt="Counsellor's Book Image"> <!-- Replace with your image path -->
+    <img src="assets/logo.jpg" alt="Counsellor's Book Image">
   </div>
-
-  <!-- Banner Section -->
   <div class="banner">
     <marquee behavior="scroll" direction="left">
       <p>Welcome to the Counsellor's Book System</p>
     </marquee>
   </div>
-
-  <!-- Main Content Section -->
   <div class="main-container">
-    <!-- Faculty Operations -->
     <div class="container">
-      <h2>Institution login</h2>
-      <a href='faculty/faculty_login.php'>
-        <button class="btn">Login</button>
-      </a> 
-    </div>
+      <h2>Institution Login</h2>
 
-    <!-- Students Operations -->
+      <form action="" method="POST">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+    </div>
     <div class="container">
-      <h2>Student login</h2>
-      <a href='student/parent111.php'>
-        <button class="btn">Login</button>
-      </a> 
+      <h2>Student Login</h2>
+      <form action="student/parent111.php" method="POST">
+        <input type="text" name="roll_no" placeholder="Roll Number" required>
+        <input type="text" name="dob" placeholder="Date of Birth (DD/MM/YYYY)">
+        <button type="submit">Login</button>
+      </form>
     </div>
-
-    <!-- Notice Board -->
     <div class="notice_board">
       <h2>Notice Board</h2>
       <marquee behavior="scroll" direction="left">
-        <p>Important: Faculty and Student Login Details are available on the portal.</p>
-        <p>Note: The system will be down for maintenance from 2:00 AM to 4:00 AM tomorrow.</p>
-        <p>Reminder: Mark your attendance before the deadline to avoid penalties.</p>
+        <p style="color: red; font-weight:600;">Important: Faculty and Student Login Details are available on the portal.</p>
+        <p style="color: red; font-weight:600;">Note: The system will be down for maintenance from 2:00 AM to 4:00 AM tomorrow.</p>
+        <p style="color: red; font-weight:600;">Reminder: Mark your attendance before the deadline to avoid penalties.</p>
       </marquee>
     </div>
   </div>
+
+  <script>
+    // Show alert message if PHP sends an error
+    <?php if (!empty($error_message)): ?>
+      setTimeout(() => {
+        alert("<?php echo $error_message; ?>");
+      }, 500); // Show alert after half a second
+    <?php endif; ?>
+  </script>
 
 </body>
 </html>
