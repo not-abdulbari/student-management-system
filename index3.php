@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         exit();
     } else {
         echo '<script>alert("Invalid username or password");</script>';
-        header('Location: index3.php');
     }
     
     $stmt->close();
