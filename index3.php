@@ -1,9 +1,11 @@
 <?php
 session_start();
 
+$show_alert = false; // Flag to control alert display
+
 // Handle Institution Login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
-    include 'faculty/db_connect.php'; // Verify correct path
+    include 'faculty/db_connect.php';
 
     $input_username = $_POST['username'];
     $input_password = $_POST['password'];
@@ -15,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
     $stmt->execute();
     $stmt->bind_result($stored_hashed_password);
     $stmt->fetch();
-    
+
     if ($input_hashed_password === $stored_hashed_password) {
         $_SESSION['logged_in'] = true;
         $stmt->close();
@@ -23,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         header('Location: faculty/home.php');
         exit();
     } else {
-        echo '<script>alert("Invalid username or password");</script>';
+        $show_alert = true; // Set flag for invalid credentials
     }
-    
+
     $stmt->close();
     $conn->close();
 }
@@ -126,6 +128,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
   </style>
 </head>
 <body>
+    <?php if ($show_alert): ?>
+  <script>
+    alert("Invalid username or password");
+    // Clear POST data to prevent alert on refresh
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+  </script>
+  <?php endif; ?>
+
   <div class="header">
     <img src="assets/logo.jpg" alt="Counsellor's Book Image">
   </div>
@@ -137,13 +149,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
   <div class="main-container">
     <div class="container">
       <h2>Institution Login</h2>
-      <form action="" method="POST"> <!-- Changed action to empty string -->
+      <form action="" method="POST">
         <input type="text" name="username" placeholder="Username" required>
         <input type="password" name="password" placeholder="Password" required>
         <button type="submit">Login</button>
       </form>
     </div>
-    <!-- Rest of the code remains unchanged -->
+    <!-- Rest of your existing HTML remains unchanged -->
     <div class="container">
       <h2>Student Login</h2>
       <form action="student/parent111.php" method="POST">
@@ -160,6 +172,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         <p>Reminder: Mark your attendance before the deadline to avoid penalties.</p>
       </marquee>
     </div>
-  </div>
 </body>
 </html>
