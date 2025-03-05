@@ -1,3 +1,33 @@
+<?php
+session_start();
+
+// Database connection (preserve your existing credentials)
+include 'db_connect.php';
+
+// Faculty login processing
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $input_hashed_password = hash('sha256', $password);
+
+    $stmt = $conn->prepare("SELECT password FROM users WHERE username = ?");
+    $stmt->bind_param('s', $username);
+    $stmt->execute();
+    $stmt->bind_result($stored_password);
+    $stmt->fetch();
+    
+    if ($input_hashed_password === $stored_password) {
+        $_SESSION['logged_in'] = true;
+        header('Location: home.php');
+        exit();
+    } else {
+        echo '<script>alert("Invalid username or password");</script>';
+    }
+    $stmt->close();
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,7 +135,7 @@
   <div class="main-container">
     <div class="container">
       <h2>Institution Login</h2>
-      <form action="faculty/faculty_login.php" method="POST">
+      <form method="POST">
         <input type="text" name="username" placeholder="Username" required>
         <input type="password" name="password" placeholder="Password" required>
         <button type="submit">Login</button>
@@ -115,7 +145,7 @@
       <h2>Student Login</h2>
       <form action="student/parent111.php" method="POST">
         <input type="text" name="roll_no" placeholder="Roll Number" required>
-        <input type="text" name="dob" placeholder="Date of Birth (DD/MM/YYYY)" >
+        <input type="text" name="dob" placeholder="Date of Birth (DD/MM/YYYY)">
         <button type="submit">Login</button>
       </form>
     </div>
