@@ -37,6 +37,92 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
   <!-- Same head content as before -->
   <style>
     /* Existing styles remain unchanged */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      color: #333;
+    }
+    .header {
+      width: 100%;
+      height: 250px;
+      overflow: hidden;
+    }
+    .header img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+    .banner {
+      background-color: #003366;
+      color: white;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .banner marquee {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .main-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      padding: 0 15px;
+    }
+    .container, .notice_board {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 20px;
+      margin: 10px;
+      width: 30%;
+    }
+    h2 {
+      font-size: 22px;
+      color: #6a11cb;
+      margin-bottom: 20px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    input {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      background-color: #f4f4f4;
+      font-size: 1em;
+      color: #333;
+    }
+    button {
+      background-color: #2575fc;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #6a11cb;
+    }
+    @media (max-width: 768px) {
+      .main-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .container, .notice_board {
+        width: 80%;
+      }
+    }
   </style>
 </head>
 <body>
