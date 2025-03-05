@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         header('Location: faculty/home.php');
         exit();
     } else {
+        header('Location: index3.php');
         echo '<script>alert("Invalid username or password");</script>';
     }
     
