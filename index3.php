@@ -1,34 +1,31 @@
 <?php
 session_start();
 
-$login_error = ""; // Variable to store login error messages
-
 // Handle Institution Login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
-    include 'faculty/db_connect.php'; // Verify the correct path to your database connection file
+    include 'faculty/db_connect.php'; // Verify correct path
 
     $input_username = $_POST['username'];
     $input_password = $_POST['password'];
     $input_hashed_password = hash('sha256', $input_password);
 
-    // Fetch hashed password from the database
     $sql = "SELECT hashed_password FROM users WHERE username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('s', $input_username);
     $stmt->execute();
     $stmt->bind_result($stored_hashed_password);
     $stmt->fetch();
-
+    
     if ($input_hashed_password === $stored_hashed_password) {
         $_SESSION['logged_in'] = true;
         $stmt->close();
         $conn->close();
-        header('Location: faculty/home.php'); // Redirect to the home page on successful login
+        header('Location: faculty/home.php');
         exit();
     } else {
-        $login_error = "Invalid username or password"; // Set error message
+        echo '<script>alert("Invalid username or password");</script>';
     }
-
+    
     $stmt->close();
     $conn->close();
 }
@@ -140,15 +137,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
   <div class="main-container">
     <div class="container">
       <h2>Institution Login</h2>
-      <form action="" method="POST"> <!-- Form submits to the same page -->
+      <form action="" method="POST"> <!-- Changed action to empty string -->
         <input type="text" name="username" placeholder="Username" required>
         <input type="password" name="password" placeholder="Password" required>
         <button type="submit">Login</button>
-        <?php if (!empty($login_error)): ?> <!-- Display error message if login fails -->
-          <div class="error-message"><?php echo $login_error; ?></div>
-        <?php endif; ?>
       </form>
     </div>
+    <!-- Rest of the code remains unchanged -->
     <div class="container">
       <h2>Student Login</h2>
       <form action="student/parent111.php" method="POST">
