@@ -95,7 +95,7 @@
 </head>
 <body>
   <div class="header">
-    <img src="logo.jpg" alt="Counsellor's Book Image">
+    <img src="assets/logo.jpg" alt="Counsellor's Book Image">
   </div>
   <div class="banner">
     <marquee behavior="scroll" direction="left">
@@ -105,7 +105,7 @@
   <div class="main-container">
     <div class="container">
       <h2>Institution Login</h2>
-      <form action="faculty_login.php" method="POST">
+      <form action="faculty/faculty_login.php" method="POST">
         <input type="text" name="username" placeholder="Username" required>
         <input type="password" name="password" placeholder="Password" required>
         <button type="submit">Login</button>
@@ -113,9 +113,9 @@
     </div>
     <div class="container">
       <h2>Student Login</h2>
-      <form action="student_login.php" method="POST">
+      <form action="student/parent111.php" method="POST">
         <input type="text" name="roll_no" placeholder="Roll Number" required>
-        <input type="text" name="dob" placeholder="Date of Birth (DD/MM/YYYY)" required>
+        <input type="text" name="dob" placeholder="Date of Birth (DD/MM/YYYY)" >
         <button type="submit">Login</button>
       </form>
     </div>
