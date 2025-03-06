@@ -203,9 +203,9 @@ body {
             </div>
 
             <div class="form-group">
-                <label for="year">Select Year:</label>
+                <label for="year">Select Year of Passing:</label>
                 <select name="year" id="year" required>
-                    <option value="">Select Year</option>
+                    <option value="">Select Year of Passing</option>
                     <?php foreach ($years as $year): ?>
                         <option value="<?= $year ?>"><?= $year ?></option>
                     <?php endforeach; ?>
