@@ -117,7 +117,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
       top: 50%;
       transform: translateY(-50%);
       cursor: pointer;
-      color: #2575fc;
+    }
+    .toggle-password img {
+      width: 20px;
+      height: 20px;
     }
     button {
       background-color: #2575fc;
@@ -162,9 +165,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         </div>
         <div class="input-group">
           <input type="password" name="password" id="password" placeholder="Password" required>
-            <span class="toggle-password" onclick="togglePasswordVisibility()">
-              <img src="https://cdn4.iconfinder.com/data/icons/interface-line-14/32/unhide-1024.png" alt="Toggle Password Visibility" width="20" height="20">
-            </span>        
+          <span class="toggle-password" onclick="togglePasswordVisibility()">
+            <img src="https://cdn4.iconfinder.com/data/icons/interface-line-14/32/unhide-1024.png" alt="Toggle Password Visibility" width="20" height="20">
+          </span>
         </div>
         <button type="submit">Login</button>
       </form>
@@ -192,14 +195,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
     // Toggle password visibility
     function togglePasswordVisibility() {
       const passwordInput = document.getElementById('password');
-      const toggleButton = document.querySelector('.toggle-password');
+      const toggleButton = document.querySelector('.toggle-password img');
 
       if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
-        toggleButton.textContent = <img src="https://cdn4.iconfinder.com/data/icons/interface-line-14/32/unhide-1024.png" alt="Toggle Password Visibility" width="20" height="20">;
+        toggleButton.src = 'https://cdn4.iconfinder.com/data/icons/interface-line-14/32/hide-1024.png'; // Change to hide icon
       } else {
         passwordInput.type = 'password';
-        toggleButton.textContent = <img src="https://cdn4.iconfinder.com/data/icons/interface-line-14/32/unhide-1024.png" alt="Toggle Password Visibility" width="20" height="20">;
+        toggleButton.src = 'https://cdn4.iconfinder.com/data/icons/interface-line-14/32/unhide-1024.png'; // Change to show icon
       }
     }
 
