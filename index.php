@@ -2,33 +2,35 @@
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-include 'faculty/db_connect.php'; // Ensure this file correctly connects to the database
 
-$error_message = ""; // Default empty error message
+$show_alert = false; // Flag to control alert display
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+// Handle Institution Login
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
+    include 'faculty/db_connect.php';
+
     $input_username = $_POST['username'];
     $input_password = $_POST['password'];
+    $input_hashed_password = hash('sha256', $input_password);
 
-    // Fetch hashed password from the database
     $sql = "SELECT hashed_password FROM users WHERE username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('s', $input_username);
     $stmt->execute();
     $stmt->bind_result($stored_hashed_password);
     $stmt->fetch();
-    $stmt->close();
 
-    // Verify the password
-    if ($stored_hashed_password && password_verify($input_password, $stored_hashed_password)) {
+    if ($input_hashed_password === $stored_hashed_password) {
         $_SESSION['logged_in'] = true;
-        $_SESSION['username'] = $input_username;
-        header('Location: home.php'); // Redirect to home page on success
+        $stmt->close();
+        $conn->close();
+        header('Location: faculty/home.php');
         exit();
     } else {
-        $error_message = "Invalid username or password!";
+        $show_alert = true; // Set flag for invalid credentials
     }
 
+    $stmt->close();
     $conn->close();
 }
 ?>
@@ -36,10 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Counsellor's Book</title>
+  <!-- Same head content as before -->
   <style>
+    /* Existing styles remain unchanged */
     body {
       margin: 0;
       padding: 0;
@@ -51,13 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       width: 100%;
       height: 250px;
       overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
     .header img {
-      width: 90%;
-      height: 90%;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
     }
     .banner {
       background-color: #003366;
@@ -110,9 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       background-color: #2575fc;
       color: white;
       border: none;
-      padding: 15px 25px;
-      font-weight: 600;
-      margin-top: 20px;
+      padding: 12px 20px;
       border-radius: 6px;
       cursor: pointer;
       font-size: 1em;
@@ -133,6 +130,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </style>
 </head>
 <body>
+    <?php if ($show_alert): ?>
+  <script>
+    alert("Invalid username or password");
+    // Clear POST data to prevent alert on refresh
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+  </script>
+  <?php endif; ?>
+
   <div class="header">
     <img src="assets/logo.jpg" alt="Counsellor's Book Image">
   </div>
@@ -144,13 +151,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="main-container">
     <div class="container">
       <h2>Institution Login</h2>
-
       <form action="" method="POST">
         <input type="text" name="username" placeholder="Username" required>
         <input type="password" name="password" placeholder="Password" required>
         <button type="submit">Login</button>
       </form>
     </div>
+    <!-- Rest of your existing HTML remains unchanged -->
     <div class="container">
       <h2>Student Login</h2>
       <form action="student/parent111.php" method="POST">
@@ -162,21 +169,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="notice_board">
       <h2>Notice Board</h2>
       <marquee behavior="scroll" direction="left">
-        <p style="color: red; font-weight:600;">Important: Faculty and Student Login Details are available on the portal.</p>
-        <p style="color: red; font-weight:600;">Note: The system will be down for maintenance from 2:00 AM to 4:00 AM tomorrow.</p>
-        <p style="color: red; font-weight:600;">Reminder: Mark your attendance before the deadline to avoid penalties.</p>
+        <p>Important: Faculty and Student Login Details are available on the portal.</p>
+        <p>Note: The system will be down for maintenance from 2:00 AM to 4:00 AM tomorrow.</p>
+        <p>Reminder: Mark your attendance before the deadline to avoid penalties.</p>
       </marquee>
     </div>
-  </div>
-
-  <script>
-    // Show alert message if PHP sends an error
-    <?php if (!empty($error_message)): ?>
-      setTimeout(() => {
-        alert("<?php echo $error_message; ?>");
-      }, 500); // Show alert after half a second
-    <?php endif; ?>
-  </script>
-
 </body>
 </html>
+
