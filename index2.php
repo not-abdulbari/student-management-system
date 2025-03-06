@@ -38,7 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Same head content as before -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
   <style>
     /* Existing styles remain unchanged */
     body {
@@ -95,15 +97,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
       flex-direction: column;
       align-items: center;
     }
-    input {
+    .input-group {
+      position: relative;
       width: 80%;
-      padding: 10px;
       margin: 10px 0;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
       border: 2px solid #ddd;
       border-radius: 6px;
       background-color: #f4f4f4;
       font-size: 1em;
       color: #333;
+    }
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #2575fc;
     }
     button {
       background-color: #2575fc;
@@ -143,8 +157,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
     <div class="container">
       <h2>Institution Login</h2>
       <form id="loginForm" action="" method="POST">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
+        <div class="input-group">
+          <input type="text" name="username" placeholder="Username" required>
+        </div>
+        <div class="input-group">
+          <input type="password" name="password" id="password" placeholder="Password" required>
+          <span class="toggle-password" onclick="togglePasswordVisibility()">👁️</span>
+        </div>
         <button type="submit">Login</button>
       </form>
     </div>
@@ -168,6 +187,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
   </div>
 
   <script>
+    // Toggle password visibility
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('password');
+      const toggleButton = document.querySelector('.toggle-password');
+
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleButton.textContent = '👁️';
+      } else {
+        passwordInput.type = 'password';
+        toggleButton.textContent = '👁️';
+      }
+    }
+
+    // AJAX form submission
     $(document).ready(function() {
       $('#loginForm').on('submit', function(e) {
         e.preventDefault(); // Prevent the form from submitting
