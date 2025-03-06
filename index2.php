@@ -162,7 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         </div>
         <div class="input-group">
           <input type="password" name="password" id="password" placeholder="Password" required>
-          <span class="toggle-password" onclick="togglePasswordVisibility()">👁️</span>
+          <span class="toggle-password" onclick="togglePasswordVisibility()">https://cdn4.iconfinder.com/data/icons/interface-line-14/32/unhide-1024.png</span>
         </div>
         <button type="submit">Login</button>
       </form>
