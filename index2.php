@@ -194,10 +194,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
       if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
-        toggleButton.textContent = '👁️';
+        toggleButton.textContent = '👁';
       } else {
         passwordInput.type = 'password';
-        toggleButton.textContent = '👁️';
+        toggleButton.textContent = '👁';
       }
     }
 
