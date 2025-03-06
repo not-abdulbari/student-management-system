@@ -162,7 +162,7 @@ nav ul li a.active {
             <li><a href="add_grades.php">Grade</a></li>
             <li><a href="add_subject.php">Subject</a></li>
             <li><a href="student_report.php">Students Report</a></li>
-            <li><a href="logout.php" class="logout-link">Logout</a></li>
+            <li><a href="../index.php" class="logout-link">Logout</a></li>
         </ul>
     </nav>
 
