@@ -128,18 +128,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
       }
     }
   </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <?php if ($show_alert): ?>
-  <script>
-    alert("Invalid username or password");
-    // Clear POST data to prevent alert on refresh
-    if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-    }
-  </script>
-  <?php endif; ?>
-
   <div class="header">
     <img src="assets/logo.jpg" alt="Counsellor's Book Image">
   </div>
@@ -151,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
   <div class="main-container">
     <div class="container">
       <h2>Institution Login</h2>
-      <form action="" method="POST">
+      <form id="loginForm" action="" method="POST">
         <input type="text" name="username" placeholder="Username" required>
         <input type="password" name="password" placeholder="Password" required>
         <button type="submit">Login</button>
@@ -174,6 +165,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         <p>Reminder: Mark your attendance before the deadline to avoid penalties.</p>
       </marquee>
     </div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      $('#loginForm').on('submit', function(e) {
+        e.preventDefault(); // Prevent the form from submitting
+
+        $.ajax({
+          url: '', // The same page
+          type: 'POST',
+          data: $(this).serialize(),
+          success: function(response) {
+            if (response.includes('Invalid username or password')) {
+              alert('Invalid username or password');
+            } else {
+              window.location.href = 'faculty/home.php';
+            }
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
-
