@@ -162,7 +162,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         </div>
         <div class="input-group">
           <input type="password" name="password" id="password" placeholder="Password" required>
-          <span class="toggle-password" onclick="togglePasswordVisibility()">https://cdn4.iconfinder.com/data/icons/interface-line-14/32/unhide-1024.png</span>
+            <span class="toggle-password" onclick="togglePasswordVisibility()">
+              <img src="https://cdn4.iconfinder.com/data/icons/interface-line-14/32/unhide-1024.png" alt="Toggle Password Visibility" width="20" height="20">
+            </span>        
         </div>
         <button type="submit">Login</button>
       </form>
@@ -194,10 +196,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
       if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
-        toggleButton.textContent = '👁';
+        toggleButton.textContent = <img src="https://cdn4.iconfinder.com/data/icons/interface-line-14/32/unhide-1024.png" alt="Toggle Password Visibility" width="20" height="20">;
       } else {
         passwordInput.type = 'password';
-        toggleButton.textContent = '👁';
+        toggleButton.textContent = <img src="https://cdn4.iconfinder.com/data/icons/interface-line-14/32/unhide-1024.png" alt="Toggle Password Visibility" width="20" height="20">;
       }
     }
 
