@@ -128,7 +128,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
     }
     .input-field i {
         position: absolute;
-        right: 50px;
+        right: 60px;
+        color: grey;
     }
     @media (max-width: 768px) {
       .main-container {
@@ -158,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         <input type="text" name="username" placeholder="Username" required>
         <div class="input-field">
             <input type="password" name="password" placeholder="Password" required>
-            <i class="fa-solid fa-eye"></i>
+            <i class="fa-solid fa-eye-slash"></i>
         </div>
         <button type="submit">Login</button>
       </form>
@@ -183,6 +184,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
   </div>
 
   <script>
+    $(document).ready(function() {
+    // Toggle password visibility
+    $(".input-field i").click(function() {
+      let passwordField = $(this).siblings("input");
+      let icon = $(this);
+
+      if (passwordField.attr("type") === "password") {
+        passwordField.attr("type", "text");
+        icon.removeClass("fa-eye-slash").addClass("fa-eye");
+      } else {
+        passwordField.attr("type", "password");
+        icon.removeClass("fa-eye").addClass("fa-eye-slash");
+      }
+    });
+        
     $(document).ready(function() {
       $('#loginForm').on('submit', function(e) {
         e.preventDefault(); // Prevent the form from submitting
