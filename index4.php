@@ -145,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
       <h2>Institution Login</h2>
       <form id="loginForm" action="" method="POST">
         <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
+        <input type="password" name="password" placeholder="Password" required <i class="fa-solid fa-eye"></i>>
         <i class="fa-solid fa-eye"></i>
         <button type="submit">Login</button>
       </form>
