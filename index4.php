@@ -110,15 +110,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
       width: 80%;
       right: 20px;
     }
-    .password-container input {
-      width: 100%;
-      padding-right: 40px;
-      border: 2px solid #ddd;
-      border-radius: 6px;
-      background-color: #f4f4f4;
-      font-size: 1em;
-      color: #333;
-    }
     .password-container .toggle-password {
       position: absolute;
       right: 10px;
