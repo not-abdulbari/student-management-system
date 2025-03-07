@@ -38,9 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Same head content as before -->
   <style>
+    /* Existing styles remain unchanged */
     body {
       margin: 0;
       padding: 0;
@@ -95,7 +95,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
       flex-direction: column;
       align-items: center;
     }
-    .password-container {
+    input {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      background-color: #f4f4f4;
+      font-size: 1em;
+      color: #333;
+    }
+      .password-container {
       position: relative;
       width: 80%;
     }
@@ -139,6 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
       }
     }
   </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
   <div class="header">
@@ -161,14 +172,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         <button type="submit">Login</button>
       </form>
     </div>
+    <!-- Rest of your existing HTML remains unchanged -->
+    <div class="container">
+      <h2>Student Login</h2>
+      <form action="student/parent111.php" method="POST">
+        <input type="text" name="roll_no" placeholder="Roll Number" required>
+        <input type="text" name="dob" placeholder="Date of Birth (DD/MM/YYYY)">
+        <button type="submit">Login</button>
+      </form>
+    </div>
+    <div class="notice_board">
+      <h2>Notice Board</h2>
+      <marquee behavior="scroll" direction="left">
+        <p>Important: Faculty and Student Login Details are available on the portal.</p>
+        <p>Note: The system will be down for maintenance from 2:00 AM to 4:00 AM tomorrow.</p>
+        <p>Reminder: Mark your attendance before the deadline to avoid penalties.</p>
+      </marquee>
+    </div>
   </div>
+
   <script>
-    $(document).ready(function() {
+      $(document).ready(function() {
       $('#togglePassword').click(function() {
         let passwordField = $('#password');
         let type = passwordField.attr('type') === 'password' ? 'text' : 'password';
         passwordField.attr('type', type);
         $(this).toggleClass('fa-eye fa-eye-slash');
+      });
+    });
+      
+    $(document).ready(function() {
+      $('#loginForm').on('submit', function(e) {
+        e.preventDefault(); // Prevent the form from submitting
+
+        $.ajax({
+          url: '', // The same page
+          type: 'POST',
+          data: $(this).serialize(),
+          success: function(response) {
+            if (response.includes('Invalid username or password')) {
+              alert('Invalid username or password');
+            } else {
+              window.location.href = 'faculty/home.php';
+            }
+          }
+        });
       });
     });
   </script>
