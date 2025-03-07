@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
     .password-container {
       position: relative;
       width: 80%;
-      right: 15px;
+      right: 13px;
     }
     .password-container input {
         width: 100%;
