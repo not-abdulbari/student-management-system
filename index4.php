@@ -1,6 +1,45 @@
+<?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+$show_alert = false; // Flag to control alert display
+
+// Handle Institution Login
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
+    include 'faculty/db_connect.php';
+
+    $input_username = $_POST['username'];
+    $input_password = $_POST['password'];
+    $input_hashed_password = hash('sha256', $input_password);
+
+    $sql = "SELECT hashed_password FROM users WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $input_username);
+    $stmt->execute();
+    $stmt->bind_result($stored_hashed_password);
+    $stmt->fetch();
+
+    if ($input_hashed_password === $stored_hashed_password) {
+        $_SESSION['logged_in'] = true;
+        $stmt->close();
+        $conn->close();
+        header('Location: faculty/home.php');
+        exit();
+    } else {
+        $show_alert = true; // Set flag for invalid credentials
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Same head content as before -->
   <style>
     /* Existing styles remain unchanged */
     body {
@@ -67,23 +106,6 @@
       font-size: 1em;
       color: #333;
     }
-    .password-wrapper {
-      position: relative;
-      width: 80%;
-    }
-    .password-wrapper input {
-      width: 100%;
-      padding-right: 40px; /* Space for the toggle icon */
-    }
-    .toggle-password {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      font-size: 18px;
-      color: #666;
-    }
     button {
       background-color: #2575fc;
       color: white;
@@ -123,16 +145,12 @@
       <h2>Institution Login</h2>
       <form id="loginForm" action="" method="POST">
         <input type="text" name="username" placeholder="Username" required>
-
-        <div class="password-wrapper">
-          <input type="password" id="password" name="password" placeholder="Password" required>
-          <span class="toggle-password" onclick="togglePassword()">👁️</span>
-        </div>
-
+        <input type="password" name="password" placeholder="Password" required>
+        <i class="fa-solid fa-eye"></i>
         <button type="submit">Login</button>
       </form>
     </div>
-
+    <!-- Rest of your existing HTML remains unchanged -->
     <div class="container">
       <h2>Student Login</h2>
       <form action="student/parent111.php" method="POST">
@@ -141,7 +159,6 @@
         <button type="submit">Login</button>
       </form>
     </div>
-    
     <div class="notice_board">
       <h2>Notice Board</h2>
       <marquee behavior="scroll" direction="left">
@@ -153,15 +170,6 @@
   </div>
 
   <script>
-    function togglePassword() {
-      var passwordField = document.getElementById("password");
-      if (passwordField.type === "password") {
-        passwordField.type = "text";
-      } else {
-        passwordField.type = "password";
-      }
-    }
-
     $(document).ready(function() {
       $('#loginForm').on('submit', function(e) {
         e.preventDefault(); // Prevent the form from submitting
