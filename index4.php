@@ -126,6 +126,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         position: relative;
         width: 100%;
     }
+    .input-field i {
+        position: absolute;
+        right: 20px;
+    }
     @media (max-width: 768px) {
       .main-container {
         flex-direction: column;
