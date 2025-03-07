@@ -175,7 +175,7 @@ button:hover {
       </form>
     </div>
     <!-- Rest of your existing HTML remains unchanged -->
-    <div class="container">
+    <div class="input-group">
       <h2>Student Login</h2>
       <form action="student/parent111.php" method="POST">
         <input type="text" name="roll_no" placeholder="Roll Number" required>
