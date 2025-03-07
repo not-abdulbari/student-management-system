@@ -123,6 +123,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
+        width: 100%;
     }
     @media (max-width: 768px) {
       .main-container {
