@@ -1,8 +1,46 @@
+<?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+$show_alert = false; // Flag to control alert display
+
+// Handle Institution Login
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
+    include 'faculty/db_connect.php';
+
+    $input_username = $_POST['username'];
+    $input_password = $_POST['password'];
+    $input_hashed_password = hash('sha256', $input_password);
+
+    $sql = "SELECT hashed_password FROM users WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $input_username);
+    $stmt->execute();
+    $stmt->bind_result($stored_hashed_password);
+    $stmt->fetch();
+
+    if ($input_hashed_password === $stored_hashed_password) {
+        $_SESSION['logged_in'] = true;
+        $stmt->close();
+        $conn->close();
+        header('Location: faculty/home.php');
+        exit();
+    } else {
+        $show_alert = true; // Set flag for invalid credentials
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
-    /* Existing styles remain unchanged */
     body {
       margin: 0;
       padding: 0;
@@ -57,31 +95,25 @@
       flex-direction: column;
       align-items: center;
     }
-    input {
+    .password-container {
+      position: relative;
       width: 80%;
-      padding: 10px;
-      margin: 10px 0;
+    }
+    .password-container input {
+      width: 100%;
+      padding-right: 40px;
       border: 2px solid #ddd;
       border-radius: 6px;
       background-color: #f4f4f4;
       font-size: 1em;
       color: #333;
     }
-    .password-wrapper {
-      position: relative;
-      width: 80%;
-    }
-    .password-wrapper input {
-      width: 100%;
-      padding-right: 40px; /* Space for the toggle icon */
-    }
-    .toggle-password {
+    .password-container .toggle-password {
       position: absolute;
       right: 10px;
       top: 50%;
       transform: translateY(-50%);
       cursor: pointer;
-      font-size: 18px;
       color: #666;
     }
     button {
@@ -107,9 +139,6 @@
       }
     }
   </style>
-  <!-- Font Awesome for Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
   <div class="header">
@@ -125,66 +154,21 @@
       <h2>Institution Login</h2>
       <form id="loginForm" action="" method="POST">
         <input type="text" name="username" placeholder="Username" required>
-
-        <div class="password-wrapper">
+        <div class="password-container">
           <input type="password" id="password" name="password" placeholder="Password" required>
+          <i class="fas fa-eye toggle-password" id="togglePassword"></i>
         </div>
-
         <button type="submit">Login</button>
       </form>
-    </div>
-
-    <div class="container">
-      <h2>Student Login</h2>
-      <form action="student/parent111.php" method="POST">
-        <input type="text" name="roll_no" placeholder="Roll Number" required>
-        <input type="text" name="dob" placeholder="Date of Birth (DD/MM/YYYY)">
-        <button type="submit">Login</button>
-      </form>
-    </div>
-    
-    <div class="notice_board">
-      <h2>Notice Board</h2>
-      <marquee behavior="scroll" direction="left">
-        <p>Important: Faculty and Student Login Details are available on the portal.</p>
-        <p>Note: The system will be down for maintenance from 2:00 AM to 4:00 AM tomorrow.</p>
-        <p>Reminder: Mark your attendance before the deadline to avoid penalties.</p>
-      </marquee>
     </div>
   </div>
-
   <script>
     $(document).ready(function() {
-      // Toggle password visibility
       $('#togglePassword').click(function() {
-        var passwordField = $('#password');
-        var icon = $(this);
-        
-        if (passwordField.attr('type') === 'password') {
-          passwordField.attr('type', 'text');
-          icon.removeClass('fa-eye-slash').addClass('fa-eye');
-        } else {
-          passwordField.attr('type', 'password');
-          icon.removeClass('fa-eye').addClass('fa-eye-slash');
-        }
-      });
-
-      // Handle login via AJAX
-      $('#loginForm').on('submit', function(e) {
-        e.preventDefault(); // Prevent the form from submitting
-
-        $.ajax({
-          url: '', // The same page
-          type: 'POST',
-          data: $(this).serialize(),
-          success: function(response) {
-            if (response.includes('Invalid username or password')) {
-              alert('Invalid username or password');
-            } else {
-              window.location.href = 'faculty/home.php';
-            }
-          }
-        });
+        let passwordField = $('#password');
+        let type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+        passwordField.attr('type', type);
+        $(this).toggleClass('fa-eye fa-eye-slash');
       });
     });
   </script>
