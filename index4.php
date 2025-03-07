@@ -128,7 +128,6 @@
 
         <div class="password-wrapper">
           <input type="password" id="password" name="password" placeholder="Password" required>
-          <i class="fa-solid fa-eye-slash toggle-password" id="togglePassword"></i>
         </div>
 
         <button type="submit">Login</button>
