@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- Same head content as before -->
   <style>
     /* Existing styles remain unchanged */
@@ -119,6 +119,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
     button:hover {
       background-color: #6a11cb;
     }
+    .input-field {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     @media (max-width: 768px) {
       .main-container {
         flex-direction: column;
@@ -145,8 +150,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
       <h2>Institution Login</h2>
       <form id="loginForm" action="" method="POST">
         <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required <i class="fa-solid fa-eye"></i>>
-        <i class="fa-solid fa-eye"></i>
+        <div class="input-field">
+            <input type="password" name="password" placeholder="Password" required>
+            <i class="fa-solid fa-eye"></i>
+        </div>
         <button type="submit">Login</button>
       </form>
     </div>
