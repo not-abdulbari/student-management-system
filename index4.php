@@ -134,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
     button:hover {
       background-color: #6a11cb;
     }
-    .notice_board p {
+          .notice_board p {
         color: red;
     }
     @media (max-width: 768px) {
