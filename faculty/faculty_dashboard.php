@@ -248,7 +248,7 @@ body {
 </head>
 <body>
     <h2>Marks Entry</h2>
-    <form action="marks_entry.php" method="POST">
+    <form action="marks_entry1.php" method="POST">
         <div class="form-row">
             <div class="form-group">
                 <label for="branch">Select Branch:</label>
