@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
     }
     .input-field i {
         position: absolute;
-        right: 20px;
+        right: 50px;
     }
     @media (max-width: 768px) {
       .main-container {
