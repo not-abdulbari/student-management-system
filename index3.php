@@ -239,6 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
             <form action="student/parent111.php" method="POST">
                 <input type="text" name="roll_no" placeholder="Roll Number" required>
                 <input type="text" name="dob" placeholder="Date of Birth (DD/MM/YYYY)">
+                <div class="h-captcha" data-sitekey="<?php echo getenv('HCAPTCHA_SITE_KEY'); ?>"></div>
                 <button type="submit">Login</button>
             </form>
         </div>
