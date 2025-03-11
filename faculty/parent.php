@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include 'db_connect.php';
-include 'head.php';
+
         // Handling form submission
         $marks_data = [];
         $attendance_data = [];
@@ -217,6 +217,9 @@ table tr:nth-child(even) {
 
             </style>
         </head>
+<?php
+        include 'head.php';
+?>
         <body>
             <div class="container">
                 <h1>Parent - View Student Marks, Attendance, Grades, and Report</h1>
