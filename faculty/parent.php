@@ -217,10 +217,11 @@ table tr:nth-child(even) {
 
             </style>
         </head>
+
+        <body>
 <?php
         include 'head.php';
 ?>
-        <body>
             <div class="container">
                 <h1>Parent - View Student Marks, Attendance, Grades, and Report</h1>
         
