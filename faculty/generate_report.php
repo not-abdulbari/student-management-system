@@ -57,13 +57,27 @@ $passPercentAppeared = $appeared > 0 ? round(($passed / $appeared) * 100, 4) : 0
 <head>
     <title>Exam Result Analysis</title>
     <style>
+        .back-button {
+        background-color: #007BFF; /* Blue color */
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+    .back-button:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
         @media print {
             body { margin: 20px; font-family: Arial; }
             .no-print { display: none; }
             table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-            th, td { border: 1px solid #000; padding: 8px; text-align: left; }
+            th, td { border: 1px solid #000; padding: 5px; text-align: left; }
             .header { text-align: center; margin-bottom: 30px; }
-            .signatures { margin-top: 50px; display: flex; justify-content: space-between; }
+             h3 { text-align: center; }
+            .signatures { margin-top: 150px; display: flex; justify-content: space-between; }
         }
         @media screen {
             body { padding: 20px; }
@@ -73,10 +87,11 @@ $passPercentAppeared = $appeared > 0 ? round(($passed / $appeared) * 100, 4) : 0
     </style>
 </head>
 <body>
+    <button onclick="goBack()" class="back-button">⬅ Back</button>
     <div class="header">
         <h2>C. ABDUL HAKEEM COLLEGE OF ENGINEERING & TECHNOLOGY</h2>
         <h3>MELVISHARAM - 632509</h3>
-        <h4>DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING</h4>
+        <h4>DEPARTMENT OF                                      </h4>
     </div>
 
     <div class="report-data">
@@ -123,6 +138,9 @@ $passPercentAppeared = $appeared > 0 ? round(($passed / $appeared) * 100, 4) : 0
     </div>
 
     <script>
+    function goBack() {
+        window.history.back();
+    }
     function finalizeReport(e) {
         e.preventDefault();
         
