@@ -1,6 +1,6 @@
 <?php
 include 'db_connect.php';
-
+include 'head.php';
 // Fetch distinct values from marks table
 $branches = $conn->query("SELECT DISTINCT branch FROM marks WHERE branch IS NOT NULL");
 $years = $conn->query("SELECT DISTINCT year FROM marks WHERE year IS NOT NULL");
