@@ -111,7 +111,7 @@ $passPercentAppeared = $appeared > 0 ? round(($passed / $appeared) * 100, 4) : 0
 </head>
 <body>
     <div class="header">
-        <img src="college_logo.jpg" alt="College Logo"> <!-- Add College Logo Here -->
+    <img src="../assets/24349bb44aaa1a8c.jpg" alt="College Logo">
         <div>
             <h3>C. ABDUL HAKEEM COLLEGE OF ENGINEERING & TECHNOLOGY</h3>
             <h3>MELVISHARAM - 632509</h3>
