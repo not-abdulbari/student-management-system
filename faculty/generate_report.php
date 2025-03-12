@@ -16,6 +16,10 @@ $departmentNames = [
     "EEE" => "Department of Electrical and Electronics Engineering",
     "MECH" => "Department of Mechanical Engineering",
     "CIVIL" => "Department of Civil Engineering",
+    "IT" => "Department of Information Technology",
+    "AIDS" => "Department of Artificial Intelligence & Data Science",
+    "MBA" => "School of Management",
+    "MCA" => "Department of Computer Applications",
 ];
 
 $department = isset($departmentNames[$branch]) ? $departmentNames[$branch] : "Department of $branch";
