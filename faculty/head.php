@@ -14,133 +14,161 @@ if (!function_exists('getCurrentDateTime')) {
     <title>Welcome to C. Abdul Hakeem College of Engineering & Technology</title>
     <style>
         /* General Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* Body Styling */
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f4f6f9;
-    color: #333;
-    font-size: 12px; /* Reduced font size for a more compact design */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        /* Body Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            font-size: 12px; /* Reduced font size for a more compact design */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-/* Header Container */
-.header-container {
-    text-align: center;
-    padding: 10px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 100%;
-}
+        /* Header Container */
+        .header-container {
+            text-align: center;
+            padding: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
 
-/* Header Image */
-.header-image {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-}
+        /* Header Image */
+        .header-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
 
-/* Banner */
-.banner {
-    background-color: #4caf50; /* Lively green banner */
-    color: #ffffff;
-    padding: 15px; /* Reduced padding */
-    text-align: center;
-    border-bottom: 3px solid #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-}
+        /* Banner */
+        .banner {
+            background-color: #4caf50; /* Lively green banner */
+            color: #ffffff;
+            padding: 15px; /* Reduced padding */
+            text-align: center;
+            border-bottom: 3px solid #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
 
-.banner:hover {
-    background-color: #66bb6a; /* Lighter green on hover */
-}
+        .banner:hover {
+            background-color: #66bb6a; /* Lighter green on hover */
+        }
 
-/* Date-Time */
-.datetime {
-    font-size: 14px; /* Reduced font size */
-    margin-top: 5px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-}
+        /* Date-Time */
+        .datetime {
+            font-size: 14px; /* Reduced font size */
+            margin-top: 5px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
 
-/* Navigation */
-nav {
-    background-color: #3f51b5; /* Deep blue for navigation */
-    padding: 8px 0; /* Reduced padding */
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 100%;
-}
+        /* Navigation */
+        nav {
+            background-color: #3f51b5; /* Deep blue for navigation */
+            padding: 8px 0; /* Reduced padding */
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
 
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-}
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
 
-nav ul li {
-    margin-right: 12px; /* Reduced space between links */
-}
+        nav ul li {
+            margin-right: 12px; /* Reduced space between links */
+            position: relative; /* Needed for dropdown */
+        }
 
-nav ul li a {
-    color: #ffffff;
-    text-decoration: none;
-    padding: 8px 12px; /* Reduced padding */
-    display: inline-block;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-size: 12px; /* Reduced font size */
-}
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 8px 12px; /* Reduced padding */
+            display: inline-block;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-size: 12px; /* Reduced font size */
+        }
 
-nav ul li a:hover {
-    background-color: #2c387e; /* Darker blue for hover effect */
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
+        nav ul li a:hover {
+            background-color: #2c387e; /* Darker blue for hover effect */
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
 
-nav ul li a:active {
-    transform: scale(0.98);
-}
+        nav ul li a:active {
+            transform: scale(0.98);
+        }
 
-/* Active Links */
-nav ul li a.active {
-    background-color: #2c387e; /* Active link color */
-    transform: scale(1.05);
-}
+        /* Active Links */
+        nav ul li a.active {
+            background-color: #2c387e; /* Active link color */
+            transform: scale(1.05);
+        }
 
-/* Responsive Design */
-@media screen and (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+        /* Dropdown Menu */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #3f51b5;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 4px;
+            overflow: hidden;
+        }
 
-    nav ul li {
-        margin-bottom: 8px; /* Reduced bottom margin */
-        margin-right: 0;
-    }
+        .dropdown-content a {
+            color: #ffffff;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
 
-    .datetime {
-        font-size: 12px; /* Further reduced font size for smaller screens */
-        text-align: center;
-    }
-}
+        .dropdown-content a:hover {
+            background-color: #2c387e;
+        }
 
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav ul li {
+                margin-bottom: 8px; /* Reduced bottom margin */
+                margin-right: 0;
+            }
+
+            .datetime {
+                font-size: 12px; /* Further reduced font size for smaller screens */
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -162,9 +190,14 @@ nav ul li a.active {
             <li><a href="add_grades.php">Grade</a></li>
             <li><a href="add_subject.php">Subject</a></li>
             <li><a href="student_report.php">Students Report</a></li>
-            <li><a href="report_selection.php">REPORT</a></li>
+            <li class="dropdown">
+                <a href="javascript:void(0)">Reports</a>
+                <div class="dropdown-content">
+                    <a href="report_selection.php">Report Selection</a>
+                    <a href="generate_marksheet.php">Generate Marksheet</a>
+                </div>
+            </li>
             <li><a href="parent.php">Student Login</a></li>
-            
             <li><a href="../index.php" class="logout-link">Logout</a></li>
         </ul>
     </nav>
