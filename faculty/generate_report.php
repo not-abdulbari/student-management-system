@@ -1,7 +1,7 @@
 <?php
 include 'db_connect.php';
 
-// Sanitize inputs
+
 $branch = $conn->real_escape_string($_POST['branch']);
 $year = $conn->real_escape_string($_POST['year']);
 $section = $conn->real_escape_string($_POST['section']);
