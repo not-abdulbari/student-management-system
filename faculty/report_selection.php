@@ -1,44 +1,141 @@
 <?php
 include 'db_connect.php';
 include 'head.php';
-// Fetch distinct values from marks table
-$branches = $conn->query("SELECT DISTINCT branch FROM marks WHERE branch IS NOT NULL");
-$years = $conn->query("SELECT DISTINCT year FROM marks WHERE year IS NOT NULL");
-$sections = $conn->query("SELECT DISTINCT section FROM marks WHERE section IS NOT NULL");
-$semesters = $conn->query("SELECT DISTINCT semester FROM marks WHERE semester IS NOT NULL");
-$subjects = $conn->query("SELECT DISTINCT subject FROM marks WHERE subject IS NOT NULL");
-$exams = $conn->query("SELECT DISTINCT exam FROM marks WHERE exam IS NOT NULL");
+
+// Fetch distinct values for dropdowns
+$branches = $conn->query("SELECT DISTINCT branch FROM marks WHERE branch IS NOT NULL ORDER BY branch ASC");
+$years = $conn->query("SELECT DISTINCT year FROM marks WHERE year IS NOT NULL ORDER BY year ASC");
+$sections = $conn->query("SELECT DISTINCT section FROM marks WHERE section IS NOT NULL ORDER BY section ASC");
+$semesters = $conn->query("SELECT DISTINCT semester FROM marks WHERE semester IS NOT NULL ORDER BY CAST(semester AS UNSIGNED) ASC");
+$subjects = $conn->query("SELECT DISTINCT subject FROM marks WHERE subject IS NOT NULL ORDER BY subject ASC");
+$exams = $conn->query("SELECT DISTINCT exam FROM marks WHERE exam IS NOT NULL ORDER BY exam ASC");
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Select Report Parameters</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        .form-container { max-width: 600px; margin: 20px auto; padding: 20px; }
-        .dropdown-group { margin: 10px 0; }
-        select { width: 100%; padding: 8px; margin: 5px 0; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .dropdown-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-back {
+            background-color: #555;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            padding: 10px 15px;
+            display: inline-block;
+        }
+
+        .btn-back:hover {
+            background-color: #333;
+        }
     </style>
+
+    <script>
+        $(document).ready(function () {
+            // Fetch subjects dynamically when branch & semester are selected
+            $("#branch, #semester").change(function () {
+                var branch = $("#branch").val();
+                var semester = $("#semester").val();
+
+                if (branch !== "" && semester !== "") {
+                    $.ajax({
+                        type: "POST",
+                        url: "get_subject.php",
+                        data: { branch: branch, semester: semester },
+                        success: function (response) {
+                            $("#subject").html(response);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
 </head>
 <body>
-    <div class="form-container">
+
+    <div class="container">
         <h2>Select Report Parameters</h2>
         <form method="post" action="generate_report.php">
             <div class="dropdown-group">
                 <label>Branch:</label>
-                <select name="branch" required>
-                    <?php while($row = $branches->fetch_assoc()) { ?>
+                <select name="branch" id="branch" required>
+                    <option value="">Select Branch</option>
+                    <?php while ($row = $branches->fetch_assoc()) { ?>
                         <option value="<?= htmlspecialchars($row['branch']) ?>"><?= htmlspecialchars($row['branch']) ?></option>
                     <?php } ?>
                 </select>
             </div>
 
-            <!-- Repeat similar structure for other dropdowns -->
             <div class="dropdown-group">
                 <label>Year:</label>
                 <select name="year" required>
-                    <?php while($row = $years->fetch_assoc()) { ?>
-                        <option><?= htmlspecialchars($row['year']) ?></option>
+                    <option value="">Select Year</option>
+                    <?php while ($row = $years->fetch_assoc()) { ?>
+                        <option value="<?= htmlspecialchars($row['year']) ?>"><?= htmlspecialchars($row['year']) ?></option>
                     <?php } ?>
                 </select>
             </div>
@@ -46,41 +143,46 @@ $exams = $conn->query("SELECT DISTINCT exam FROM marks WHERE exam IS NOT NULL");
             <div class="dropdown-group">
                 <label>Section:</label>
                 <select name="section" required>
-                    <?php while($row = $sections->fetch_assoc()) { ?>
-                        <option><?= htmlspecialchars($row['section']) ?></option>
+                    <option value="">Select Section</option>
+                    <?php while ($row = $sections->fetch_assoc()) { ?>
+                        <option value="<?= htmlspecialchars($row['section']) ?>"><?= htmlspecialchars($row['section']) ?></option>
                     <?php } ?>
                 </select>
             </div>
 
             <div class="dropdown-group">
                 <label>Semester:</label>
-                <select name="semester" required>
-                    <?php while($row = $semesters->fetch_assoc()) { ?>
-                        <option><?= htmlspecialchars($row['semester']) ?></option>
+                <select name="semester" id="semester" required>
+                    <option value="">Select Semester</option>
+                    <?php while ($row = $semesters->fetch_assoc()) { ?>
+                        <option value="<?= htmlspecialchars($row['semester']) ?>"><?= htmlspecialchars($row['semester']) ?></option>
                     <?php } ?>
                 </select>
             </div>
 
             <div class="dropdown-group">
                 <label>Subject:</label>
-                <select name="subject" required>
-                    <?php while($row = $subjects->fetch_assoc()) { ?>
-                        <option><?= htmlspecialchars($row['subject']) ?></option>
-                    <?php } ?>
+                <select name="subject" id="subject" required>
+                    <option value="">Select Semester & Branch First</option>
                 </select>
             </div>
 
             <div class="dropdown-group">
                 <label>Exam Type:</label>
                 <select name="exam" required>
-                    <?php while($row = $exams->fetch_assoc()) { ?>
-                        <option><?= htmlspecialchars($row['exam']) ?></option>
+                    <option value="">Select Exam Type</option>
+                    <?php while ($row = $exams->fetch_assoc()) { ?>
+                        <option value="<?= htmlspecialchars($row['exam']) ?>"><?= htmlspecialchars($row['exam']) ?></option>
                     <?php } ?>
                 </select>
             </div>
 
-            <button type="submit">Generate Report</button>
+            <div class="btn-container">
+                <a href="faculty_dashboard.php" class="btn btn-back">← Back</a>
+                <button type="submit" class="btn btn-primary">Generate Report</button>
+            </div>
         </form>
     </div>
+
 </body>
 </html>
