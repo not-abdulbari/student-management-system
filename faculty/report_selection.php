@@ -49,7 +49,7 @@ $exams = $conn->query("SELECT DISTINCT exam FROM marks WHERE exam IS NOT NULL OR
             margin-bottom: 5px;
         }
 
-        select {
+        select, input[type="text"], input[type="date"] {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -175,6 +175,16 @@ $exams = $conn->query("SELECT DISTINCT exam FROM marks WHERE exam IS NOT NULL OR
                         <option value="<?= htmlspecialchars($row['exam']) ?>"><?= htmlspecialchars($row['exam']) ?></option>
                     <?php } ?>
                 </select>
+            </div>
+
+            <div class="dropdown-group">
+                <label>Faculty Code:</label>
+                <input type="text" name="faculty_code" required>
+            </div>
+
+            <div class="dropdown-group">
+                <label>Date of Exam:</label>
+                <input type="date" name="exam_date" value="<?= date('Y-m-d') ?>" required>
             </div>
 
             <div class="btn-container">
