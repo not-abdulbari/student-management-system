@@ -119,8 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <p style="text-align: center;">______________________________________________________________________________________________</p>
 
 <div class="container">
-    <h2 style="text-align: center;">Marks List</h2>
-    <div class="exam-type"><?= htmlspecialchars($exam) ?></div>
+    <h2 style="text-align: center;"><?= htmlspecialchars($exam) ?> MARK SHEET</h2>
     <?php if (isset($marks) && $marks !== null && $marks->num_rows > 0) { ?>
         <div class="marks-list">
         <div id="printContent">
