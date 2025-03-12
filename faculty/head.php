@@ -193,8 +193,8 @@ if (!function_exists('getCurrentDateTime')) {
             <li class="dropdown">
                 <a href="javascript:void(0)">Reports</a>
                 <div class="dropdown-content">
-                    <a href="report_selection.php">Report Selection</a>
-                    <a href="generate_marksheet.php">Generate Marksheet</a>
+                    <a href="report_selection.php">Result Analysis</a>
+                    <a href="generate_marksheet.php">Mark List</a>
                 </div>
             </li>
             <li><a href="parent.php">Student Login</a></li>
