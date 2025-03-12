@@ -1,5 +1,4 @@
 name: Deploy to InfinityFree FTP
-
 on:
   push:
     branches:
