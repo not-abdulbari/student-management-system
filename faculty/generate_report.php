@@ -69,7 +69,7 @@ if ($result->num_rows > 0) {
 
 $appeared = $totalStudents - $absent;
 $passPercentTotal = $totalStudents > 0 ? round(($passed / $totalStudents) * 100, 2) : 0;
-$passPercentAppeared = $appeared > 0 ? round(($passed / $appeared) * 100, 4) : 0;
+$passPercentAppeared = $appeared > 0 ? round(($passed / $appeared) * 100, 2) : 0;
 ?>
 
 <!DOCTYPE html>
