@@ -1,13 +1,15 @@
 <?php
 include 'db_connect.php';
 
-
+// Sanitize inputs
 $branch = $conn->real_escape_string($_POST['branch']);
 $year = $conn->real_escape_string($_POST['year']);
 $section = $conn->real_escape_string($_POST['section']);
 $semester = $conn->real_escape_string($_POST['semester']);
 $subject = $conn->real_escape_string($_POST['subject']);
 $exam = $conn->real_escape_string($_POST['exam']);
+$faculty_code = $conn->real_escape_string($_POST['faculty_code']);
+$exam_date = $conn->real_escape_string($_POST['exam_date']);
 
 // Map branch names to department names
 $departmentNames = [
@@ -28,6 +30,11 @@ $department = isset($departmentNames[$branch]) ? $departmentNames[$branch] : "De
 $subjectNameQuery = $conn->query("SELECT subject_name FROM subjects WHERE subject_code='$subject' AND branch='$branch' AND semester='$semester'");
 $subjectNameRow = $subjectNameQuery->fetch_assoc();
 $subjectName = $subjectNameRow['subject_name'] ?? "Unknown Subject";
+
+// Fetch faculty name from faculty table
+$facultyNameQuery = $conn->query("SELECT faculty_name FROM faculty WHERE faculty_code='$faculty_code'");
+$facultyNameRow = $facultyNameQuery->fetch_assoc();
+$facultyName = $facultyNameRow['faculty_name'] ?? "Unknown Faculty";
 
 // Fetch total students
 $totalStudentsQuery = $conn->query("
@@ -73,7 +80,7 @@ if ($result->num_rows > 0) {
 
 $appeared = $totalStudents - $absent;
 $passPercentTotal = $totalStudents > 0 ? round(($passed / $totalStudents) * 100, 2) : 0;
-$passPercentAppeared = $appeared > 0 ? round(($passed / $appeared) * 100, 2) : 0;
+$passPercentAppeared = $appeared > 0 ? round(($passed / $appeared) * 100, 4) : 0;
 ?>
 
 <!DOCTYPE html>
@@ -104,7 +111,7 @@ $passPercentAppeared = $appeared > 0 ? round(($passed / $appeared) * 100, 2) : 0
 </head>
 <body>
     <div class="header">
-        <img src="../assets/24349bb44aaa1a8c.jpg" alt="College Logo"> <!-- Add College Logo Here -->
+        <img src="college_logo.jpg" alt="College Logo"> <!-- Add College Logo Here -->
         <div>
             <h3>C. ABDUL HAKEEM COLLEGE OF ENGINEERING & TECHNOLOGY</h3>
             <h3>MELVISHARAM - 632509</h3>
@@ -116,21 +123,15 @@ $passPercentAppeared = $appeared > 0 ? round(($passed / $appeared) * 100, 2) : 0
         <h3 id="examTitle" style="text-align: center;">INTERNAL EXAM RESULT ANALYSIS</h3>
         <div class="exam-type"><?= htmlspecialchars($exam) ?></div> <!-- Exam Type Below Heading -->
 
-        <form class="no-print" onsubmit="return finalizeReport(event)">
-            <label>Subject Handler: <input type="text" id="handler" required></label>
-            <label>Exam Date: <input type="date" id="examDate" required></label>
-            <button type="submit" class="print-btn">Generate PDF</button>
-        </form>
-
         <div id="printContent">
             <div class="info-container">
                 <div class="info-left">
-                    <p><strong>Subject Handler:</strong> <span id="displayHandler"></span></p>
+                    <p><strong>Subject Handler:</strong> <?= htmlspecialchars($facultyName) ?></p>
                     <p><strong>Subject:</strong> <?= htmlspecialchars($subject) ?> - <?= htmlspecialchars($subjectName) ?></p>
                 </div>
                 <div class="info-right">
-                    <p><strong>Year/Sem/Sec:</strong> <?= "$year/$semester/$section" ?></p>
-                    <p><strong>Exam Date:</strong> <span id="displayExamDate"></span></p>
+                    <p><strong>Year/Sem/Sec:</strong> <?= htmlspecialchars("$year / $semester / $section") ?></p>
+                    <p><strong>Exam Date:</strong> <?= htmlspecialchars($exam_date) ?></p>
                 </div>
             </div>
 
@@ -174,13 +175,13 @@ $passPercentAppeared = $appeared > 0 ? round(($passed / $appeared) * 100, 2) : 0
     </div>
 
     <script>
-    function finalizeReport(e) {
-        e.preventDefault();
-        document.getElementById('displayHandler').textContent = document.getElementById('handler').value;
-        document.getElementById('displayExamDate').textContent = document.getElementById('examDate').value.split('-').reverse().join('/');
-        document.getElementById('printContent').style.display = 'block';
-        setTimeout(() => { window.print(); document.getElementById('printContent').style.display = 'none'; }, 100);
+    function printReport() {
+        window.print();
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        printReport();
+    });
     </script>
 </body>
 </html>
