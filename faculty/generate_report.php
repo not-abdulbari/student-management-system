@@ -9,46 +9,66 @@ $semester = $conn->real_escape_string($_POST['semester']);
 $subject = $conn->real_escape_string($_POST['subject']);
 $exam = $conn->real_escape_string($_POST['exam']);
 
-// Calculate statistics
-$totalStudents = $conn->query(
-    "SELECT COUNT(DISTINCT roll_no) FROM marks 
-    WHERE branch='$branch' AND year='$year' 
-    AND section='$section' AND semester='$semester'"
-)->fetch_row()[0];
+// Map branch names to department names
+$departmentNames = [
+    "CSE" => "Department of Computer Science and Engineering",
+    "ECE" => "Department of Electronics and Communication Engineering",
+    "EEE" => "Department of Electrical and Electronics Engineering",
+    "MECH" => "Department of Mechanical Engineering",
+    "CIVIL" => "Department of Civil Engineering",
+];
 
-$result = $conn->query(
-    "SELECT marks FROM marks 
+$department = isset($departmentNames[$branch]) ? $departmentNames[$branch] : "Department of $branch";
+
+// Fetch subject name from subjects table
+$subjectNameQuery = $conn->query("SELECT subject_name FROM subjects WHERE subject_code='$subject' AND branch='$branch' AND semester='$semester'");
+$subjectNameRow = $subjectNameQuery->fetch_assoc();
+$subjectName = $subjectNameRow['subject_name'] ?? "Unknown Subject";
+
+// Fetch total students
+$totalStudentsQuery = $conn->query("
+    SELECT COUNT(DISTINCT roll_no) FROM marks 
     WHERE branch='$branch' AND year='$year' 
     AND section='$section' AND semester='$semester'
-    AND subject='$subject' AND exam='$exam'"
-);
+");
+$totalStudents = $totalStudentsQuery->fetch_row()[0] ?? 0;
+
+// Fetch marks
+$result = $conn->query("
+    SELECT marks FROM marks 
+    WHERE branch='$branch' AND year='$year' 
+    AND section='$section' AND semester='$semester'
+    AND subject='$subject' AND exam='$exam'
+");
 
 $absent = 0;
 $passed = 0;
 $ranges = array_fill(0, 6, 0); // 91-100, 81-90,..., <50
 
-while($row = $result->fetch_assoc()) {
-    $mark = $row['marks'];
-    
-    if($mark == '-1') {
-        $absent++;
-        continue;
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $mark = $row['marks'];
+
+        if ($mark == '-1') {
+            $absent++;
+            continue;
+        }
+
+        $numericMark = (int)$mark;
+
+        if ($numericMark >= 50) $passed++;
+
+        if ($numericMark >= 91) $ranges[0]++;
+        elseif ($numericMark >= 81) $ranges[1]++;
+        elseif ($numericMark >= 71) $ranges[2]++;
+        elseif ($numericMark >= 61) $ranges[3]++;
+        elseif ($numericMark >= 50) $ranges[4]++;
+        else $ranges[5]++;
     }
-    
-    $numericMark = (int)$mark;
-    
-    if($numericMark >= 50) $passed++;
-    
-    if($numericMark >= 91) $ranges[0]++;
-    elseif($numericMark >= 81) $ranges[1]++;
-    elseif($numericMark >= 71) $ranges[2]++;
-    elseif($numericMark >= 61) $ranges[3]++;
-    elseif($numericMark >= 50) $ranges[4]++;
-    else $ranges[5]++;
 }
 
 $appeared = $totalStudents - $absent;
-$passPercentTotal = $totalStudents > 0 ? round(($passed / $totalStudents) * 100, 4) : 0;
+$passPercentTotal = $totalStudents > 0 ? round(($passed / $totalStudents) * 100, 2) : 0;
 $passPercentAppeared = $appeared > 0 ? round(($passed / $appeared) * 100, 4) : 0;
 ?>
 
@@ -57,111 +77,105 @@ $passPercentAppeared = $appeared > 0 ? round(($passed / $appeared) * 100, 4) : 0
 <head>
     <title>Exam Result Analysis</title>
     <style>
-        .back-button {
-        background-color: #007BFF; /* Blue color */
-        color: white;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s;
-    }
-    .back-button:hover {
-        background-color: #0056b3; /* Darker blue on hover */
-    }
         @media print {
-            body { margin: 20px; font-family: Arial; }
+            body { margin: 14px; font-family: Times new roman; font-size: 14px }
             .no-print { display: none; }
-            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-            th, td { border: 1px solid #000; padding: 5px; text-align: left; }
-            .header { text-align: center; margin-bottom: 30px; }
-             h3 { text-align: center; }
-            .signatures { margin-top: 150px; display: flex; justify-content: space-between; }
+            table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+            th, td { border: 1px solid #000; padding: 8px; text-align:left; }
+            .header { text-align: center; display: flex; align-items: center; justify-content: center; }
+            h3{ margin-bottom: -10px;}
+            .header img { margin-top:10px; height: 90px;}
+            .exam-type { font-size: 18px; font-weight: bold; text-align: center; margin-top: 10px; }
+            .info-container { display: flex; justify-content: space-between; margin-top: 20px; }
+            .info-left, .info-right { width: 48%; }
+            .signatures { margin-top: 150px; display: flex; justify-content: space-between; margin-right:20px;  }
         }
         @media screen {
             body { padding: 20px; }
             table { width: 80%; }
-            .print-btn { margin: 20px; padding: 10px 20px; }
+            .print-btn { margin: 20px; padding: 10px 20px; background-color: #007bff; color: white; border: none; cursor: pointer; }
+            .print-btn:hover { background-color: #0056b3; }
         }
     </style>
 </head>
 <body>
-    <button onclick="goBack()" class="back-button">⬅ Back</button>
     <div class="header">
-        <h2>C. ABDUL HAKEEM COLLEGE OF ENGINEERING & TECHNOLOGY</h2>
-        <h3>MELVISHARAM - 632509</h3>
-        <h4>DEPARTMENT OF                                      </h4>
+        <img src="college_logo.jpg" alt="College Logo"> <!-- Add College Logo Here -->
+        <div>
+            <h3>C. ABDUL HAKEEM COLLEGE OF ENGINEERING & TECHNOLOGY</h3>
+            <h3>MELVISHARAM - 632509</h3>
+            <h3><?= htmlspecialchars($department) ?></h3> <!-- Dynamic Department Name -->
+        </div>
     </div>
-
+    <p style="text-align: center;">______________________________________________________________________________________________</p>
     <div class="report-data">
-        <h3>INTERNAL EXAM RESULT ANALYSIS</h3>
-        
+        <h3 id="examTitle" style="text-align: center;">INTERNAL EXAM RESULT ANALYSIS</h3>
+        <div class="exam-type"><?= htmlspecialchars($exam) ?></div> <!-- Exam Type Below Heading -->
+
         <form class="no-print" onsubmit="return finalizeReport(event)">
             <label>Subject Handler: <input type="text" id="handler" required></label>
             <label>Exam Date: <input type="date" id="examDate" required></label>
             <button type="submit" class="print-btn">Generate PDF</button>
         </form>
 
-        <div id="printContent" style="display: none;">
-            <p>Subject Handler: <span id="displayHandler"></span></p>
-            <p>Exam Date: <span id="displayExamDate"></span></p>
-            <p>Subject: <?= htmlspecialchars($subject) ?></p>
-            <p>Year/Sem/Sec: <?= "$year/$semester/$section" ?></p>
+        <div id="printContent">
+            <div class="info-container">
+                <div class="info-left">
+                    <p><strong>Subject Handler:</strong> <span id="displayHandler"></span></p>
+                    <p><strong>Subject:</strong> <?= htmlspecialchars($subject) ?> - <?= htmlspecialchars($subjectName) ?></p>
+                </div>
+                <div class="info-right">
+                    <p><strong>Year/Sem/Sec:</strong> <?= "$year/$semester/$section" ?></p>
+                    <p><strong>Exam Date:</strong> <span id="displayExamDate"></span></p>
+                </div>
+            </div>
 
             <table>
-                <tr><th>Total Students</th><td><?= $totalStudents ?></td></tr>
-                <tr><th>Appeared</th><td><?= $appeared ?></td></tr>
-                <tr><th>Absent</th><td><?= $absent ?></td></tr>
-                <tr><th>Passed</th><td><?= $passed ?></td></tr>
-                <tr><th>Failed</th><td><?= $appeared - $passed ?></td></tr>
-                <tr><th>Pass % (Total)</th><td><?= $passPercentTotal ?>%</td></tr>
-                <tr><th>Pass % (Appeared)</th><td><?= $passPercentAppeared ?>%</td></tr>
+                <tr><th>Total Number of Students</th><td><?= $totalStudents ?></td></tr>
+                <tr><th>Number of Students Appeared</th><td><?= $appeared ?></td></tr>
+                <tr><th>Number of Students Absent</th><td><?= $absent ?></td></tr>
+                <tr><th>Number of Students Passed</th><td><?= $passed ?></td></tr>
+                <tr><th>Number of Students Failed</th><td><?= $appeared - $passed ?></td></tr>
+                <tr><th>Pass % Based on Total Students</th><td><?= $passPercentTotal ?>%</td></tr>
+                <tr><th>Pass % Based on Appeared</th><td><?= $passPercentAppeared ?>%</td></tr>
             </table>
 
             <h4>Marks Distribution</h4>
             <table>
-                <tr><th>Range</th><th>Students</th></tr>
-                <?php
-                $rangeLabels = ['91-100', '81-90', '71-80', '61-70', '51-60', '<50'];
-                foreach($rangeLabels as $index => $label) {
-                    echo "<tr><td>$label</td><td>{$ranges[$index]}</td></tr>";
-                }
-                ?>
+                <tr>
+                    <th>Description</th>
+                    <th>91-100</th>
+                    <th>81-90</th>
+                    <th>71-80</th>
+                    <th>61-70</th>
+                    <th>51-60</th>
+                    <th>&lt;50</th>
+                </tr>
+                <tr>
+                    <th>No. of Students</th>
+                    <td><?= $ranges[0] ?></td>
+                    <td><?= $ranges[1] ?></td>
+                    <td><?= $ranges[2] ?></td>
+                    <td><?= $ranges[3] ?></td>
+                    <td><?= $ranges[4] ?></td>
+                    <td><?= $ranges[5] ?></td>
+                </tr>
             </table>
-
+            <p><strong>Minimum Pass Marks: 50 Marks</strong></p>
             <div class="signatures">
-                <div>Faculty In-Charge: __________________</div>
-                <div>HOD: __________________</div>
+                <div>Faculty In-Charge</div>
+                <div>HOD</div>
             </div>
         </div>
     </div>
 
     <script>
-    function goBack() {
-        window.history.back();
-    }
     function finalizeReport(e) {
         e.preventDefault();
-        
-        // Update display values
-        document.getElementById('displayHandler').textContent = 
-            document.getElementById('handler').value;
-        document.getElementById('displayExamDate').textContent = 
-            document.getElementById('examDate').value;
-        
-        // Show printable content
+        document.getElementById('displayHandler').textContent = document.getElementById('handler').value;
+        document.getElementById('displayExamDate').textContent = document.getElementById('examDate').value.split('-').reverse().join('/');
         document.getElementById('printContent').style.display = 'block';
-        
-        // Trigger print after short delay
-        setTimeout(() => {
-            window.print();
-            
-            // Hide printable content after print
-            setTimeout(() => {
-                document.getElementById('printContent').style.display = 'none';
-            }, 500);
-        }, 100);
+        setTimeout(() => { window.print(); document.getElementById('printContent').style.display = 'none'; }, 100);
     }
     </script>
 </body>
