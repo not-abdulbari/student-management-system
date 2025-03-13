@@ -215,7 +215,7 @@ body {
 </head>
 <body>
     <div class="container">
-        <h2>Select Report Parameters</h2>
+        <h2>Marksheet</h2>
         <form method="post" action="marksheet.php">
             <div class="dropdown-group">
                 <label>Branch:</label>
