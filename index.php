@@ -103,7 +103,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         }
 
         .banner {
-            margin-top: 1%;
+            margin-top: 0;
+            padding: 0;
             background-color: #003366;
             color: white;
             height: 60px;
