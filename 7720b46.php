@@ -82,55 +82,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>CAHCET - Student Management System</title>
     <style>
-        /* New modern color palette */
-        :root {
-            --primary-color: #4A90E2;
-            --secondary-color: #50E3C2;
-            --background-color: #F5F7FA;
-            --card-background: #FFFFFF;
-            --input-background: #E0E6ED;
-            --button-color: #4A90E2;
-            --button-hover-color: #357ABD;
-            --text-color: #333;
-            --headline-color: #4A90E2;
-            --border-color: #D1D9E6;
-            --error-color: #FF5A5F;
-        }
-
         body {
             margin: 0;
             padding: 0;
             font-family: 'Arial', sans-serif;
-            background: var(--background-color);
-            color: var(--text-color);
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
         }
 
         .header {
             width: 100%;
             height: 250px;
-            background: var(--primary-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
         .header img {
-            width: 80%;
+            width: 100%;
             height: auto;
             object-fit: cover;
-            border-radius: 10px;
         }
 
         .banner {
-            margin: 20px 0;
-            background-color: var(--secondary-color);
+            margin-top: 40px;
+            background-color: #003366;
             color: white;
             height: 60px;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
         }
 
         .banner marquee {
@@ -141,32 +119,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         .main-container {
             display: flex;
             justify-content: space-between;
-            margin: 0 auto;
+            margin-top: 20px;
             padding: 0 15px;
-            max-width: 1200px;
         }
 
         .container,
         .notice_board {
-            background-color: var(--card-background);
-            border-radius: 12px;
+            background-color: white;
+            border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             text-align: center;
-            padding: 30px;
+            padding: 20px;
             margin: 10px;
             width: 30%;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .container:hover,
-        .notice_board:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
         h2 {
-            font-size: 24px;
-            color: var(--headline-color);
+            font-size: 22px;
+            color: #6a11cb;
             margin-bottom: 20px;
         }
 
@@ -178,40 +148,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
         input {
             width: 80%;
-            padding: 12px;
+            padding: 10px;
             margin: 10px 0;
-            border: 2px solid var(--border-color);
+            border: 2px solid #ddd;
             border-radius: 6px;
-            background-color: var(--input-background);
+            background-color: #f4f4f4;
             font-size: 1em;
-            color: var(--text-color);
-            transition: border 0.3s, box-shadow 0.3s;
-        }
-
-        input:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 8px var(--primary-color);
+            color: #333;
         }
 
         button {
-            background-color: var(--button-color);
+            background-color: #2575fc;
             color: white;
             border: none;
             padding: 12px 20px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 1em;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-
-        button:hover {
-            background-color: var(--button-hover-color);
-            transform: translateY(-2px);
+            transition: background-color 0.3s;
         }
 
         .eye-icon {
             display: flex;
-            width: 80%;
+            width: 100%;
             position: relative;
             justify-content: center;
             align-items: center;
@@ -225,7 +184,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         }
 
         .notice_board p {
-            color: var(--error-color);
+            color: red;
+        }
+
+        button:hover {
+            background-color: #6a11cb;
+        }
+
+        input[type="password"]::-ms-reveal,
+        input[type="password"]::-ms-clear {
+            display: none;
         }
 
         @media (max-width: 768px) {
@@ -251,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
 <body>
     <div class="header">
-        <img src="assets/789asdfkl.webp" alt="Counsellor's Book Image">
+        <img src="assets/logo.jpg" alt="Counsellor's Book Image">
     </div>
     <div class="banner">
         <marquee behavior="scroll" direction="left">
@@ -271,7 +239,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
                 <button type="submit">Login</button>
             </form>
         </div>
-        <!-- Rest of your existing HTML remains unchanged -->
         <div class="container">
             <h2>Student Login</h2>
             <form action="student/parent111.php" method="POST">
