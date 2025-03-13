@@ -19,80 +19,181 @@ $exams = $conn->query("SELECT DISTINCT exam FROM marks WHERE exam IS NOT NULL OR
     <title>Select Report Parameters</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            padding: 20px;
-        }
+/* Base styling for body */
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .container {
-            max-width: 500px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        }
+/* Body Styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #f7f9fc, #e4f1fe); /* Light gradient background */
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
 
-        h2 {
-            text-align: center;
-            color: #333;
-        }
+/* Header Styling */
+h2 {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 28px;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
 
-        .dropdown-group {
-            margin-bottom: 15px;
-        }
+/* Form Styling */
+form {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    border-left: 5px solid #3498db;
+}
 
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
+form:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
 
-        select, input[type="text"], input[type="date"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+/* Form Elements Styling */
+label {
+    margin-top: 15px;
+    display: block;
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 16px;
+}
 
-        .btn-container {
-            display: flex;
-            justify-content: space-between;
-        }
+select, button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    transition: background-color 0.3s, border-color 0.3s;
+}
 
-        .btn {
-            padding: 10px 15px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+select:focus, button:focus {
+    outline: none;
+    border-color: #3498db;
+}
 
-        .btn-primary {
-            background-color: #007bff;
-            color: white;
-        }
+select:hover, button:hover {
+    background-color: #eaf2f8;
+}
 
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
+/* Button Styling */
+button {
+    background-color: #3498db;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
 
-        .btn-back {
-            background-color: #555;
-            color: white;
-            text-decoration: none;
-            text-align: center;
-            padding: 10px 15px;
-            display: inline-block;
-        }
+button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
 
-        .btn-back:hover {
-            background-color: #333;
-        }
+button:active {
+    transform: scale(1);
+}
+
+/* Responsive Form Layout */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+    min-width: 250px;
+}
+
+.form-row select {
+    width: 100%;
+}
+
+/* Specific Styling for Form-Group Labels */
+.form-row .form-group label {
+    font-weight: normal;
+    font-size: 16px;
+}
+
+/* Interactive Select Dropdowns */
+select {
+    background-color: #f9f9f9;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+select option:hover {
+    background-color: #f1f1f1;
+}
+
+/* Button Hover for Different States */
+button:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+/* Mobile Responsive Styling */
+@media (max-width: 768px) {
+    form {
+        padding: 20px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-row .form-group {
+        width: 100%;
+    }
+}
+
+/* Smooth Input Animations */
+form {
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Placeholder Text Color */
+input::placeholder,
+select::placeholder {
+    color: #bbb;
+}
+
+/* Gradient Background for the Page */
+body {
+    background: linear-gradient(135deg, #f7f9fc, #e4f1fe);
+}
+
+
     </style>
-
     <script>
         $(document).ready(function () {
             // Fetch subjects dynamically when branch & semester are selected
