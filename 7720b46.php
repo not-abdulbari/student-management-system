@@ -46,12 +46,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Login Page</title>
     <style>
-        /* Existing styles remain unchanged */
+        /* CSS HEX */
+        --federal-blue: #03045eff;
+        --marian-blue: #023e8aff;
+        --honolulu-blue: #0077b6ff;
+        --blue-green: #0096c7ff;
+        --pacific-cyan: #00b4d8ff;
+        --vivid-sky-blue: #48cae4ff;
+        --non-photo-blue: #90e0efff;
+        --non-photo-blue-2: #ade8f4ff;
+        --light-cyan: #caf0f8ff;
+
         body {
             margin: 0;
             padding: 0;
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            background: var(--non-photo-blue-2);
             color: #333;
         }
 
@@ -68,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
         .banner {
             margin-top: 40px;
-            background-color: #003366;
+            background-color: var(--federal-blue);
             color: white;
             height: 60px;
             display: flex;
@@ -101,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
         h2 {
             font-size: 22px;
-            color: #6a11cb;
+            color: var(--honolulu-blue);
             margin-bottom: 20px;
         }
 
@@ -115,15 +125,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
             width: 80%;
             padding: 10px;
             margin: 10px 0;
-            border: 2px solid #ddd;
+            border: 2px solid var(--pacific-cyan);
             border-radius: 6px;
-            background-color: #f4f4f4;
+            background-color: var(--non-photo-blue);
             font-size: 1em;
             color: #333;
         }
 
         button {
-            background-color: #2575fc;
+            background-color: var(--marian-blue);
             color: white;
             border: none;
             padding: 12px 20px;
@@ -152,14 +162,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         }
 
         button:hover {
-            background-color: #6a11cb;
+            background-color: var(--blue-green);
         }
 
         input[type="password"]::-ms-reveal,
         input[type="password"]::-ms-clear {
             display: none;
         }
-
 
         @media (max-width: 768px) {
             .main-container {
