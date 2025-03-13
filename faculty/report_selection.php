@@ -41,10 +41,10 @@ h2 {
     text-align: center;
     color: #2c3e50;
     font-size: 28px;
-    margin-bottom: 40px;
-    text-transform: uppercase;
+    margin: 40px 0;
     font-weight: bold;
 }
+
 
 /* Form Styling */
 form {
