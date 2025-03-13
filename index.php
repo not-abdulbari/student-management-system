@@ -99,8 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         .header img {
             width: 100%;
             height: auto;
-            object-fit: cover;
-        }
+            }
 
         .banner {
             margin-top: 0;
