@@ -71,7 +71,7 @@ label {
     font-size: 16px;
 }
 
-select, button {
+input[type="text"], input[type="date"], select, button {
     width: 100%;
     padding: 12px;
     margin-top: 10px;
@@ -82,12 +82,12 @@ select, button {
     transition: background-color 0.3s, border-color 0.3s;
 }
 
-select:focus, button:focus {
+input[type="text"]:focus, input[type="date"]:focus, select:focus, button:focus {
     outline: none;
     border-color: #3498db;
 }
 
-select:hover, button:hover {
+input[type="text"]:hover, input[type="date"]:hover, select:hover, button:hover {
     background-color: #eaf2f8;
 }
 
@@ -191,9 +191,7 @@ select::placeholder {
 body {
     background: linear-gradient(135deg, #f7f9fc, #e4f1fe);
 }
-
-
-    </style>
+</style>
     <script>
         $(document).ready(function () {
             // Fetch subjects dynamically when branch & semester are selected
