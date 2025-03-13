@@ -46,29 +46,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Login Page</title>
     <style>
-        /* CSS HEX */
+        /* New modern color palette */
         :root {
-            --alice-blue: #edf2fbff;
-            --lavender-web: #e2eafcff;
-            --lavender-web-2: #d7e3fcff;
-            --periwinkle: #ccdbfdff;
-            --periwinkle-2: #c1d3feff;
-            --periwinkle-3: #b6ccfeff;
-            --jordy-blue: #abc4ffff;
+            --primary-color: #4A90E2;
+            --secondary-color: #50E3C2;
+            --background-color: #F5F7FA;
+            --card-background: #FFFFFF;
+            --input-background: #E0E6ED;
+            --button-color: #4A90E2;
+            --button-hover-color: #357ABD;
+            --text-color: #333;
+            --headline-color: #4A90E2;
+            --border-color: #D1D9E6;
+            --error-color: #FF5A5F;
         }
 
         body {
             margin: 0;
             padding: 0;
             font-family: 'Arial', sans-serif;
-            background: var(--alice-blue);
-            color: #333;
+            background: var(--background-color);
+            color: var(--text-color);
         }
 
         .header {
             width: 100%;
             height: 250px;
-            background: var(--periwinkle-2);
+            background: var(--primary-color);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -83,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
         .banner {
             margin: 20px 0;
-            background-color: var(--lavender-web);
+            background-color: var(--secondary-color);
             color: white;
             height: 60px;
             display: flex;
@@ -96,7 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         .banner marquee {
             font-size: 16px;
             font-weight: bold;
-            color: #333;
         }
 
         .main-container {
@@ -109,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
         .container,
         .notice_board {
-            background-color: var(--lavender-web-2);
+            background-color: var(--card-background);
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             text-align: center;
@@ -127,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
         h2 {
             font-size: 24px;
-            color: var(--jordy-blue);
+            color: var(--headline-color);
             margin-bottom: 20px;
         }
 
@@ -141,21 +144,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
             width: 80%;
             padding: 12px;
             margin: 10px 0;
-            border: 2px solid var(--periwinkle-3);
+            border: 2px solid var(--border-color);
             border-radius: 6px;
-            background-color: var(--lavender-web-2);
+            background-color: var(--input-background);
             font-size: 1em;
-            color: #333;
+            color: var(--text-color);
             transition: border 0.3s, box-shadow 0.3s;
         }
 
         input:focus {
-            border-color: var(--jordy-blue);
-            box-shadow: 0 0 8px var(--jordy-blue);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 8px var(--primary-color);
         }
 
         button {
-            background-color: var(--periwinkle);
+            background-color: var(--button-color);
             color: white;
             border: none;
             padding: 12px 20px;
@@ -166,7 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         }
 
         button:hover {
-            background-color: var(--jordy-blue);
+            background-color: var(--button-hover-color);
             transform: translateY(-2px);
         }
 
@@ -186,7 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         }
 
         .notice_board p {
-            color: var(--periwinkle-2);
+            color: var(--error-color);
         }
 
         @media (max-width: 768px) {
