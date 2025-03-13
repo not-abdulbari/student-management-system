@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         }
 
         .banner {
-            margin-top: 40px;
+            margin-top: 0px;
             background-color: #003366;
             color: white;
             height: 60px;
@@ -220,7 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
 <body>
     <div class="header">
-        <img src="assets/logo.jpg" alt="Counsellor's Book Image">
+        <img src="assets/789asdfkl.webp" alt="Counsellor's Book Image">
     </div>
     <div class="banner">
         <marquee behavior="scroll" direction="left">
