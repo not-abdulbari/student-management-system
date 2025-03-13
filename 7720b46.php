@@ -47,15 +47,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
     <title>Login Page</title>
     <style>
         /* CSS HEX */
-        --federal-blue: #03045eff;
-        --marian-blue: #023e8aff;
-        --honolulu-blue: #0077b6ff;
-        --blue-green: #0096c7ff;
-        --pacific-cyan: #00b4d8ff;
-        --vivid-sky-blue: #48cae4ff;
-        --non-photo-blue: #90e0efff;
-        --non-photo-blue-2: #ade8f4ff;
-        --light-cyan: #caf0f8ff;
+        :root {
+            --federal-blue: #03045eff;
+            --marian-blue: #023e8aff;
+            --honolulu-blue: #0077b6ff;
+            --blue-green: #0096c7ff;
+            --pacific-cyan: #00b4d8ff;
+            --vivid-sky-blue: #48cae4ff;
+            --non-photo-blue: #90e0efff;
+            --non-photo-blue-2: #ade8f4ff;
+            --light-cyan: #caf0f8ff;
+        }
 
         body {
             margin: 0;
@@ -68,22 +70,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         .header {
             width: 100%;
             height: 250px;
+            background: var(--pacific-cyan);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .header img {
-            width: 100%;
+            width: 80%;
             height: auto;
             object-fit: cover;
+            border-radius: 10px;
         }
 
         .banner {
-            margin-top: 40px;
+            margin: 20px 0;
             background-color: var(--federal-blue);
             color: white;
             height: 60px;
             display: flex;
             justify-content: center;
             align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
 
         .banner marquee {
@@ -94,23 +103,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         .main-container {
             display: flex;
             justify-content: space-between;
-            margin-top: 20px;
+            margin: 0 auto;
             padding: 0 15px;
+            max-width: 1200px;
         }
 
         .container,
         .notice_board {
             background-color: white;
-            border-radius: 8px;
+            border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             text-align: center;
-            padding: 20px;
+            padding: 30px;
             margin: 10px;
             width: 30%;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .container:hover,
+        .notice_board:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
         h2 {
-            font-size: 22px;
+            font-size: 24px;
             color: var(--honolulu-blue);
             margin-bottom: 20px;
         }
@@ -123,13 +140,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
         input {
             width: 80%;
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
             border: 2px solid var(--pacific-cyan);
             border-radius: 6px;
             background-color: var(--non-photo-blue);
             font-size: 1em;
             color: #333;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--honolulu-blue);
+            box-shadow: 0 0 8px var(--honolulu-blue);
         }
 
         button {
@@ -140,7 +163,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
             border-radius: 6px;
             cursor: pointer;
             font-size: 1em;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--blue-green);
+            transform: translateY(-2px);
         }
 
         .eye-icon {
@@ -155,19 +183,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
             position: absolute;
             right: 75px;
             color: grey;
+            cursor: pointer;
         }
 
         .notice_board p {
-            color: red;
-        }
-
-        button:hover {
-            background-color: var(--blue-green);
-        }
-
-        input[type="password"]::-ms-reveal,
-        input[type="password"]::-ms-clear {
-            display: none;
+            color: var(--federal-blue);
         }
 
         @media (max-width: 768px) {
