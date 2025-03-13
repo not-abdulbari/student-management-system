@@ -217,7 +217,7 @@ body {
 <body>
 
     <div class="container">
-        <h2>Select Report Parameters</h2>
+        <h2>Internal Exam Result Analysis</h2>
         <form method="post" action="generate_report.php">
             <div class="dropdown-group">
                 <label>Branch:</label>
