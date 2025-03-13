@@ -82,10 +82,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>CAHCET - Student Management System</title>
     <style>
-        /* Existing styles remain unchanged */
-        body {
+        /* Reset margin and padding for all elements */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             color: #333;
@@ -103,8 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         }
 
         .banner {
-            margin-top: 0;
-            padding: 0;
             background-color: #003366;
             color: white;
             height: 60px;
@@ -196,7 +198,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         input[type="password"]::-ms-clear {
             display: none;
         }
-
 
         @media (max-width: 768px) {
             .main-container {
