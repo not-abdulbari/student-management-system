@@ -48,29 +48,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
     <style>
         /* CSS HEX */
         :root {
-            --federal-blue: #03045eff;
-            --marian-blue: #023e8aff;
-            --honolulu-blue: #0077b6ff;
-            --blue-green: #0096c7ff;
-            --pacific-cyan: #00b4d8ff;
-            --vivid-sky-blue: #48cae4ff;
-            --non-photo-blue: #90e0efff;
-            --non-photo-blue-2: #ade8f4ff;
-            --light-cyan: #caf0f8ff;
+            --rich-black: #00111cff;
+            --rich-black-2: #001523ff;
+            --rich-black-3: #001a2cff;
+            --prussian-blue: #002137ff;
+            --prussian-blue-2: #00253eff;
+            --prussian-blue-3: #002945ff;
+            --prussian-blue-4: #002e4eff;
+            --prussian-blue-5: #003356ff;
+            --indigo-dye: #003a61ff;
+            --indigo-dye-2: #00406cff;
         }
 
         body {
             margin: 0;
             padding: 0;
             font-family: 'Arial', sans-serif;
-            background: var(--non-photo-blue-2);
-            color: #333;
+            background: var(--rich-black);
+            color: #ddd;
         }
 
         .header {
             width: 100%;
             height: 250px;
-            background: var(--pacific-cyan);
+            background: var(--prussian-blue-4);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -85,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
         .banner {
             margin: 20px 0;
-            background-color: var(--federal-blue);
+            background-color: var(--prussian-blue);
             color: white;
             height: 60px;
             display: flex;
@@ -110,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
         .container,
         .notice_board {
-            background-color: white;
+            background-color: var(--rich-black-3);
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             text-align: center;
@@ -128,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
         h2 {
             font-size: 24px;
-            color: var(--honolulu-blue);
+            color: var(--indigo-dye);
             margin-bottom: 20px;
         }
 
@@ -142,21 +143,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
             width: 80%;
             padding: 12px;
             margin: 10px 0;
-            border: 2px solid var(--pacific-cyan);
+            border: 2px solid var(--prussian-blue-5);
             border-radius: 6px;
-            background-color: var(--non-photo-blue);
+            background-color: var(--rich-black-2);
             font-size: 1em;
-            color: #333;
+            color: #ddd;
             transition: border 0.3s, box-shadow 0.3s;
         }
 
         input:focus {
-            border-color: var(--honolulu-blue);
-            box-shadow: 0 0 8px var(--honolulu-blue);
+            border-color: var(--indigo-dye-2);
+            box-shadow: 0 0 8px var(--indigo-dye-2);
         }
 
         button {
-            background-color: var(--marian-blue);
+            background-color: var(--prussian-blue-3);
             color: white;
             border: none;
             padding: 12px 20px;
@@ -167,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         }
 
         button:hover {
-            background-color: var(--blue-green);
+            background-color: var(--indigo-dye);
             transform: translateY(-2px);
         }
 
@@ -187,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         }
 
         .notice_board p {
-            color: var(--federal-blue);
+            color: var(--prussian-blue-2);
         }
 
         @media (max-width: 768px) {
@@ -231,7 +232,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
                 <button type="submit">Login</button>
             </form>
         </div>
-        <!-- Rest of your existing HTML remains unchanged -->
         <div class="container">
             <h2>Student Login</h2>
             <form action="student/parent111.php" method="POST">
