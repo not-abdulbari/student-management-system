@@ -82,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>CAHCET - Student Management System</title>
     <style>
+        /* Responsive Design */
         body {
             margin: 0;
             padding: 0;
@@ -132,6 +133,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
             padding: 20px;
             margin: 10px;
             width: 30%;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .container:hover,
+        .notice_board:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
         h2 {
@@ -146,7 +154,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
             align-items: center;
         }
 
-        input {
+        input,
+        .h-captcha {
             width: 80%;
             padding: 10px;
             margin: 10px 0;
@@ -170,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
         .eye-icon {
             display: flex;
-            width: 100%;
+            width: 80%;
             position: relative;
             justify-content: center;
             align-items: center;
@@ -178,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
         .eye-icon i {
             position: absolute;
-            right: 15%;
+            right: 10%;
             color: grey;
             cursor: pointer;
         }
@@ -196,20 +205,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
             display: none;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .main-container {
                 flex-direction: column;
                 align-items: center;
             }
 
+            .container,
+            .notice_board {
+                width: 80%;
+            }
+        }
+
+        @media (max-width: 768px) {
             .header {
-                width: 100%;
                 height: 70px;
             }
 
             .container,
             .notice_board {
-                width: 80%;
+                width: 90%;
             }
         }
     </style>
@@ -219,7 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
 <body>
     <div class="header">
-        <img src="assets/789asdfkl.webp" alt="Counsellor's Book Image">
+        <img src="assets/logo.jpg" alt="Counsellor's Book Image">
     </div>
     <div class="banner">
         <marquee behavior="scroll" direction="left">
