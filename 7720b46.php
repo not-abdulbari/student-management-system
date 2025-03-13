@@ -3,21 +3,18 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$show_alert = false; // Flag to control alert display
+$show_alert = false; 
 
-// Handle Institution Login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
     include 'faculty/db_connect.php';
 
-    // Verify if hCaptcha is filled
     if (empty($_POST['h-captcha-response'])) {
-        $show_alert = true; // Set flag for missing hCaptcha
+        $show_alert = true;
         echo "<script>alert('Please complete the hCaptcha verification.');</script>";
     } else {
-        // Verify hCaptcha
         $hcaptcha_response = $_POST['h-captcha-response'];
-        $hcaptcha_secret = getenv('HCAPTCHA_SECRET_KEY'); // Fetch from GitHub Secrets
-        $hcaptcha_site_key = getenv('HCAPTCHA_SITE_KEY'); // Fetch from GitHub Secrets
+        $hcaptcha_secret = getenv('HCAPTCHA_SECRET_KEY');
+        $hcaptcha_site_key = getenv('HCAPTCHA_SITE_KEY');
 
         $verify_url = "https://hcaptcha.com/siteverify";
         $data = [
@@ -38,10 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         $response_data = json_decode($verify_response);
 
         if (!$response_data->success) {
-            $show_alert = true; // Set flag for invalid hCaptcha
+            $show_alert = true;
             echo "<script>alert('hCaptcha verification failed. Please try again.');</script>";
         } else {
-            // Proceed with login logic
             $input_username = $_POST['username'];
             $input_password = $_POST['password'];
             $input_hashed_password = hash('sha256', $input_password);
@@ -60,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
                 header('Location: faculty/home.php');
                 exit();
             } else {
-                $show_alert = true; // Set flag for invalid credentials
+                $show_alert = true;
                 echo "<script>alert('Invalid username or password');</script>";
             }
 
@@ -70,10 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -88,11 +82,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
 
         .header {
             width: 100%;
-            height: 250px;
+            height: auto;
         }
 
         .header img {
@@ -102,10 +101,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         }
 
         .banner {
-            margin-top: 40px;
+            margin-top: 20px;
             background-color: #003366;
             color: white;
-            height: 60px;
+            height: 40px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -118,20 +117,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
         .main-container {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            align-items: center;
             margin-top: 20px;
             padding: 0 15px;
+            width: 100%;
         }
 
-        .container,
-        .notice_board {
+        .container {
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             text-align: center;
             padding: 20px;
             margin: 10px;
-            width: 30%;
+            width: 90%;
+            max-width: 600px;
         }
 
         h2 {
@@ -147,7 +148,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         }
 
         input {
-            width: 80%;
+            width: 100%;
+            max-width: 400px;
             padding: 10px;
             margin: 10px 0;
             border: 2px solid #ddd;
@@ -209,14 +211,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
             .container,
             .notice_board {
-                width: 80%;
+                width: 100%;
+                max-width: 600px;
             }
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://hcaptcha.com/1/api.js" async defer></script>
 </head>
-
 <body>
     <div class="header">
         <img src="assets/789asdfkl.webp" alt="Counsellor's Book Image">
@@ -252,48 +254,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
             <h2>Notice Board</h2>
             <marquee behavior="scroll" direction="left">
                 <p>Important: Faculty and Student Login Details are available on the portal.</p>
-                <p>Note: The system will be down for maintenance from 2:00 AM to 4:00 AM tomorrow.</p>
-                <p>Reminder: Mark your attendance before the deadline to avoid penalties.</p>
-            </marquee>
-        </div>
-    </div>
-
-    <script>
-        document.querySelector('.icon').addEventListener('click', function () {
-            let passwordInput = document.getElementById('password');
-            let icon = document.querySelector('.icon');
-
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-                icon.classList.remove("fa-eye-slash");
-                icon.classList.add("fa-eye");
-            } else {
-                passwordInput.type = "password";
-                icon.classList.remove("fa-eye");
-                icon.classList.add("fa-eye-slash");
-            }
-        });
-
-        // AJAX form submission
-        $(document).ready(function () {
-            $('#loginForm').on('submit', function (e) {
-                e.preventDefault(); // Prevent the form from submitting
-
-                $.ajax({
-                    url: '', // The same page
-                    type: 'POST',
-                    data: $(this).serialize(),
-                    success: function (response) {
-                        if (response.includes('Invalid username or password')) {
-                            alert('Invalid username or password');
-                        } else {
-                            window.location.href = 'faculty/home.php';
-                        }
-                    }
-                });
-            });
-        });
-    </script>
-</body>
-
-</html>
+                <p>Note ▋
