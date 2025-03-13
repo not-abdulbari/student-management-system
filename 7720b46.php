@@ -9,29 +9,65 @@ $show_alert = false; // Flag to control alert display
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
     include 'faculty/db_connect.php';
 
-    $input_username = $_POST['username'];
-    $input_password = $_POST['password'];
-    $input_hashed_password = hash('sha256', $input_password);
-
-    $sql = "SELECT hashed_password FROM users WHERE username = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('s', $input_username);
-    $stmt->execute();
-    $stmt->bind_result($stored_hashed_password);
-    $stmt->fetch();
-
-    if ($input_hashed_password === $stored_hashed_password) {
-        $_SESSION['logged_in'] = true;
-        $stmt->close();
-        $conn->close();
-        header('Location: faculty/home.php');
-        exit();
+    // Verify if hCaptcha is filled
+    if (empty($_POST['h-captcha-response'])) {
+        $show_alert = true; // Set flag for missing hCaptcha
+        echo "<script>alert('Please complete the hCaptcha verification.');</script>";
     } else {
-        $show_alert = true; // Set flag for invalid credentials
-    }
+        // Verify hCaptcha
+        $hcaptcha_response = $_POST['h-captcha-response'];
+        $hcaptcha_secret = getenv('HCAPTCHA_SECRET_KEY'); // Fetch from GitHub Secrets
+        $hcaptcha_site_key = getenv('HCAPTCHA_SITE_KEY'); // Fetch from GitHub Secrets
 
-    $stmt->close();
-    $conn->close();
+        $verify_url = "https://hcaptcha.com/siteverify";
+        $data = [
+            'secret' => $hcaptcha_secret,
+            'response' => $hcaptcha_response
+        ];
+
+        $options = [
+            'http' => [
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method' => 'POST',
+                'content' => http_build_query($data)
+            ]
+        ];
+
+        $context = stream_context_create($options);
+        $verify_response = file_get_contents($verify_url, false, $context);
+        $response_data = json_decode($verify_response);
+
+        if (!$response_data->success) {
+            $show_alert = true; // Set flag for invalid hCaptcha
+            echo "<script>alert('hCaptcha verification failed. Please try again.');</script>";
+        } else {
+            // Proceed with login logic
+            $input_username = $_POST['username'];
+            $input_password = $_POST['password'];
+            $input_hashed_password = hash('sha256', $input_password);
+
+            $sql = "SELECT hashed_password FROM users WHERE username = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('s', $input_username);
+            $stmt->execute();
+            $stmt->bind_result($stored_hashed_password);
+            $stmt->fetch();
+
+            if ($input_hashed_password === $stored_hashed_password) {
+                $_SESSION['logged_in'] = true;
+                $stmt->close();
+                $conn->close();
+                header('Location: faculty/home.php');
+                exit();
+            } else {
+                $show_alert = true; // Set flag for invalid credentials
+                echo "<script>alert('Invalid username or password');</script>";
+            }
+
+            $stmt->close();
+            $conn->close();
+        }
+    }
 }
 ?>
 
@@ -44,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Login Page</title>
+    <title>CAHCET - Student Management System</title>
     <style>
         /* New modern color palette */
         :root {
@@ -175,7 +211,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
         .eye-icon {
             display: flex;
-            width: 100%;
+            width: 80%;
             position: relative;
             justify-content: center;
             align-items: center;
@@ -210,6 +246,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://hcaptcha.com/1/api.js" async defer></script>
 </head>
 
 <body>
@@ -230,14 +267,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
                     <input type="password" name="password" id="password" placeholder="Password" required>
                     <i class="fas fa-eye-slash icon"></i>
                 </div>
+                <div class="h-captcha" data-sitekey="<?php echo getenv('HCAPTCHA_SITE_KEY'); ?>"></div>
                 <button type="submit">Login</button>
             </form>
         </div>
+        <!-- Rest of your existing HTML remains unchanged -->
         <div class="container">
             <h2>Student Login</h2>
             <form action="student/parent111.php" method="POST">
                 <input type="text" name="roll_no" placeholder="Roll Number" required>
                 <input type="text" name="dob" placeholder="Date of Birth (DD/MM/YYYY)">
+                <div class="h-captcha" data-sitekey="<?php echo getenv('HCAPTCHA_SITE_KEY'); ?>" required></div>
                 <button type="submit">Login</button>
             </form>
         </div>
