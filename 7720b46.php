@@ -175,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
         .eye-icon {
             display: flex;
-            width: 80%;
+            width: 100%;
             position: relative;
             justify-content: center;
             align-items: center;
