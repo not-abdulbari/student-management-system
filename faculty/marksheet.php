@@ -105,6 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             .info-container { display: flex; justify-content: space-between; margin-top: 20px; }
             .info-left, .info-right { width: 48%; }
             .signatures { margin-top: 150px; display: flex; justify-content: space-between; margin-right: 20px; }
+        }
     </style>
     <script>
         function printMarksList() {
