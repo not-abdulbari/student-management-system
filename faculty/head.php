@@ -204,7 +204,7 @@ if (!function_exists('getCurrentDateTime')) {
                 </div>
             </li>
             <li><a href="parent.php">Student Login</a></li>
-            <li><a href="../index.php" class="logout-link">Logout</a></li>
+            <li><a href="logout.php" class="logout-link">Logout</a></li>
         </ul>
     </nav>
 
