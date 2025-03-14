@@ -11,8 +11,8 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 }
 
 // Database connection
-include 'head.php'
-include 'db_connect.php';
+include 'head.php'; // Added semicolon
+include 'db_connect.php'; // Added semicolon
 
 // Reusable function to fetch distinct values for dropdowns
 function fetchDistinctValues($conn, $column, $table) {
