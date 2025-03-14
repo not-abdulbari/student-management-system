@@ -1,9 +1,15 @@
 <?php
-include 'db_connect.php';
-// Enable error reporting for debugging
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+$show_alert = false; // Flag to control alert display
+session_start();
+
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header('Location: ../index.php');
+    exit;
+}
+include 'db_connect.php';
 
 // Check if form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
