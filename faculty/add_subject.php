@@ -1,13 +1,12 @@
 <?php
-session_start();
-// Prevent caching
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Cache-Control: post-check=0, pre-check=0", false);
-header("Pragma: no-cache");
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-// Check if the user is logged in
+$show_alert = false; // Flag to control alert display
+session_start();
+
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header('Location: subjects_login.php');
+    header('Location: ../index.php');
     exit;
 }
 
