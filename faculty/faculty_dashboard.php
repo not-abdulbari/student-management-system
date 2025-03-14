@@ -1,15 +1,13 @@
 <?php
 session_start();
 
-include 'head.php';
-
-// Check if the user is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header('Location: faculty_login.php');
+    header('Location: ../index.php');
     exit;
 }
 
 // Database connection
+include 'head.php'
 include 'db_connect.php';
 
 // Reusable function to fetch distinct values for dropdowns
