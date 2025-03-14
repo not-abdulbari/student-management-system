@@ -102,10 +102,17 @@ $passPercentAppeared = $appeared > 0 ? round(($passed / $appeared) * 100, 4) : 0
             .signatures { margin-top: 150px; display: flex; justify-content: space-between; margin-right:20px;  }
         }
         @media screen {
-            body { padding: 20px; }
-            table { width: 80%; }
-            .print-btn { margin: 20px; padding: 10px 20px; background-color: #007bff; color: white; border: none; cursor: pointer; }
-            .print-btn:hover { background-color: #0056b3; }
+           body { margin: 14px; font-family: Times new roman; font-size: 14px }
+            .no-print { display: none; }
+            table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+            th, td { border: 1px solid #000; padding: 8px; text-align:left; }
+            .header { text-align: center; display: flex; align-items: center; justify-content: center; }
+            h3{ margin-bottom: -10px;}
+            .header img { margin-top:10px; height: 90px;}
+            .exam-type { font-size: 18px; font-weight: bold; text-align: center; margin-top: 10px; }
+            .info-container { display: flex; justify-content: space-between; margin-top: 20px; }
+            .info-left, .info-right { width: 48%; }
+            .signatures { margin-top: 150px; display: flex; justify-content: space-between; margin-right:20px;  }
         }
     </style>
 </head>
