@@ -24,7 +24,7 @@ $sections_result = $conn->query($sections_sql);
 $semesters = range(1, 8);
 
 // Exam types (assuming predefined types)
-$exam_types = ['CAT1', 'CAT2', 'Model', 'Semester'];
+$exam_types = ['CAT1', 'CAT2', 'Model'];
 
 $conn->close();
 ?>
