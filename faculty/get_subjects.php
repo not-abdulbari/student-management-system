@@ -1,5 +1,5 @@
 <?php
-    include 'db_connect.php';
+include 'db_connect.php';
 
 // Get the semester and branch from the GET request
 $semester = isset($_GET['semester']) ? trim($_GET['semester']) : '';
