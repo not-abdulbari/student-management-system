@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ];
 
     $department = isset($departmentNames[$branch]) ? $departmentNames[$branch] : "Department of $branch";
-}
+
 
     // Fetch student marks
     $marks_sql = "SELECT m.subject AS subject_code, sub.subject_name, m.marks 
