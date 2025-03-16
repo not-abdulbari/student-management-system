@@ -1,14 +1,16 @@
 <?php
 session_start();
 
+include 'head.php';
+
+// Check if the user is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header('Location: ../index.php');
+    header('Location: faculty_login.php');
     exit;
 }
 
 // Database connection
-include 'head.php'; // Added semicolon
-include 'db_connect.php'; // Added semicolon
+include 'db_connect.php';
 
 // Reusable function to fetch distinct values for dropdowns
 function fetchDistinctValues($conn, $column, $table) {
@@ -61,7 +63,8 @@ h2 {
     text-align: center;
     color: #2c3e50;
     font-size: 28px;
-    margin: 40px 0;
+    margin-bottom: 40px;
+    text-transform: uppercase;
     font-weight: bold;
 }
 
@@ -215,32 +218,32 @@ body {
     </style>
     <script>
         function fetchSubjects() {
-            const branch = document.getElementById("branch").value;
-            const semester = document.getElementById("semester").value;
-            const subjectSelect = document.getElementById("subject");
+    const branch = document.getElementById("branch").value;
+    const semester = document.getElementById("semester").value;
+    const subjectSelect = document.getElementById("subject");
 
-            // Reset subject dropdown
-            subjectSelect.innerHTML = '<option value="">Select Subject</option>';
+    // Reset subject dropdown
+    subjectSelect.innerHTML = '<option value="">Select Subject</option>';
 
-            if (branch && semester) {
-                fetch(`get_subjects.php?branch=${encodeURIComponent(branch)}&semester=${encodeURIComponent(semester)}`)
-                    .then(response => response.json())
-                    .then(subjects => {
-                        if (subjects.error) {
-                            console.error(subjects.error);
-                            alert("Error fetching subjects: " + subjects.error);
-                        } else {
-                            subjects.forEach(subject => {
-                                const option = document.createElement("option");
-                                option.value = subject.subject_code;
-                                option.textContent = subject.subject_name;
-                                subjectSelect.appendChild(option);
-                            });
-                        }
-                    })
-                    .catch(error => console.error("Error fetching subjects:", error));
-            }
-        }
+    if (branch && semester) {
+        fetch(`get_subjects.php?branch=${encodeURIComponent(branch)}&semester=${encodeURIComponent(semester)}`)
+            .then(response => response.json())
+            .then(subjects => {
+                if (subjects.error) {
+                    console.error(subjects.error);
+                    alert("Error fetching subjects: " + subjects.error);
+                } else {
+                    subjects.forEach(subject => {
+                        const option = document.createElement("option");
+                        option.value = subject.subject_code;
+                        option.textContent = `${subject.subject_code} - ${subject.subject_name}`;
+                        subjectSelect.appendChild(option);
+                    });
+                }
+            })
+            .catch(error => console.error("Error fetching subjects:", error));
+    }
+}
     </script>
 </head>
 <body>
@@ -291,12 +294,13 @@ body {
         </div>
 
         <div class="form-row">
-            <div class="form-group">
-                <label for="subject">Select Subject:</label>
-                <select name="subject" id="subject" required>
-                    <option value="">Select Subject</option>
-                </select>
-            </div>
+        <div class="form-group">
+            <label for="subject">Select Subject:</label>
+            <select name="subject" id="subject" required>
+                <option value="">Select Subject</option>
+            </select>
+        </div>
+    </div>
 
             <div class="form-group">
                 <label for="exam">Select Exam Type:</label>
