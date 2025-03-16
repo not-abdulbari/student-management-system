@@ -152,6 +152,15 @@ while ($mark = $marks_result->fetch_assoc()) {
         $index++;
     }
 }
+    // Add a line break before the legends
+$pdf->Ln(10);
+
+// Add legends
+$pdf->SetFont('Times', 'B', 12);
+$pdf->Cell(20, 10, 'DEFINITIONS:', 0, 1, 'L');
+$pdf->SetFont('Times', '', 12);
+$pdf->Cell(25, 10, 'AB - Absent', 0, 1, 'L');
+$pdf->Cell(25, 10, '(U) - Fail', 0, 1, 'L');
 
     // Output the PDF to the browser for download
     $filename = "{$student['roll_no']}-{$exam}-{$semester}.pdf";
