@@ -113,7 +113,7 @@ $pdf->Cell(21, 10, $branch . ' & ' . $section, 0, 1, 'R'); // Value aligned to t
     $pdf->Ln(10);
 
    // Calculate table width
-$tableWidth = 15 + 30 + 100 + 25; // Sum of column widths
+$tableWidth = 15 + 30 + 130 + 25; // Sum of column widths
 
 // Calculate starting X-coordinate to center the table
 $pageWidth = 210; // A4 page width in mm
@@ -126,7 +126,7 @@ $pdf->SetX($startX);
 $pdf->SetFont('Times', 'B', 12); // Times New Roman, bold, size 12
 $pdf->Cell(15, 10, 'S.No.', 1, 0, 'C');
 $pdf->Cell(30, 10, 'Subject Code', 1, 0, 'C');
-$pdf->Cell(100, 10, 'Subject Name', 1, 0, 'C');
+$pdf->Cell(130, 10, 'Subject Name', 1, 0, 'C');
 $pdf->Cell(25, 10, 'Marks', 1, 1, 'C');
 
 // Fetch and add marks data
@@ -144,7 +144,7 @@ while ($mark = $marks_result->fetch_assoc()) {
         
         $pdf->Cell(15, 10, $index, 1, 0, 'C');
         $pdf->Cell(30, 10, $mark['subject_code'], 1, 0, 'C');
-        $pdf->Cell(100, 10, $mark['subject_name'], 1, 0, 'L');
+        $pdf->Cell(130, 10, $mark['subject_name'], 1, 0, 'L');
         $pdf->Cell(25, 10, $markDisplay, 1, 1, 'C');
 
         // Add the subject code to the printed list
