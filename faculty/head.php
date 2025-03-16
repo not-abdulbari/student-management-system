@@ -201,6 +201,7 @@ if (!function_exists('getCurrentDateTime')) {
                 <div class="dropdown-content">
                     <a href="report_selection.php">Result Analysis</a>
                     <a href="generate_marksheet.php">Mark List</a>
+                    <a href="progress_prelims.php">Progress Report</a>
                 </div>
             </li>
             <li><a href="parent.php">Student Login</a></li>
