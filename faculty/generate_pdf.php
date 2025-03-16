@@ -1,6 +1,6 @@
 <?php
 // Include the FPDF library
-require('fpdf186/fpdf.php'); // Update the path to where you extracted FPDF
+require('../fpdf186/fpdf.php'); // Update the path to where you extracted FPDF
 
 // Include your database connection file
 include 'db_connect.php';
