@@ -94,9 +94,9 @@ $pdf->SetFont('Times', '', 12); // Regular for value
 $pdf->Cell(70, 10, $student['name'], 0, 0, 'L'); // Value
 
 $pdf->SetFont('Times', 'B', 12); // Bold for labels
-$pdf->Cell(80, 10, 'Roll No.: ', 0, 0, 'R'); // Label (reduced width)
+$pdf->Cell(60, 10, 'Roll No.: ', 0, 0, 'R'); // Label (reduced width)
 $pdf->SetFont('Times', '', 12); // Regular for value
-$pdf->Cell(16, 10, $student['roll_no'], 0, 1, 'R'); // Value
+$pdf->Cell(20, 10, $student['roll_no'], 0, 1, 'R'); // Value
 
 $pdf->SetFont('Times', 'B', 12); // Bold for labels
 $pdf->Cell(25, 10, 'Year: ', 0, 0, 'L'); // Label (reduced width)
@@ -105,9 +105,9 @@ $pdf->Cell(70, 10, $year, 0, 0, 'L'); // Value
 
 // Set font for student info (labels in bold, values in regular)
 $pdf->SetFont('Times', 'B', 12); // Bold for labels
-$pdf->Cell(80, 10, 'Branch & Section: ', 0, 0, 'R'); // Label aligned to the right
+$pdf->Cell(60, 10, 'Branch & Section: ', 0, 0, 'R'); // Label aligned to the right
 $pdf->SetFont('Times', '', 12); // Regular for value
-$pdf->Cell(16, 10, $branch . ' & ' . $section, 0, 1, 'R'); // Value aligned to the right
+$pdf->Cell(20, 10, $branch . ' & ' . $section, 0, 1, 'R'); // Value aligned to the right
 
     // Add a line break
     $pdf->Ln(10);
