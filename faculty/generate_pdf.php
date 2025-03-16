@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 // Include the FPDF library
 require('../fpdf186/fpdf.php'); // Update the path to where you extracted FPDF
 
