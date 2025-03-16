@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pdf->AddPage();
 
     // Add college logo (replace 'college_logo.jpg' with the actual path to your logo)
-    $pdf->Image('college_logo.jpg', 10, 10, 30); // Logo positioned at (10, 10) with width 30
+    $pdf->Image('../assets/24349bb44aaa1a8c.jpg', 10, 10, 30); // Logo positioned at (10, 10) with width 30
 
     // Set font for the header
     $pdf->SetFont('Times', 'B', 14);
