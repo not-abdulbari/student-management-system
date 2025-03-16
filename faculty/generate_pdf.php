@@ -27,13 +27,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Define department names
     $departmentNames = [
         "CSE" => "Department of Computer Science and Engineering",
-        "ECE" => "Department of Electronics and Communication Engineering",
-        "EEE" => "Department of Electrical and Electronics Engineering",
-        "MECH" => "Department of Mechanical Engineering",
-        "CIVIL" => "Department of Civil Engineering",
+    "ECE" => "Department of Electronics and Communication Engineering",
+    "EEE" => "Department of Electrical and Electronics Engineering",
+    "MECH" => "Department of Mechanical Engineering",
+    "CIVIL" => "Department of Civil Engineering",
+    "IT" => "Department of Information Technology",
+    "AIDS" => "Department of Artificial Intelligence & Data Science",
+    "MBA" => "School of Management",
+    "MCA" => "Department of Computer Applications",
     ];
 
     $department = isset($departmentNames[$branch]) ? $departmentNames[$branch] : "Department of $branch";
+}
 
     // Fetch student marks
     $marks_sql = "SELECT m.subject AS subject_code, sub.subject_name, m.marks 
