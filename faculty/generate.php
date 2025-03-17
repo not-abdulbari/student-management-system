@@ -29,8 +29,8 @@ $departmentNames = [
     "CIVIL" => "Department of Civil Engineering",
     "IT" => "Department of Information Technology",
     "AIDS" => "Department of Artificial Intelligence & Data Science",
-    "MBA" => "School of Management",
-    "MCA" => "Department of Computer Applications",
+    "MBA" => "Department of Master of Business Administration",
+    "MCA" => "Department of Master of Computer Applications",
 ];
 
 $department = isset($departmentNames[$branch]) ? $departmentNames[$branch] : "Department of $branch";
@@ -142,6 +142,7 @@ foreach ($subjects as $subject) {
             <h3>C. ABDUL HAKEEM COLLEGE OF ENGINEERING & TECHNOLOGY</h3>
             <h3>MELVISHARAM - 632509</h3>
             <h3><?= htmlspecialchars($department) ?></h3> <!-- Dynamic Department Name -->
+            <h3>Academic Year 2024 - 2025 (EVEN)</h3>
         </div>
     </div>
     <p style="text-align: center;">______________________________________________________________________________________________</p>
