@@ -202,6 +202,7 @@ if (!function_exists('getCurrentDateTime')) {
                     <a href="report_selection.php">Result Analysis</a>
                     <a href="generate_marksheet.php">Mark List</a>
                     <a href="progress_prelims.php">Progress Report</a>
+                    <a href="class_performance.php">Progress Report</a>
                 </div>
             </li>
             <li><a href="parent.php">Student Login</a></li>
