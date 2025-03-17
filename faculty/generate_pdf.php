@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pdf->Cell(0, 10, $department, 0, 1, 'C');
 
     $pdf->SetFont('Times', '', 12);
-    $pdf->SetXY(40, 30); // Align with the college name
+    $pdf->SetXY(40, 38); // Align with the college name
     $pdf->Cell(0, 10, 'Academic Year 2024 - 2025 (EVEN)', 0, 1, 'C');
 
     // Add a line
