@@ -201,7 +201,7 @@ body {
 <body>
 
     <div class="container">
-        <h2>Internal Exam Result Analysis</h2>
+        <h2>IConsolidated Exam Result Analysis</h2>
         <form method="post" action="generate.php">
             <div class="dropdown-group">
                 <label>Branch:</label>
