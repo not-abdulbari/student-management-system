@@ -33,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     "CIVIL" => "Department of Civil Engineering",
     "IT" => "Department of Information Technology",
     "AIDS" => "Department of Artificial Intelligence & Data Science",
-    "MBA" => "School of Management",
-    "MCA" => "Department of Computer Applications",
+    "MBA" => "Department of Master of Business Administration",
+    "MCA" => "Department of Master of Computer Applications",
     ];
 
     $department = isset($departmentNames[$branch]) ? $departmentNames[$branch] : "Department of $branch";
@@ -71,6 +71,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pdf->SetFont('Times', '', 12);
     $pdf->SetXY(40, 30); // Align with the college name
     $pdf->Cell(0, 10, $department, 0, 1, 'C');
+
+    $pdf->SetFont('Times', '', 12);
+    $pdf->SetXY(40, 30); // Align with the college name
+    $pdf->Cell(0, 10, 'Academic Year 2024 - 2025 (EVEN)', 0, 1, 'C');
 
     // Add a line
     $pdf->SetY(40); // Adjust Y position to leave space for the logo and header
