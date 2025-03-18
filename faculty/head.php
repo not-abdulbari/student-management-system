@@ -205,7 +205,13 @@ if (!function_exists('getCurrentDateTime')) {
                     <a href="class_performance.php">Consolidated Result Analysis</a>
                 </div>
             </li>
-            <li><a href="parent.php">Student Login</a></li>
+            <li class="dropdown">
+                <a href="javascript:void(0)">STUDENT</a>
+                <div class="dropdown-content">
+                    <a href="parent.php">STUDENT LOGIN</a>
+                    <a href="student_profile.php">Under Development</a>
+                </div>
+            </li>
             <li><a href="logout.php" class="logout-link">Logout</a></li>
         </ul>
     </nav>
