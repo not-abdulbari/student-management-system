@@ -11,12 +11,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
     $roll_number = $_POST['roll_number'];
 
     // Fetch student biodata
-    $sql_student = "SELECT s.name, s.roll_no, s.year, s.branch, s.section, s.reg_no, si.mail, si.dob, si.father_name, si.occupation, si.parent_phone, 
-                    si.student_phone, si.present_addr, si.permanent_addr, si.languages_known, si.school, si.medium, 
-                    si.math, si.physic, si.chemis, si.cutoff, si.quota 
-                    FROM students s 
-                    JOIN student_info si ON s.roll_no = si.roll_no 
-                    WHERE s.roll_no = ?";
+    $sql_student = "SELECT roll_no, reg_no, name, branch, year, section
+                    FROM students 
+                    WHERE roll_no = ?";
     $stmt = $conn->prepare($sql_student);
     $stmt->bind_param("s", $roll_number);
     $stmt->execute();
@@ -31,16 +28,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
 
     // Fetch marks
     $sql_marks = "
-SELECT m.semester, m.subject, s.subject_name,
-       MAX(CASE WHEN m.exam = 'CAT1' THEN m.marks END) AS CAT1,
-       MAX(CASE WHEN m.exam = 'CAT2' THEN m.marks END) AS CAT2,
-       MAX(CASE WHEN m.exam = 'Model' THEN m.marks END) AS Model
-FROM marks m
-JOIN subjects s ON m.subject = s.subject_code
-WHERE m.roll_no = ?
-GROUP BY m.semester, m.subject, s.subject_name
-ORDER BY m.semester ASC, m.subject ASC
-";
+    SELECT m.semester, m.subject, s.subject_name,
+           MAX(CASE WHEN m.exam = 'CAT1' THEN m.marks END) AS CAT1,
+           MAX(CASE WHEN m.exam = 'CAT2' THEN m.marks END) AS CAT2,
+           MAX(CASE WHEN m.exam = 'Model' THEN m.marks END) AS Model
+    FROM marks m
+    JOIN subjects s ON m.subject = s.subject_code
+    WHERE m.roll_no = ?
+    GROUP BY m.semester, m.subject, s.subject_name
+    ORDER BY m.semester ASC, m.subject ASC
+    ";
 
     $stmt = $conn->prepare($sql_marks);
     $stmt->bind_param("s", $roll_number);
