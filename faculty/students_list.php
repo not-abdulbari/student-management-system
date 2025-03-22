@@ -16,9 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $semester = $_POST['semester'];
     $exam = $_POST['exam'];
 
-    // Debugging: Print received year and year_roman values
-    echo 'Year: ' . htmlspecialchars($year) . '<br>';
-    echo 'Year Roman: ' . htmlspecialchars($year_roman) . '<br>';
 
     // Fetch students based on criteria
     $sql = "SELECT roll_no, name FROM students WHERE branch = ? AND year = ? AND section = ?";
