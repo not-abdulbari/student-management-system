@@ -147,7 +147,7 @@ $passPercentAppeared = $appeared > 0 ? round(($passed / $appeared) * 100, 2) : 0
                 </div>
                 <div class="info-right">
                     <p><strong>Year/Sem/Sec:</strong> <?= htmlspecialchars("$year_roman / $semester / $section") ?></p>
-                    <p><strong>Exam Date:</strong><?= date('d/m/Y', strtotime(htmlspecialchars($exam_date))) ?></p>
+                    <p><strong>Exam Date:</strong> <?= date('d/m/Y', strtotime(htmlspecialchars($exam_date))) ?></p>
                 </div>
             </div>
 
