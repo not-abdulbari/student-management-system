@@ -83,33 +83,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marksheet</title>
     <style>
-        @media print {
-            body { margin: 14px; font-family: Times New Roman; font-size: 14px; }
-            .no-print { display: none; }
-            table { width: 100%; border-collapse: collapse; margin-top: 14px; }
-            th, td { border: 1px solid #000; padding: 3px; text-align: left; font-size: 12px; }
-            .header { text-align: center; display: flex; align-items: center; justify-content: center; }
-            h3 { margin-bottom: -10px; }
-            .header img { margin-top: 10px; height: 90px; }
-            .exam-type { font-size: 18px; font-weight: bold; text-align: center; margin-top: 10px; }
-            .info-container { display: flex; justify-content: space-between; margin-top: 20px; }
-            .info-left, .info-right { width: 48%; }
-            .signatures { margin-top: 150px; display: flex; justify-content: space-between; margin-right: 20px; }
-        }
-        @media screen {
-            body { margin: 14px; font-family: Times New Roman; font-size: 14px; }
-            .no-print { display: none; }
-            table { width: 100%; border-collapse: collapse; margin-top: 14px; }
-            th, td { border: 1px solid #000; padding: 3px; text-align: left; font-size: 12px; }
-            .header { text-align: center; display: flex; align-items: center; justify-content: center; }
-            h3 { margin-bottom: -10px; }
-            .header img { margin-top: 10px; height: 90px; }
-            .exam-type { font-size: 18px; font-weight: bold; text-align: center; margin-top: 10px; }
-            .info-container { display: flex; justify-content: space-between; margin-top: 20px; }
-            .info-left, .info-right { width: 48%; }
-            .signatures { margin-top: 150px; display: flex; justify-content: space-between; margin-right: 20px; }
-        }
-    </style>
+    @media print {
+        body { margin: 14px; font-family: Times New Roman; font-size: 14px; }
+        .no-print { display: none; }
+        table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+        th, td { border: 1px solid #000; padding: 2px; text-align: left; font-size: 12px; } /* Reduced padding */
+        .header { text-align: center; display: flex; align-items: center; justify-content: center; }
+        h3 { margin-bottom: -10px; }
+        .header img { margin-top: 10px; height: 90px; }
+        .exam-type { font-size: 18px; font-weight: bold; text-align: center; margin-top: 10px; }
+        .info-container { display: flex; justify-content: space-between; margin-top: 20px; }
+        .info-left, .info-right { width: 48%; }
+        .signatures { margin-top: 150px; display: flex; justify-content: space-between; margin-right: 20px; }
+    }
+    @media screen {
+        body { margin: 14px; font-family: Times New Roman; font-size: 14px; }
+        .no-print { display: none; }
+        table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+        th, td { border: 1px solid #000; padding: 2px; text-align: left; font-size: 12px; } /* Reduced padding */
+        .header { text-align: center; display: flex; align-items: center; justify-content: center; }
+        h3 { margin-bottom: -10px; }
+        .header img { margin-top: 10px; height: 90px; }
+        .exam-type { font-size: 18px; font-weight: bold; text-align: center; margin-top: 10px; }
+        .info-container { display: flex; justify-content: space-between; margin-top: 20px; }
+        .info-left, .info-right { width: 48%; }
+        .signatures { margin-top: 150px; display: flex; justify-content: space-between; margin-right: 20px; }
+    }
+</style>
     <script>
         function printMarksList() {
             window.print();
