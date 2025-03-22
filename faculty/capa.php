@@ -17,6 +17,21 @@ $facultyNameQuery = $conn->query("SELECT faculty_name FROM faculty WHERE faculty
 $facultyNameRow = $facultyNameQuery->fetch_assoc();
 $facultyName = $facultyNameRow['faculty_name'] ?? "Unknown Faculty";
 
+// Map branch names to department names
+$departmentNames = [
+    "CSE" => "Department of Computer Science and Engineering",
+    "ECE" => "Department of Electronics and Communication Engineering",
+    "EEE" => "Department of Electrical and Electronics Engineering",
+    "MECH" => "Department of Mechanical Engineering",
+    "CIVIL" => "Department of Civil Engineering",
+    "IT" => "Department of Information Technology",
+    "AIDS" => "Department of Artificial Intelligence & Data Science",
+    "MBA" => "Department of Master of Business Administration",
+    "MCA" => "Department of Master of Computer Applications",
+];
+
+$department = isset($departmentNames[$branch]) ? $departmentNames[$branch] : "Department of $branch";
+
 // Fetch subject name
 $subjectNameQuery = $conn->query("SELECT subject_name FROM subjects WHERE subject_code='$subject' AND branch='$branch' AND semester='$semester'");
 $subjectNameRow = $subjectNameQuery->fetch_assoc();
