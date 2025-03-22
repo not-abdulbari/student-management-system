@@ -135,10 +135,10 @@ while ($row = $failedStudentsQuery->fetch_assoc()) {
 <div class="container">
     <div class="header">
         <img src="../assets/24349bb44aaa1a8c.jpg" alt="College Logo">
-            <h3>C. ABDUL HAKEEM COLLEGE OF ENGINEERING & TECHNOLOGY</h3>
-            <h3>MELVISHARAM - 632509</h3>
-            <h3><?= htmlspecialchars($department) ?></h3> <!-- Dynamic Department Name -->
-            <h3>Academic Year 2024 - 2025 (EVEN)</h3>
+            <h3>C. ABDUL HAKEEM COLLEGE OF ENGINEERING & TECHNOLOGY</h3><br>
+            <h3>MELVISHARAM - 632509</h3><br>
+            <h3><?= htmlspecialchars($department) ?></h3><br>
+            <h3>Academic Year 2024 - 2025 (EVEN)</h3><br>
     </div>
 
 
