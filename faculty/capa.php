@@ -113,11 +113,7 @@ while ($row = $failedStudentsQuery->fetch_assoc()) {
         text-align: right;
     }
 
-    .header img {
-        height: 90px;
-        display: block;
-        margin: 20px auto 10px;
-    }
+
 </style>
     <script>
         function printMarksList() {
