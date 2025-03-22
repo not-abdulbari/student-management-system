@@ -105,11 +105,16 @@ while ($row = $failedStudentsQuery->fetch_assoc()) {
         }
 
     </style>
+    <script>
+        function printMarksList() {
+            window.print();
+        }
+    </script>
 </head>
 <body>
     
     <div class="no-print">
-        <button class="print-btn" onclick="printMarksList()">Print CAPA ForM</button>
+        <button class="print-btn" onclick="printMarksList()">Print CAPA Form</button>
     </div>
     
 
