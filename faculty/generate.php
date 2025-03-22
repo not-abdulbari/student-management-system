@@ -11,16 +11,9 @@ include 'db_connect.php';
 $branch = isset($_POST['branch']) ? $conn->real_escape_string($_POST['branch']) : '';
 $year = isset($_POST['year']) ? $conn->real_escape_string($_POST['year']) : '';
 $year_roman = $conn->real_escape_string($_POST['year_roman']);
-
 $section = isset($_POST['section']) ? $conn->real_escape_string($_POST['section']) : '';
 $semester = isset($_POST['semester']) ? $conn->real_escape_string($_POST['semester']) : '';
 $exam = isset($_POST['exam']) ? $conn->real_escape_string($_POST['exam']) : '';
-$exam_date = isset($_POST['exam_date']) ? $conn->real_escape_string($_POST['exam_date']) : '';
-
-// Check if all required fields are filled
-if (empty($branch) || empty($year) || empty($section) || empty($semester) || empty($exam) || empty($exam_date)) {
-    die('Please fill all the required fields.');
-}
 
 // Map branch names to department names
 $departmentNames = [
