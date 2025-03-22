@@ -95,10 +95,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .info-container { display: flex; justify-content: space-between; margin-top: 20px; }
         .info-left, .info-right { width: 48%; }
         .signatures { margin-top: 150px; display: flex; justify-content: space-between; margin-right: 20px; }
+        @page {
+            size: auto;
+            margin: 0mm;
+        }
+        header, footer {
+            display: none;
+        }
     }
     @media screen {
         body { margin: 14px; font-family: Times New Roman; font-size: 14px; }
-        .no-print { display: none; }
         table { width: 50%; border-collapse: collapse; margin-top: 14px; margin-left: auto; margin-right: auto; }
         th, td { border: 1px solid #000; padding: 2px; text-align: left; font-size: 12px; } /* Reduced padding */
         .header { text-align: center; display: flex; align-items: center; justify-content: center; }
@@ -109,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .info-left, .info-right { width: 48%; }
         .signatures { margin-top: 150px; display: flex; justify-content: space-between; margin-right: 20px; }
     }
-</style>
+    </style>
     <script>
         function printMarksList() {
             window.print();
