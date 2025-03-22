@@ -142,7 +142,7 @@ while ($row = $failedStudentsQuery->fetch_assoc()) {
             <h3>Academic Year 2024 - 2025 (EVEN)</h3> 
         </div>
     </div>
-
+<p style="text-align: center;">_________________________________________________________________________________________________________________________________________</p>
 
     <table>
         <tr>
