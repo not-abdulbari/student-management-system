@@ -124,6 +124,9 @@ $passPercentAppeared = $appeared > 0 ? round(($passed / $appeared) * 100, 2) : 0
     </style>
 </head>
 <body>
+    <div class="no-print">
+        <button class="print-btn" onclick="printMarksList()">Print Marks List</button>
+    </div>
     <div class="header">
     <img src="../assets/24349bb44aaa1a8c.jpg" alt="College Logo">
         <div>
