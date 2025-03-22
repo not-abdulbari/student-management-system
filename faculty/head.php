@@ -203,6 +203,7 @@ if (!function_exists('getCurrentDateTime')) {
                     <a href="generate_marksheet.php">Mark List</a>
                     <a href="progress_prelims.php">Progress Report</a>
                     <a href="class_performance.php">Consolidated Result Analysis</a>
+                    <a href="capa_select.php">CAPA Form</a>
                 </div>
             </li>
             <li class="dropdown">
