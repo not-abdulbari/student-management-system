@@ -10,6 +10,7 @@ include 'db_connect.php';
 // Sanitize inputs
 $branch = $conn->real_escape_string($_POST['branch']);
 $year = $conn->real_escape_string($_POST['year']);
+$year_roman = $conn->real_escape_string($_POST['year_roman']);
 $section = $conn->real_escape_string($_POST['section']);
 $semester = $conn->real_escape_string($_POST['semester']);
 $subject = $conn->real_escape_string($_POST['subject']);
@@ -145,8 +146,8 @@ $passPercentAppeared = $appeared > 0 ? round(($passed / $appeared) * 100, 2) : 0
                     <p><strong>Subject:</strong> <?= htmlspecialchars($subject) ?> - <?= htmlspecialchars($subjectName) ?></p>
                 </div>
                 <div class="info-right">
-                    <p><strong>Year/Sem/Sec:</strong> <?= htmlspecialchars("$year / $semester / $section") ?></p>
-                    <p><strong>Exam Date:</strong> <?= htmlspecialchars($exam_date) ?></p>
+                    <p><strong>Year/Sem/Sec:</strong> <?= htmlspecialchars("$year_roman / $semester / $section") ?></p>
+                    <p><strong>Exam Date:</strong><?= date('d/m/Y', strtotime(htmlspecialchars($exam_date))) ?></p>
                 </div>
             </div>
 
