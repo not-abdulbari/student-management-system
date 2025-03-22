@@ -224,6 +224,17 @@ body {
             </div>
 
             <div class="dropdown-group">
+                <label>Year (Roman):</label>
+                <select name="year_roman" required>
+                    <option value="">Select Year</option>
+                    <option value="I">I</option>
+                    <option value="II">II</option>
+                    <option value="III">III</option>
+                    <option value="IV">IV</option>
+                </select>
+            </div>
+
+            <div class="dropdown-group">
                 <label>Section:</label>
                 <select name="section" required>
                     <option value="">Select Section</option>
