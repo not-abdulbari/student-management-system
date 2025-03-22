@@ -8,6 +8,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
 include 'db_connect.php';
 include 'head.php';
+
 // Fetch distinct values for dropdowns
 $branches = $conn->query("SELECT DISTINCT branch FROM marks WHERE branch IS NOT NULL ORDER BY branch ASC");
 $years = $conn->query("SELECT DISTINCT year FROM marks WHERE year IS NOT NULL ORDER BY year ASC");
@@ -53,7 +54,6 @@ h2 {
     margin: 40px 0;
     font-weight: bold;
 }
-
 
 /* Form Styling */
 form {
@@ -229,7 +229,7 @@ body {
         <form method="post" action="capa.php">
             <div class="dropdown-group">
                 <label>Branch:</label>
-                <select name="branch" required>
+                <select name="branch" id="branch" required>
                     <option value="">Select Branch</option>
                     <?php while ($row = $branches->fetch_assoc()) { ?>
                         <option value="<?= htmlspecialchars($row['branch']) ?>"><?= htmlspecialchars($row['branch']) ?></option>
@@ -255,7 +255,7 @@ body {
                     <option value="II">II</option>
                     <option value="III">III</option>
                     <option value="IV">IV</option>
-                    </select>
+                </select>
             </div>
 
             <div class="dropdown-group">
@@ -270,7 +270,7 @@ body {
 
             <div class="dropdown-group">
                 <label>Semester:</label>
-                <select name="semester" required>
+                <select name="semester" id="semester" required>
                     <option value="">Select Semester</option>
                     <?php while ($row = $semesters->fetch_assoc()) { ?>
                         <option value="<?= htmlspecialchars($row['semester']) ?>"><?= htmlspecialchars($row['semester']) ?></option>
@@ -280,7 +280,7 @@ body {
 
             <div class="dropdown-group">
                 <label>Subject:</label>
-                <select name="subject" required>
+                <select name="subject" id="subject" required>
                     <option value="">Select Subject</option>
                     <?php while ($row = $subjects->fetch_assoc()) { ?>
                         <option value="<?= htmlspecialchars($row['subject']) ?>"><?= htmlspecialchars($row['subject']) ?></option>
