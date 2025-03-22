@@ -264,11 +264,7 @@ body {
                 </select>
             </div>
 
-            <div class="dropdown-group">
-                <label>Date of Exam:</label>
-                <input type="date" name="exam_date" value="<?= date('Y-m-d') ?>" required>
-            </div>
-
+            
             <div class="btn-container">
                 <a href="faculty_dashboard.php" class="btn btn-back">← Back</a>
                 <button type="submit" class="btn btn-primary">Generate Report</button>
