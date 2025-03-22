@@ -25,6 +25,8 @@ $faculties = $conn->query("SELECT faculty_code, faculty_name FROM faculty ORDER 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAPA Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <style>
 /* Base styling for body */
 /* General Reset */
