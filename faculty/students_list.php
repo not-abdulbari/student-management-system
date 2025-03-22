@@ -11,6 +11,7 @@ include 'db_connect.php'; // Include your database connection file
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $branch = $_POST['branch'];
     $year = $_POST['year'];
+    $year_roman = $_POST['year_roman'];
     $section = $_POST['section'];
     $semester = $_POST['semester'];
     $exam = $_POST['exam'];
