@@ -10,6 +10,8 @@ include 'db_connect.php';
 // Sanitize inputs
 $branch = isset($_POST['branch']) ? $conn->real_escape_string($_POST['branch']) : '';
 $year = isset($_POST['year']) ? $conn->real_escape_string($_POST['year']) : '';
+$year_roman = $conn->real_escape_string($_POST['year_roman']);
+
 $section = isset($_POST['section']) ? $conn->real_escape_string($_POST['section']) : '';
 $semester = isset($_POST['semester']) ? $conn->real_escape_string($_POST['semester']) : '';
 $exam = isset($_POST['exam']) ? $conn->real_escape_string($_POST['exam']) : '';
