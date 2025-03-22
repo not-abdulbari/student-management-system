@@ -64,17 +64,7 @@ while ($row = $failedStudentsQuery->fetch_assoc()) {
         .container { width: 100%; margin: 0; padding: 0; }
         table { width: 100%; border-collapse: collapse; margin-top: 12px; }
         th, td { border: 1px solid #000; padding: 2px; text-align: left; }
-        .header text {
-            display: flex;
-            align-items: center; /* Vertically centers the content */
-            margin: 0; /* Ensures the header stays centered */
-            text-align: center;
-        }
-    
-        .header img {
-            height: 90px;
-            margin-right: 0; /* Adds space between the image and text */
-        }
+        .header{ display: flex; align-items: center; justify-content: center; }
         h3, h4 { margin: 5px 0; }
         .signatures { margin-top: 50px; width: 75%; }
     }
@@ -145,12 +135,10 @@ while ($row = $failedStudentsQuery->fetch_assoc()) {
 <div class="container">
     <div class="header">
         <img src="../assets/24349bb44aaa1a8c.jpg" alt="College Logo">
-        <div class="header-text">
             <h3>C. ABDUL HAKEEM COLLEGE OF ENGINEERING & TECHNOLOGY</h3>
             <h3>MELVISHARAM - 632509</h3>
             <h3><?= htmlspecialchars($department) ?></h3> <!-- Dynamic Department Name -->
             <h3>Academic Year 2024 - 2025 (EVEN)</h3>
-        </div>
     </div>
 
 
