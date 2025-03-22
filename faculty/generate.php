@@ -105,7 +105,7 @@ foreach ($subjects as $subject) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Exam Result Analysis</title>
+    <title>Consolidated Exam Result Analysis</title>
     <style>
         @media print {
             body { margin: 14px; font-family: Times new roman; font-size: 14px }
