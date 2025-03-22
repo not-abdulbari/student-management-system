@@ -232,6 +232,18 @@ body {
                     <?php endwhile; ?>
                 </select>
             </div>
+
+            <div class="dropdown-group">
+                <label>Year (Roman):</label>
+                <select name="year_roman" required>
+                    <option value="">Select Year</option>
+                    <option value="I">I</option>
+                    <option value="II">II</option>
+                    <option value="III">III</option>
+                    <option value="IV">IV</option>
+                </select>
+            </div>
+            
             <div class="form-group">
                 <label for="section">Section:</label>
                 <select id="section" name="section" required>
