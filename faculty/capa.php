@@ -107,6 +107,11 @@ while ($row = $failedStudentsQuery->fetch_assoc()) {
     </style>
 </head>
 <body>
+    
+    <div class="no-print">
+        <button class="print-btn" onclick="printMarksList()">Print CAPA ForM</button>
+    </div>
+    
 
 <div class="container">
     <div class="header">
