@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Marksheet</title>
     <style>
     @media print {
-        body { margin: 14px; font-family: Times New Roman; font-size: 14px; }
+        body { margin: 20mm ; font-family: Times New Roman; font-size: 14px; }
         .no-print { display: none; }
         table { width: 50%; border-collapse: collapse; margin-top: 14px; margin-left: auto; margin-right: auto; }
         th, td { border: 1px solid #000; padding: 2px; text-align: left; font-size: 12px; } /* Reduced padding */
@@ -96,8 +96,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .info-left, .info-right { width: 48%; }
         .signatures { margin-top: 150px; display: flex; justify-content: space-between; margin-right: 20px; }
         @page {
-            size: auto;
-            margin: 0mm;
+            size: A4;
+            margin: 20mm;
         }
         header, footer {
             display: none;
