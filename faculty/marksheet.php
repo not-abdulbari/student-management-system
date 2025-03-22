@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Check if keys exist in the $_POST array and assign default values if they do not.
     $branch = isset($_POST['branch']) ? $_POST['branch'] : '';
     $year = isset($_POST['year']) ? $_POST['year'] : '';
+    $year_roman = $conn->real_escape_string($_POST['year_roman']);
     $section = isset($_POST['section']) ? $_POST['section'] : '';
     $semester = isset($_POST['semester']) ? $_POST['semester'] : '';
     $subject = isset($_POST['subject']) ? $_POST['subject'] : '';
@@ -142,8 +143,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <p><strong>Subject:</strong> <?= htmlspecialchars($subject) ?> - <?= htmlspecialchars($subjectName) ?></p>
                 </div>
                 <div class="info-right">
-                    <p><strong>Year/Sem/Sec:</strong> <?= htmlspecialchars("$year / $semester / $section") ?></p>
-                    <p><strong>Exam Date:</strong> <?= htmlspecialchars($exam_date) ?></p>
+                    <p><strong>Year/Sem/Sec:</strong> <?= htmlspecialchars("$year_roman / $semester / $section") ?></p>
+                    <p><strong>Exam Date:</strong> <?= date('d/m/Y', strtotime(htmlspecialchars($exam_date))) ?></p>
                 </div>
             </div>
             <table>
