@@ -49,8 +49,18 @@ while ($row = $failedStudentsQuery->fetch_assoc()) {
             .container { width: 100%; margin: 0; padding: 0; }
             table { width: 100%; border-collapse: collapse; margin-top: 12px; }
             th, td { border: 1px solid #000; padding: 2px; text-align: left; }
-            .header {display: flex; align-items: center; justify-content: center; margin-left: 10px; text-align: left; }
-            .header img { margin-top: 10px; height: 90px; margin-right: 10px; }
+            .header {
+    display: flex;
+    align-items: center; /* Vertically centers the content */
+    justify-content: center; /* Horizontally centers the header */
+    margin: 0 auto; /* Ensures the header stays centered */
+    text-align: left;
+}
+
+.header img {
+    height: 90px;
+    margin-right: 10px; /* Adds space between the image and text */
+}
             h3, h4 { margin: 5px 0; }
             .signatures { margin-top: 50px; width: 75%; }
         }
