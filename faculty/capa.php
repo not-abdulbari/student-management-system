@@ -102,7 +102,7 @@ while ($row = $failedStudentsQuery->fetch_assoc()) {
         .header img {
             height: 90px;
             display: block;
-            margin: 0 auto 10px;
+            margin: 20px auto 10px;
         }
 
     </style>
