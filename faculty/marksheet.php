@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     @media print {
         body { margin: 14px; font-family: Times New Roman; font-size: 14px; }
         .no-print { display: none; }
-        table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+        table { width: 50%; border-collapse: collapse; margin-top: 14px; }
         th, td { border: 1px solid #000; padding: 2px; text-align: left; font-size: 12px; } /* Reduced padding */
         .header { text-align: center; display: flex; align-items: center; justify-content: center; }
         h3 { margin-bottom: -10px; }
@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     @media screen {
         body { margin: 14px; font-family: Times New Roman; font-size: 14px; }
         .no-print { display: none; }
-        table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+        table { width: 50%; border-collapse: collapse; margin-top: 14px; }
         th, td { border: 1px solid #000; padding: 2px; text-align: left; font-size: 12px; } /* Reduced padding */
         .header { text-align: center; display: flex; align-items: center; justify-content: center; }
         h3 { margin-bottom: -10px; }
