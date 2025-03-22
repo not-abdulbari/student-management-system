@@ -11,10 +11,14 @@ include 'db_connect.php'; // Include your database connection file
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $branch = $_POST['branch'];
     $year = $_POST['year'];
-    $year_roman = isset($_POST['year_roman']) ? $_POST['year_roman'] : ''; // Add this check
+    $year_roman = isset($_POST['year_roman']) ? $_POST['year_roman'] : '';
     $section = $_POST['section'];
     $semester = $_POST['semester'];
     $exam = $_POST['exam'];
+
+    // Debugging: Print received year and year_roman values
+    echo 'Year: ' . htmlspecialchars($year) . '<br>';
+    echo 'Year Roman: ' . htmlspecialchars($year_roman) . '<br>';
 
     // Fetch students based on criteria
     $sql = "SELECT roll_no, name FROM students WHERE branch = ? AND year = ? AND section = ?";
@@ -110,6 +114,7 @@ th {
                     <input type="hidden" name="roll_no" value="<?= htmlspecialchars($row['roll_no']) ?>">
                     <input type="hidden" name="branch" value="<?= htmlspecialchars($branch) ?>">
                     <input type="hidden" name="year" value="<?= htmlspecialchars($year) ?>">
+                    <input type="hidden" name="year_roman" value="<?= htmlspecialchars($year_roman) ?>">
                     <input type="hidden" name="section" value="<?= htmlspecialchars($section) ?>">
                     <input type="hidden" name="semester" value="<?= htmlspecialchars($semester) ?>">
                     <input type="hidden" name="exam" value="<?= htmlspecialchars($exam) ?>">
