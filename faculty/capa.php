@@ -58,79 +58,77 @@ while ($row = $failedStudentsQuery->fetch_assoc()) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAPA Report</title>
     <style>
-        @media print {
-            body { margin: 12px; font-family: "Times New Roman", serif; font-size: 14px; }
-            .no-print { display: none; }
-            .container { width: 100%; margin: 0; padding: 0; }
-            table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-            th, td { border: 1px solid #000; padding: 2px; text-align: left; }
-            .header {
-    display: flex;
-    align-items: center; /* Vertically centers the content */
-    justify-content: center; /* Horizontally centers the header */
-    margin: 0 auto; /* Ensures the header stays centered */
-    text-align: left;
-}
-
-.header img {
-    height: 90px;
-    margin-right: 10px; /* Adds space between the image and text */
-}
-            h3, h4 { margin: 5px 0; }
-            .signatures { margin-top: 50px; width: 75%; }
-        }
-        @page {
-            size: A4 landscape;
-        }
-
-        body {
-            font-family: "Times New Roman", serif;
-            background-color: #fff;
-            color: #000;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: auto;
-        }
-
-        h2, h3, h4, p {
-            margin-top: -5px;
-            text-align: center;
-        }
-
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2px 0;
-        }
-
-        th, td {
-            border: 1px solid black;
-            padding: 5px;
+    @media print {
+        body { margin: 12px; font-family: "Times New Roman", serif; font-size: 14px; }
+        .no-print { display: none; }
+        .container { width: 100%; margin: 0; padding: 0; }
+        table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+        th, td { border: 1px solid #000; padding: 2px; text-align: left; }
+        .header {
+            display: flex;
+            align-items: center; /* Vertically centers the content */
+            margin: 0 auto; /* Ensures the header stays centered */
             text-align: left;
         }
-
-        .signature {
-            margin-top: 50px;
-            display: flex;
-            justify-content: space-between;
-            text-align: right;
-        }
-
-        .signature div {
-            text-align: right;
-        }
-
+    
         .header img {
             height: 90px;
-            display: block;
-            margin: 20px auto 10px;
+            margin-right: 10px; /* Adds space between the image and text */
         }
+        h3, h4 { margin: 5px 0; }
+        .signatures { margin-top: 50px; width: 75%; }
+    }
+    @page {
+        size: A4 landscape;
+    }
 
-    </style>
+    body {
+        font-family: "Times New Roman", serif;
+        background-color: #fff;
+        color: #000;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: auto;
+    }
+
+    h2, h3, h4, p {
+        margin-top: -5px;
+        text-align: center;
+    }
+
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 2px 0;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 5px;
+        text-align: left;
+    }
+
+    .signature {
+        margin-top: 50px;
+        display: flex;
+        justify-content: space-between;
+        text-align: right;
+    }
+
+    .signature div {
+        text-align: right;
+    }
+
+    .header img {
+        height: 90px;
+        display: block;
+        margin: 20px auto 10px;
+    }
+</style>
     <script>
         function printMarksList() {
             window.print();
