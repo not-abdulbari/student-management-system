@@ -49,7 +49,7 @@ while ($row = $failedStudentsQuery->fetch_assoc()) {
             .container { width: 100%; margin: 0; padding: 0; }
             table { width: 100%; border-collapse: collapse; margin-top: 12px; }
             th, td { border: 1px solid #000; padding: 2px; text-align: left; }
-            .header { text-align: center; display: flex; align-items: center; justify-content: center; }
+            .header { margin-left:10px; text-align: center;}
             .header img { margin-top:10px; height: 90px;}
             h3, h4 { margin: 5px 0; }
             .signatures { margin-top: 50px; width: 75%; }
