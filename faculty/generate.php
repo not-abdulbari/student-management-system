@@ -181,8 +181,10 @@ foreach ($subjects as $subject) {
                 </tbody>
             </table>
             <div class="signatures">
-                <div>Faculty In-Charge</div>
+                <div>Program Coordinator/QRC</div>
                 <div>HOD</div>
+                <div>Vice Principal</div>
+                <div>Principal</div>
             </div>
         </div>
     </div>
