@@ -65,7 +65,7 @@ while ($row = $failedStudentsQuery->fetch_assoc()) {
         table { width: 100%; border-collapse: collapse; margin-top: 12px; }
         th, td { border: 1px solid #000; padding: 2px; text-align: left; }
         .header{ display: flex; align-items: center; justify-content: center; }
-        .header img{ height: 90px; width: 90px; }
+        .header img{ height: 90px; width: 90px; margin-right: 10px; }
         h3, h4 { margin: 5px 0; }
         .signatures { margin-top: 50px; width: 75%; }
     }
@@ -113,6 +113,9 @@ while ($row = $failedStudentsQuery->fetch_assoc()) {
     .signature div {
         text-align: right;
     }
+
+    .header img{ height: 90px; width: 90px; }
+
 
 
 </style>
