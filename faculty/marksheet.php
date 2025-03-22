@@ -95,13 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .info-container { display: flex; justify-content: space-between; margin-top: 20px; }
         .info-left, .info-right { width: 48%; }
         .signatures { margin-top: 150px; display: flex; justify-content: space-between; margin-right: 20px; }
-        @page {
-            size: A4;
-            margin: 0;
-        }
-        header, footer {
-            display: none;
-        }
+        
     }
     @media screen {
         body { margin: 14px; font-family: Times New Roman; font-size: 14px; }
