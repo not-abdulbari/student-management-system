@@ -148,9 +148,10 @@ foreach ($subjects as $subject) {
     <p style="text-align: center;">______________________________________________________________________________________________</p>
     <div class="report-data">
         <h3 id="examTitle" style="text-align: center;">CONSOLIDATED EXAM RESULT ANALYSIS</h3>
-        <div class="exam-type"><?= htmlspecialchars($exam) ?></div> <!-- Exam Type Below Heading -->
+        <div class="exam-type"><?= htmlspecialchars($exam) ?> Exam</div> <!-- Exam Type Below Heading -->
 
         <div id="printContent">
+            <p style="text-align: center;"><strong>Year/Sem/Sec:</strong> <?= htmlspecialchars("$year_roman / $semester / $section") ?></p>
             <table>
                 <thead>
                     <tr>
