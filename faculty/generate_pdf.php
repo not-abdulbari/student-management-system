@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $roll_no = $_POST['roll_no'];
     $branch = $_POST['branch'];
     $year = $_POST['year'];
+    $year_roman = $_POST['year_roman'];
     $section = $_POST['section'];
     $semester = $_POST['semester'];
     $exam = $_POST['exam'];
@@ -105,7 +106,7 @@ $pdf->Cell(21, 10, $student['roll_no'], 0, 1, 'R'); // Value
 $pdf->SetFont('Times', 'B', 12); // Bold for labels
 $pdf->Cell(25, 10, 'Year: ', 0, 0, 'L'); // Label (reduced width)
 $pdf->SetFont('Times', '', 12); // Regular for value
-$pdf->Cell(70, 10, $year, 0, 0, 'L'); // Value
+$pdf->Cell(70, 10, $year_roman, 0, 0, 'L'); // Value
 
 // Set font for student info (labels in bold, values in regular)
 $pdf->SetFont('Times', 'B', 12); // Bold for labels
