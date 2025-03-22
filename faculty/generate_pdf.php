@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $roll_no = $_POST['roll_no'];
     $branch = $_POST['branch'];
     $year = $_POST['year'];
-    $year_roman = $_POST['year_roman'];
+    $year_roman = isset($_POST['year_roman']) ? $_POST['year_roman'] : ''; // Add this check
     $section = $_POST['section'];
     $semester = $_POST['semester'];
     $exam = $_POST['exam'];
