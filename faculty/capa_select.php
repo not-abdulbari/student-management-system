@@ -199,6 +199,26 @@ body {
     background: linear-gradient(135deg, #f7f9fc, #e4f1fe);
 }
 </style>
+    <script>
+        $(document).ready(function () {
+            // Fetch subjects dynamically when branch & semester are selected
+            $("#branch, #semester").change(function () {
+                var branch = $("#branch").val();
+                var semester = $("#semester").val();
+
+                if (branch !== "" && semester !== "") {
+                    $.ajax({
+                        type: "POST",
+                        url: "get_subject.php",
+                        data: { branch: branch, semester: semester },
+                        success: function (response) {
+                            $("#subject").html(response);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 </head>
 <body>
 
