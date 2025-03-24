@@ -224,7 +224,7 @@ body {
 
     <div class="container">
         <h2>Internal Exam Result Analysis</h2>
-        <form method="post" action="generate_report.php">
+        <form method="post" action="generate_report1.php">
             <div class="dropdown-group">
                 <label>Branch:</label>
                 <select name="branch" id="branch" required>
