@@ -174,7 +174,7 @@ foreach ($subjects as $subject) {
                 </tbody>
             </table>
             <div class="signatures">
-                <div>Program Coordinator/QRC</div>
+                <div>Test Coordinator</div>
                 <div>HOD</div>
                 <div>Vice Principal</div>
                 <div>Principal</div>
