@@ -71,17 +71,18 @@
     <div class="header">
         <img src="assets/789asdfkl.webp" alt="LMS Portal Image">
     </div>
-    <div class="banner">
-        <marquee behavior="scroll" direction="left">
-            <p>Server is down for maintenance. Please check back later.</p>
-        </marquee>
-    </div>
-    <div class="main-container">
-        <div class="maintenance-message">
-            <h2>Server is down for maintenance</h2>
-            <p>We are currently performing scheduled maintenance. We should be back online shortly.</p>
-        </div>
-    </div>
+<div class="banner">
+  <marquee behavior="scroll" direction="left">
+    <p>Scheduled Maintenance Notice</p>
+  </marquee>
+</div>
+
+<div class="main-container">
+  <div class="maintenance-message">
+    <h2>Expected Downtime: Until 12:00 PM (noon) on March 26, 2025</h2>
+    <p>We apologize for the inconvenience and appreciate your patience. Our services will resume shortly.</p>
+  </div>
+</div>
 </body>
 
 </html>
