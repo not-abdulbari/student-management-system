@@ -86,6 +86,11 @@ if ($result->num_rows > 0) {
     }
 }
 
+// Ensure the total number of students does not exceed the actual count
+if ($totalStudents < ($absent + $passed + array_sum($ranges) - $ranges[5])) {
+    $totalStudents = $absent + $passed + array_sum($ranges) - $ranges[5];
+}
+
 $appeared = $totalStudents - $absent;
 $passPercentTotal = $totalStudents > 0 ? round(($passed / $totalStudents) * 100, 2) : 0;
 $passPercentAppeared = $appeared > 0 ? round(($passed / $appeared) * 100, 2) : 0;
