@@ -43,13 +43,12 @@ $facultyNameQuery = $conn->query("SELECT faculty_name FROM faculty WHERE faculty
 $facultyNameRow = $facultyNameQuery->fetch_assoc();
 $facultyName = $facultyNameRow['faculty_name'] ?? "Unknown Faculty";
 
-// Fetch total students excluding those with no marks entered
+// Fetch total students including those with no marks entered
 $totalStudentsQuery = $conn->query("
     SELECT COUNT(DISTINCT roll_no) FROM marks 
     WHERE branch='$branch' AND year='$year' 
     AND section='$section' AND semester='$semester'
     AND subject='$subject' AND exam='$exam'
-    AND marks != '-1'
 ");
 $totalStudents = $totalStudentsQuery->fetch_row()[0] ?? 0;
 
