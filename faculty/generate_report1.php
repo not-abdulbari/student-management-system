@@ -27,7 +27,7 @@ $departmentNames = [
     "CIVIL" => "Department of Civil Engineering",
     "IT" => "Department of Information Technology",
     "AIDS" => "Department of Artificial Intelligence & Data Science",
-    "MBA" => "Department of Master of Business Administration",
+    "MBA" => "School of Management",
     "MCA" => "Department of Master of Computer Applications",
 ];
 
