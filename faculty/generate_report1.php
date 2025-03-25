@@ -27,7 +27,7 @@ $departmentNames = [
     "CIVIL" => "Department of Civil Engineering",
     "IT" => "Department of Information Technology",
     "AIDS" => "Department of Artificial Intelligence & Data Science",
-    "MBA" => "School of Management",
+    "MBA" => "Department of Master of Business Administration",
     "MCA" => "Department of Master of Computer Applications",
 ];
 
@@ -84,11 +84,6 @@ if ($result->num_rows > 0) {
         elseif ($numericMark >= 50) $ranges[4]++;
         else $ranges[5]++;
     }
-}
-
-// Ensure the total number of students does not exceed the actual count
-if ($totalStudents < ($absent + $passed + array_sum($ranges) - $ranges[5])) {
-    $totalStudents = $absent + $passed + array_sum($ranges) - $ranges[5];
 }
 
 $appeared = $totalStudents - $absent;
