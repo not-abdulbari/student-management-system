@@ -140,7 +140,7 @@ $overallPassPercent = $totalStudents > 0 ? round(($allCleared / $totalStudents) 
             body { margin: 14px; font-family: Times new roman; font-size: 14px }
             .no-print { display: none; }
             table { width: 100%; border-collapse: collapse; margin-top: 14px; }
-            th, td { border: 1px solid #000; padding: 8px; text-align:left; }
+            th, td { border: 1px solid #000; padding: 4px; text-align:left; }
             .header { text-align: center; display: flex; align-items: center; justify-content: center; }
             h3{ margin-bottom: -10px;}
             .header img { margin-top:10px; height: 90px;}
@@ -208,7 +208,7 @@ $overallPassPercent = $totalStudents > 0 ? round(($allCleared / $totalStudents) 
                 </tbody>
             </table>
 
-            <h3 style="text-align: center;">Overall Student Performance</h3>
+            <p style="text-align: center;">Overall Student Performance</p>
             <table>
                 <thead>
                     <tr>
@@ -240,8 +240,8 @@ $overallPassPercent = $totalStudents > 0 ? round(($allCleared / $totalStudents) 
                 </tbody>
             </table>
 
-            <h3 style="text-align: center;">Overall Pass Percentage</h3>
-            <p style="text-align: center; font-size: 18px; font-weight: bold;"><?= htmlspecialchars($overallPassPercent) ?>%</p>
+            <p style="text-align: center;">Overall Pass Percentage</p>
+            <p style="text-align: center; font-size: 14px; font-weight: bold;"><?= htmlspecialchars($overallPassPercent) ?>%</p>
 
             <div class="signatures">
                 <div>Test Coordinator</div>
