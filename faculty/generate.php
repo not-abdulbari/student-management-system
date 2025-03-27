@@ -39,6 +39,7 @@ while ($row = $subjectsQuery->fetch_assoc()) {
 
 $reportData = [];
 $studentFailures = [];
+$allStudents = [];
 
 // Iterate over each subject to fetch and calculate data
 foreach ($subjects as $subject) {
@@ -64,6 +65,10 @@ foreach ($subjects as $subject) {
         while ($row = $result->fetch_assoc()) {
             $studentId = $row['roll_no'];
             $mark = $row['marks'];
+
+            if (!isset($allStudents[$studentId])) {
+                $allStudents[$studentId] = 0;
+            }
 
             if ($mark == '-1') {
                 $absent++;
@@ -105,32 +110,24 @@ $failedOne = 0;
 $failedTwo = 0;
 $failedThree = 0;
 $failedMoreThanThree = 0;
-$totalStudents = 0;
 
-foreach ($studentFailures as $studentId => $failCount) {
-    // Verify if the student belongs to the same class, year, semester, section, and exam
-    $studentQuery = $conn->query("
-        SELECT roll_no FROM marks 
-        WHERE roll_no='$studentId' AND branch='$branch' AND year='$year' 
-        AND section='$section' AND semester='$semester' AND exam='$exam'
-    ");
+foreach ($allStudents as $studentId => $count) {
+    $failCount = $studentFailures[$studentId] ?? 0;
 
-    if ($studentQuery->num_rows > 0) {
-        $totalStudents++;
-        if ($failCount == 0) {
-            $allCleared++;
-        } elseif ($failCount == 1) {
-            $failedOne++;
-        } elseif ($failCount == 2) {
-            $failedTwo++;
-        } elseif ($failCount == 3) {
-            $failedThree++;
-        } else {
-            $failedMoreThanThree++;
-        }
+    if ($failCount == 0) {
+        $allCleared++;
+    } elseif ($failCount == 1) {
+        $failedOne++;
+    } elseif ($failCount == 2) {
+        $failedTwo++;
+    } elseif ($failCount == 3) {
+        $failedThree++;
+    } else {
+        $failedMoreThanThree++;
     }
 }
 
+$totalStudents = count($allStudents);
 $overallPassPercent = $totalStudents > 0 ? round(($allCleared / $totalStudents) * 100, 2) : 0;
 ?>
 
