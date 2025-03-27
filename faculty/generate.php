@@ -1,7 +1,6 @@
 <?php
 session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header('Location: ../index.php');
     exit;
@@ -50,7 +49,7 @@ foreach ($subjects as $subject) {
 
     // Fetch marks
     $result = $conn->query("
-        SELECT student_id, marks FROM marks 
+        SELECT roll_no, marks FROM marks 
         WHERE branch='$branch' AND year='$year' 
         AND section='$section' AND semester='$semester'
         AND subject='$subject' AND exam='$exam'
@@ -63,7 +62,7 @@ foreach ($subjects as $subject) {
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $studentId = $row['student_id'];
+            $studentId = $row['roll_no'];
             $mark = $row['marks'];
 
             if ($mark == '-1') {
