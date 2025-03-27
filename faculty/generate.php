@@ -99,28 +99,38 @@ foreach ($subjects as $subject) {
     }
 }
 
-// Calculate student failure statistics
+// Calculate student failure statistics only for the provided year, semester, section, and exam
 $allCleared = 0;
 $failedOne = 0;
 $failedTwo = 0;
 $failedThree = 0;
 $failedMoreThanThree = 0;
+$totalStudents = 0;
 
-foreach ($studentFailures as $failCount) {
-    if ($failCount == 0) {
-        $allCleared++;
-    } elseif ($failCount == 1) {
-        $failedOne++;
-    } elseif ($failCount == 2) {
-        $failedTwo++;
-    } elseif ($failCount == 3) {
-        $failedThree++;
-    } else {
-        $failedMoreThanThree++;
+foreach ($studentFailures as $studentId => $failCount) {
+    // Verify if the student belongs to the same class, year, semester, section, and exam
+    $studentQuery = $conn->query("
+        SELECT roll_no FROM marks 
+        WHERE roll_no='$studentId' AND branch='$branch' AND year='$year' 
+        AND section='$section' AND semester='$semester' AND exam='$exam'
+    ");
+
+    if ($studentQuery->num_rows > 0) {
+        $totalStudents++;
+        if ($failCount == 0) {
+            $allCleared++;
+        } elseif ($failCount == 1) {
+            $failedOne++;
+        } elseif ($failCount == 2) {
+            $failedTwo++;
+        } elseif ($failCount == 3) {
+            $failedThree++;
+        } else {
+            $failedMoreThanThree++;
+        }
     }
 }
 
-$totalStudents = count($studentFailures);
 $overallPassPercent = $totalStudents > 0 ? round(($allCleared / $totalStudents) * 100, 2) : 0;
 ?>
 
