@@ -228,7 +228,7 @@ $conn->close();
         }
     </style>
     <script>
-        function confirmSubmit() {
+        function previewMarks() {
             // Show a preview of the entered data
             const marksTable = document.querySelector('table tbody');
             let previewData = 'Roll Number | Name | Marks\n';
@@ -240,16 +240,32 @@ $conn->close();
                 previewData += `${rollNo} | ${name} | ${marks}\n`;
             });
 
-            // Confirm submission
-            if (confirm(`You are about to submit the following data:\n\n${previewData}\n\nOnce submitted, this data cannot be modified. Do you want to proceed?`)) {
-                // Make all input fields readonly
-                document.querySelectorAll('input[type="text"]').forEach(input => {
-                    input.readOnly = true;
-                });
-                return true; // Allow form submission
-            } else {
-                return false; // Prevent form submission
+            // Display the preview data
+            alert(`Preview of entered data:\n\n${previewData}\n\nPlease confirm that all entries are correct. Once submitted, this data cannot be modified.`);
+        }
+
+        function confirmSubmit() {
+            // Ensure that all marks are entered
+            const marksTable = document.querySelector('table tbody');
+            let allMarksEntered = true;
+            marksTable.querySelectorAll('tr').forEach(row => {
+                const marks = row.cells[2].querySelector('input').value;
+                if (marks.trim() === "") {
+                    allMarksEntered = false;
+                }
+            });
+
+            if (!allMarksEntered) {
+                alert("Please ensure that marks are entered for all students.");
+                return false;
             }
+
+            // Make all input fields readonly
+            document.querySelectorAll('input[type="text"]').forEach(input => {
+                input.readOnly = true;
+            });
+
+            return true; // Allow form submission
         }
     </script>
 </head>
@@ -296,6 +312,7 @@ $conn->close();
             </tbody>
         </table>
 
+        <button type="button" onclick="previewMarks()">Preview Marks</button>
         <button type="submit">Submit Marks</button>
     </form>
     
