@@ -166,7 +166,7 @@ $overallPassPercent = $totalStudents > 0 ? round(($allCleared / $totalStudents) 
 </head>
 <body>
     <div class="header">
-        <img src="../assets/24349bb44aaa1a8c.jpg" alt="College Logo">
+        <img src="../assets/24349bb44aaa1a8c.svg" alt="College Logo">
         <div>
             <h3>C. ABDUL HAKEEM COLLEGE OF ENGINEERING & TECHNOLOGY</h3>
             <h3>MELVISHARAM - 632509</h3>
