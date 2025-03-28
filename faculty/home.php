@@ -6,65 +6,50 @@
     <title>Home</title>
     <style>
         /* General Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* Body Styling */
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    background-color: #f4f6f9;
-    color: #333;
-}
+        /* Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            background-color: #f4f6f9;
+            color: #333;
+        }
 
-/* Content Container */
-.content-container {
-    margin: 20px;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
+        /* Content Container */
+        .content-container {
+            margin: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
 
-/* College Info */
-.college-info {
-    background-color: #2c3e50;
-    color: white;
-    padding: 15px;
-    text-align: center;
-    margin-bottom: 20px;
-    border-radius: 8px 8px 0 0;
-}
+        /* Module Tutorial */
+        .module-tutorial {
+            margin-bottom: 20px;
+        }
 
-.college-info h2 {
-    margin: 0;
-}
+        .module-tutorial h2 {
+            color: #3498db;
+            margin-bottom: 10px;
+        }
 
-/* College Details */
-.college-details {
-    font-size: 14px;
-    line-height: 1.6;
-    text-align: justify;
-}
+        .module-tutorial p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
 
-.college-details h3 {
-    color: #3498db;
-    margin-top: 20px;
-}
-
-.college-details p {
-    margin-bottom: 10px;
-}
-
-/* Responsive Layout */
-@media screen and (max-width: 768px) {
-    .college-details p {
-        font-size: 13px;
-    }
-}
+        /* Responsive Layout */
+        @media screen and (max-width: 768px) {
+            .module-tutorial p {
+                font-size: 13px;
+            }
+        }
 
     </style>
 </head>
@@ -74,33 +59,37 @@ body {
         session_start();
 
         if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-        header('Location: ../index.php');
-        exit;
-}
+            header('Location: ../index.php');
+            exit;
+        }
         include 'head.php'; // Including the header with the navigation and banner
     ?>
 
     <div class="content-container">
-        <div class="college-info">
-            <h2>C. Abdul Hakeem College of Engineering & Technology</h2>
-            <p>Committed to Excellence in Education and Innovation</p>
-        </div>
+        <div class="module-tutorial">
+            <h2>Module Tutorial</h2>
+            <p>Welcome to the tutorial section. Here you will find instructions on how to use each module within the system.</p>
 
-        <div class="college-details">
-            <h3>About the College</h3>
-            <p>C. Abdul Hakeem College of Engineering & Technology, established in 1994, is one of the premier institutions in the region, offering undergraduate and postgraduate degrees in various engineering disciplines. The college is affiliated with Anna University, Chennai, and has earned a reputation for academic excellence and innovative teaching methods.</p>
+            <h3>Marks Module</h3>
+            <p>This module allows you to manage and enter marks for students. To get started, navigate to the 'Marks' section from the main menu.</p>
 
-            <h3>Our Vision</h3>
-            <p>Our vision is to nurture young minds to excel in the field of technology and contribute to the development of society through knowledge, innovation, and leadership.</p>
+            <h3>Attendance Module</h3>
+            <p>This module helps you track and manage student attendance. You can mark attendance, view attendance reports, and generate attendance summaries. Find this module under the 'Attendance' section.</p>
 
-            <h3>Our Mission</h3>
-            <p>To provide a world-class education that empowers students to become leaders in the field of engineering and technology. We aim to bridge the gap between industry and academia through collaborative research, skill development, and practical exposure.</p>
+            <h3>Grade Module</h3>
+            <p>In this module, you can add or update student grades. Access this module through the 'Grade' section in the main menu.</p>
 
-            <h3>Facilities</h3>
-            <p>The college is equipped with state-of-the-art infrastructure, including modern classrooms, computer labs, and research facilities. We also provide opportunities for students to engage in extra-curricular activities, sports, and community service.</p>
+            <h3>Subject Module</h3>
+            <p>The subject management module lets you create and manage subjects offered by the college. Go to the 'Subject' section to begin.</p>
 
-            <h3>Accreditations</h3>
-            <p>Our college is accredited by the National Board of Accreditation (NBA) and recognized by the All India Council for Technical Education (AICTE). We strive to maintain high standards of teaching and learning through continuous improvements in our academic programs and teaching methods.</p>
+            <h3>Students Report Module</h3>
+            <p>This module allows you to view and generate reports for students. Navigate to the 'Students Report' section to use this feature.</p>
+
+            <h3>Reports Module</h3>
+            <p>Manage and generate different types of reports using this module. You can find it under the 'Reports' section in the main menu.</p>
+
+            <h3>Student Login Module</h3>
+            <p>Parents and students can access their profiles and view relevant information through this module. Visit the 'Student' section to use this feature.</p>
         </div>
     </div>
 
