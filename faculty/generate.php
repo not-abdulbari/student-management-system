@@ -59,7 +59,7 @@ foreach ($subjects as $subject) {
     $absent = 0;
     $passed = 0;
     $failed = 0;
-    $totalStudents = 0;
+    $appeared = 0;
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
@@ -76,6 +76,7 @@ foreach ($subjects as $subject) {
             }
 
             $numericMark = (int)$mark;
+            $appeared++;
 
             if ($numericMark >= 50) {
                 $passed++;
@@ -83,20 +84,17 @@ foreach ($subjects as $subject) {
                 $failed++;
                 $studentFailures[$studentId] = ($studentFailures[$studentId] ?? 0) + 1;
             }
-
-            $totalStudents++;
         }
     }
 
-    $appeared = $totalStudents + $absent;
     $passPercent = $appeared > 0 ? round(($passed / $appeared) * 100, 2) : 0;
 
-    if ($totalStudents > 0) {
+    if ($appeared > 0) {
         $reportData[] = [
             'subject' => $subject,
             'subjectName' => $subjectName,
-            'totalPresent' => $totalStudents,
-            'totalAppear' => $appeared,
+            'totalPresent' => $appeared,
+            'totalAppear' => $appeared + $absent,
             'passed' => $passed,
             'failed' => $failed,
             'passPercent' => $passPercent,
