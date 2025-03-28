@@ -184,6 +184,11 @@ $conn->close();
             background-color: #fff;
         }
 
+        input[type="text"]:disabled {
+            background-color: #e0e0e0; /* Grey background for disabled inputs */
+            color: #888; /* Grey text color for disabled inputs */
+        }
+
         /* Button Styling */
         button {
             width: 100%;
@@ -240,8 +245,7 @@ $conn->close();
                 previewData += `${rollNo} | ${name} | ${marks}\n`;
             });
 
-            // Display the preview data
-            alert(`Preview of entered data:\n\n${previewData}\n\nPlease confirm that all entries are correct. Once submitted, this data cannot be modified.`);
+            return confirm(`Preview of entered data:\n\n${previewData}\n\nPlease confirm that all entries are correct. Once submitted, this data cannot be modified.\n\nPress OK to proceed or Cancel to go back.`);
         }
 
         function confirmSubmit() {
@@ -313,7 +317,7 @@ $conn->close();
             </tbody>
         </table>
 
-        <button type="button" onclick="previewMarks()">Preview Marks</button>
+        <button type="button" onclick="if(previewMarks()) { confirmSubmit(); }">Preview Marks</button>
         <button type="submit">Submit Marks</button>
     </form>
     
