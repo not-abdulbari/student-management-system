@@ -24,6 +24,20 @@ while ($row = $result->fetch_assoc()) {
 
 $stmt->close();
 
+// Fetch previous marks if they exist
+$previousMarksQuery = "SELECT roll_no, marks FROM marks WHERE branch = ? AND year = ? AND section = ? AND semester = ? AND subject = ? AND exam = ?";
+$previousMarksStmt = $conn->prepare($previousMarksQuery);
+$previousMarksStmt->bind_param("ssssss", $branch, $year, $section, $semester, $subject, $exam);
+$previousMarksStmt->execute();
+$previousMarksResult = $previousMarksStmt->get_result();
+
+$previousMarks = [];
+while ($row = $previousMarksResult->fetch_assoc()) {
+    $previousMarks[$row['roll_no']] = $row['marks'];
+}
+
+$previousMarksStmt->close();
+
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['marks'])) {
     // Validate required POST data
@@ -272,6 +286,8 @@ $conn->close();
                                 type="text" 
                                 name="marks[<?= htmlspecialchars($student['roll_no']) ?>]" 
                                 placeholder="Enter marks" 
+                                value="<?= isset($previousMarks[$student['roll_no']]) ? htmlspecialchars($previousMarks[$student['roll_no']]) : '' ?>"
+                                <?= isset($previousMarks[$student['roll_no']]) ? 'disabled' : '' ?>
                                 required
                             >
                         </td>
