@@ -265,6 +265,7 @@ $conn->close();
                 input.readOnly = true;
             });
 
+            alert("Once submitted, the data cannot be modified.");
             return true; // Allow form submission
         }
     </script>
