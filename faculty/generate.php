@@ -108,6 +108,7 @@ $failedOne = 0;
 $failedTwo = 0;
 $failedThree = 0;
 $failedMoreThanThree = 0;
+$totalAppeared = 0;
 
 foreach ($allStudents as $studentId => $count) {
     $failCount = $studentFailures[$studentId] ?? 0;
@@ -123,10 +124,13 @@ foreach ($allStudents as $studentId => $count) {
     } else {
         $failedMoreThanThree++;
     }
+
+    if ($failCount >= 0) {
+        $totalAppeared++;
+    }
 }
 
-$totalStudents = count($allStudents);
-$overallPassPercent = $totalStudents > 0 ? round(($allCleared / $totalStudents) * 100, 2) : 0;
+$overallPassPercent = $totalAppeared > 0 ? round(($allCleared / $totalAppeared) * 100, 2) : 0;
 ?>
 
 <!DOCTYPE html>
