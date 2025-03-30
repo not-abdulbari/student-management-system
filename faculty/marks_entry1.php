@@ -11,7 +11,7 @@ $subject = $_POST['subject'] ?? '';
 $exam = $_POST['exam'] ?? '';
 
 // Fetch students based on branch, year, and section
-$query = "SELECT roll_no, name FROM students WHERE branch = ? AND year = ? AND section = ?";
+$query = "SELECT roll_no, reg_no, name FROM students WHERE branch = ? AND year = ? AND section = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("sss", $branch, $year, $section);
 $stmt->execute();
@@ -45,41 +45,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['marks'])) {
         $marks = $_POST['marks']; // Array of roll_no => marks
 
         // Bind parameters and execute the statement
-$stmt = $conn->prepare("
-    INSERT INTO marks (roll_no, subject, exam, marks, semester, branch, year, section)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    ON DUPLICATE KEY UPDATE
-        marks = VALUES(marks),
-        semester = VALUES(semester),
-        branch = VALUES(branch),
-        year = VALUES(year),
-        section = VALUES(section)
-");
+        $stmt = $conn->prepare("
+            INSERT INTO marks (roll_no, subject, exam, marks, semester, branch, year, section)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ON DUPLICATE KEY UPDATE
+                marks = VALUES(marks),
+                semester = VALUES(semester),
+                branch = VALUES(branch),
+                year = VALUES(year),
+                section = VALUES(section)
+        ");
 
-if (!$stmt) {
-    die("Prepare failed: " . $conn->error);
-}
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
 
-// Bind parameters as strings
-$stmt->bind_param("ssssssss", $roll_no, $subject, $exam, $mark, $semester, $branch, $year, $section);
+        // Bind parameters as strings
+        $stmt->bind_param("ssssssss", $roll_no, $subject, $exam, $mark, $semester, $branch, $year, $section);
 
-// Iterate through the marks array and execute the statement
-foreach ($marks as $roll_no => $mark) {
-    // Skip students with no marks entered
-    if (trim($mark) === "") {
-        continue;
-    }
+        // Iterate through the marks array and execute the statement
+        foreach ($marks as $roll_no => $mark) {
+            // Skip students with no marks entered
+            if (trim($mark) === "") {
+                continue;
+            }
 
-    $roll_no = htmlspecialchars($roll_no);
-    $mark = htmlspecialchars($mark); // Treat mark as a string
+            $roll_no = htmlspecialchars($roll_no);
+            $mark = htmlspecialchars($mark); // Treat mark as a string
 
-    $stmt->execute();
+            $stmt->execute();
 
-    if ($stmt->error) {
-        echo "Error for Roll No $roll_no: " . $stmt->error . "<br>";
-    }
-}
-$stmt->close();
+            if ($stmt->error) {
+                echo "Error for Roll No $roll_no: " . $stmt->error . "<br>";
+            }
+        }
+        $stmt->close();
 
         // Display success message and redirect
         echo "<script>
@@ -238,16 +238,17 @@ $conn->close();
         function previewMarks() {
             // Show a preview of the entered data
             const marksTable = document.querySelector('table tbody');
-            let previewData = 'Roll Number | Name | Marks\n';
+            let previewData = 'Roll Number | Register Number | Name | Marks\n';
             previewData += '================================\n';
             marksTable.querySelectorAll('tr').forEach(row => {
                 const rollNo = row.cells[0].innerText;
-                const name = row.cells[1].innerText;
-                const marks = row.cells[2].querySelector('input').value;
-                previewData += `${rollNo} | ${name} | ${marks}\n`;
+                const regNo = row.cells[1].innerText;
+                const name = row.cells[2].innerText;
+                const marks = row.cells[3].querySelector('input').value;
+                previewData += `${rollNo} | ${regNo} | ${name} | ${marks}\n`;
             });
 
-            return confirm(`Preview of entered data:\n\n${previewData}\n\nPlease confirm that all entries are correct. Once submitted, this data cannot be modified.\n\nPress OK to proceed or Cancel to make changes.`);
+            return confirm(`Preview of entered data:\n\n${previewData}\n\nPlease confirm that all entries are correct. Once submitted, this data cannot be modified.\n\nPress OK to proceed or Cancel to review.`);
         }
 
         function confirmSubmit() {
@@ -255,7 +256,7 @@ $conn->close();
             const marksTable = document.querySelector('table tbody');
             let allMarksEntered = true;
             marksTable.querySelectorAll('tr').forEach(row => {
-                const marks = row.cells[2].querySelector('input').value;
+                const marks = row.cells[3].querySelector('input').value;
                 if (marks.trim() === "") {
                     allMarksEntered = false;
                 }
@@ -295,6 +296,7 @@ $conn->close();
             <thead>
                 <tr>
                     <th>Roll Number</th>
+                    <th>Register Number</th>
                     <th>Name</th>
                     <th>Marks</th>
                 </tr>
@@ -303,6 +305,7 @@ $conn->close();
                 <?php foreach ($students as $student): ?>
                     <tr>
                         <td><?= htmlspecialchars($student['roll_no']) ?></td>
+                        <td><?= htmlspecialchars($student['reg_no']) ?></td>
                         <td><?= htmlspecialchars($student['name']) ?></td>
                         <td>
                             <input 
