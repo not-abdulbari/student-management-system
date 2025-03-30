@@ -10,8 +10,8 @@ $semester = $_POST['semester'] ?? '';
 $subject = $_POST['subject'] ?? '';
 $exam = $_POST['exam'] ?? '';
 
-// Fetch students based on branch, year, and section
-$query = "SELECT roll_no, reg_no, name FROM students WHERE branch = ? AND year = ? AND section = ?";
+// Fetch students based on branch, year, and section and sort by register number
+$query = "SELECT roll_no, reg_no, name FROM students WHERE branch = ? AND year = ? AND section = ? ORDER BY reg_no";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("sss", $branch, $year, $section);
 $stmt->execute();
