@@ -1,6 +1,6 @@
 <?php
 // Include database connection
-include 'db_connection.php';
+include 'faculty/db_connect.php';
 
 $student_data = [];
 $student_data_error = '';
