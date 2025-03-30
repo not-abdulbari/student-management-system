@@ -1,6 +1,11 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 // Include database connection
-include 'db_connection.php';
+include 'faculty/db_connect.php';
 
 $student_data = [];
 $student_data_error = '';
