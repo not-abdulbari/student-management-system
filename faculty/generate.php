@@ -75,14 +75,20 @@ foreach ($subjects as $subject) {
                 continue;
             }
 
-            $numericMark = (int)$mark;
-            $appeared++;
+            // Check if mark is numeric
+            if (is_numeric($mark)) {
+                $numericMark = (int)$mark;
+                $appeared++;
 
-            if ($numericMark >= 50) {
-                $passed++;
+                if ($numericMark >= 50) {
+                    $passed++;
+                } else {
+                    $failed++;
+                    $studentFailures[$studentId] = ($studentFailures[$studentId] ?? 0) + 1;
+                }
             } else {
-                $failed++;
-                $studentFailures[$studentId] = ($studentFailures[$studentId] ?? 0) + 1;
+                // If mark is not numeric, treat it as a letter grade and display as is
+                $appeared++;
             }
         }
     }
