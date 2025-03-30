@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['marks'])) {
             }
 
             $roll_no = htmlspecialchars($roll_no);
-            $mark = (int)$mark;
+            $mark = htmlspecialchars($mark); // Treat mark as a string
 
             $stmt->execute();
 
@@ -245,7 +245,7 @@ $conn->close();
                 previewData += `${rollNo} | ${name} | ${marks}\n`;
             });
 
-            return confirm(`Preview of entered data:\n\n${previewData}\n\nPlease confirm that all entries are correct. Once submitted, this data cannot be modified.\n\nPress OK to proceed or Cancel to go back.`);
+            return confirm(`Preview of entered data:\n\n${previewData}\n\nPlease confirm that all entries are correct. Once submitted, this data cannot be modified.\n\nPress OK to proceed or Cancel to make changes.`);
         }
 
         function confirmSubmit() {
