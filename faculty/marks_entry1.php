@@ -44,40 +44,42 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['marks'])) {
     if (!empty($semester) && !empty($subject) && !empty($exam) && isset($_POST['marks'])) {
         $marks = $_POST['marks']; // Array of roll_no => marks
 
-        // Prepare SQL statement
-        $stmt = $conn->prepare("
-            INSERT INTO marks (roll_no, subject, exam, marks, semester, branch, year, section)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ON DUPLICATE KEY UPDATE
-                marks = VALUES(marks),
-                semester = VALUES(semester),
-                branch = VALUES(branch),
-                year = VALUES(year),
-                section = VALUES(section)
-        ");
-        if (!$stmt) {
-            die("Prepare failed: " . $conn->error);
-        }
+        // Bind parameters and execute the statement
+$stmt = $conn->prepare("
+    INSERT INTO marks (roll_no, subject, exam, marks, semester, branch, year, section)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    ON DUPLICATE KEY UPDATE
+        marks = VALUES(marks),
+        semester = VALUES(semester),
+        branch = VALUES(branch),
+        year = VALUES(year),
+        section = VALUES(section)
+");
 
-        $stmt->bind_param("sssissss", $roll_no, $subject, $exam, $mark, $semester, $branch, $year, $section);
+if (!$stmt) {
+    die("Prepare failed: " . $conn->error);
+}
 
-        // Iterate through the marks array and execute the statement
-        foreach ($marks as $roll_no => $mark) {
-            // Skip students with no marks entered
-            if (trim($mark) === "") {
-                continue;
-            }
+// Bind parameters as strings
+$stmt->bind_param("ssssssss", $roll_no, $subject, $exam, $mark, $semester, $branch, $year, $section);
 
-            $roll_no = htmlspecialchars($roll_no);
-            $mark = htmlspecialchars($mark); // Treat mark as a string
+// Iterate through the marks array and execute the statement
+foreach ($marks as $roll_no => $mark) {
+    // Skip students with no marks entered
+    if (trim($mark) === "") {
+        continue;
+    }
 
-            $stmt->execute();
+    $roll_no = htmlspecialchars($roll_no);
+    $mark = htmlspecialchars($mark); // Treat mark as a string
 
-            if ($stmt->error) {
-                echo "Error for Roll No $roll_no: " . $stmt->error . "<br>";
-            }
-        }
-        $stmt->close();
+    $stmt->execute();
+
+    if ($stmt->error) {
+        echo "Error for Roll No $roll_no: " . $stmt->error . "<br>";
+    }
+}
+$stmt->close();
 
         // Display success message and redirect
         echo "<script>
