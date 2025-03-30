@@ -1,11 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
 // Include database connection
-include 'faculty/db_connect.php';
+include 'db_connection.php';
 
 $student_data = [];
 $student_data_error = '';
@@ -61,83 +56,157 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_student_info'])
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://hcaptcha.com/1/api.js" async defer></script>
     <title>Student Data Entry</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+            border-radius: 8px;
+        }
+        h2, h3 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="email"], input[type="number"], input[type="date"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #5cb85c;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        input[type="submit"]:hover {
+            background-color: #4cae4c;
+        }
+        .table-container {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .error {
+            color: red;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <form method="POST" action="student_data.php">
-        <label for="roll_no">Roll Number:</label>
-        <input type="text" name="roll_no" id="roll_no" required><br>
-        <input type="submit" name="fetch_student" value="Fetch Student Details"><br>
-    </form>
-
-    <?php if (!empty($student_data)): ?>
-        <h3>Student Details</h3>
-        <table>
-            <tr><th>Roll Number</th><td><?php echo htmlspecialchars($student_data['roll_no']); ?></td></tr>
-            <tr><th>Register Number</th><td><?php echo htmlspecialchars($student_data['reg_no']); ?></td></tr>
-            <tr><th>Name</th><td><?php echo htmlspecialchars($student_data['name']); ?></td></tr>
-            <tr><th>Branch</th><td><?php echo htmlspecialchars($student_data['branch']); ?></td></tr>
-            <tr><th>Year</th><td><?php echo htmlspecialchars($student_data['year']); ?></td></tr>
-            <tr><th>Section</th><td><?php echo htmlspecialchars($student_data['section']); ?></td></tr>
-        </table>
-
-        <h3>Additional Information</h3>
+    <div class="container">
+        <h2>Student Data Entry</h2>
         <form method="POST" action="student_data.php">
-            <input type="hidden" name="roll_no" value="<?php echo htmlspecialchars($student_data['roll_no']); ?>">
-
-            <label for="mail">Mail:</label>
-            <input type="email" name="mail" id="mail" required><br>
-
-            <label for="dob">Date of Birth (DD-MM-YYYY):</label>
-            <input type="text" name="dob" id="dob" required><br>
-
-            <label for="father_name">Father's Name:</label>
-            <input type="text" name="father_name" id="father_name" required><br>
-
-            <label for="occupation">Occupation:</label>
-            <input type="text" name="occupation" id="occupation" required><br>
-
-            <label for="parent_phone">Parent's Phone:</label>
-            <input type="text" name="parent_phone" id="parent_phone" required><br>
-
-            <label for="student_phone">Student's Phone:</label>
-            <input type="text" name="student_phone" id="student_phone" required><br>
-
-            <label for="present_addr">Present Address:</label>
-            <input type="text" name="present_addr" id="present_addr" required><br>
-
-            <label for="permanent_addr">Permanent Address:</label>
-            <input type="text" name="permanent_addr" id="permanent_addr" required><br>
-
-            <label for="languages_known">Languages Known:</label>
-            <input type="text" name="languages_known" id="languages_known" required><br>
-
-            <label for="school">School:</label>
-            <input type="text" name="school" id="school" required><br>
-
-            <label for="medium">Medium:</label>
-            <input type="text" name="medium" id="medium" required><br>
-
-            <label for="math">Math:</label>
-            <input type="number" name="math" id="math" required><br>
-
-            <label for="physic">Physics:</label>
-            <input type="number" name="physic" id="physic" required><br>
-
-            <label for="chemis">Chemistry:</label>
-            <input type="number" name="chemis" id="chemis" required><br>
-
-            <label for="quota">Quota:</label>
-            <select name="quota" id="quota" required>
-                <option value="management">Management</option>
-                <option value="counselling">Counselling</option>
-            </select><br>
-
-            <div class="h-captcha" data-sitekey="your-hcaptcha-site-key"></div><br>
-            
-            <input type="submit" name="submit_student_info" value="Submit">
+            <label for="roll_no">Roll Number:</label>
+            <input type="text" name="roll_no" id="roll_no" required><br>
+            <input type="submit" name="fetch_student" value="Fetch Student Details"><br>
         </form>
-    <?php elseif ($student_data_error): ?>
-        <p><?php echo $student_data_error; ?></p>
-    <?php endif; ?>
+
+        <?php if (!empty($student_data)): ?>
+            <div class="table-container">
+                <h3>Student Details</h3>
+                <table>
+                    <tr><th>Roll Number</th><td><?php echo htmlspecialchars($student_data['roll_no']); ?></td></tr>
+                    <tr><th>Register Number</th><td><?php echo htmlspecialchars($student_data['reg_no']); ?></td></tr>
+                    <tr><th>Name</th><td><?php echo htmlspecialchars($student_data['name']); ?></td></tr>
+                    <tr><th>Branch</th><td><?php echo htmlspecialchars($student_data['branch']); ?></td></tr>
+                    <tr><th>Year</th><td><?php echo htmlspecialchars($student_data['year']); ?></td></tr>
+                    <tr><th>Section</th><td><?php echo htmlspecialchars($student_data['section']); ?></td></tr>
+                </table>
+            </div>
+
+            <h3>Additional Information</h3>
+            <form method="POST" action="student_data.php">
+                <input type="hidden" name="roll_no" value="<?php echo htmlspecialchars($student_data['roll_no']); ?>">
+
+                <label for="mail">Mail:</label>
+                <input type="email" name="mail" id="mail" required><br>
+
+                <label for="dob">Date of Birth:</label>
+                <input type="date" name="dob" id="dob" required><br>
+
+                <label for="father_name">Father's Name:</label>
+                <input type="text" name="father_name" id="father_name" required><br>
+
+                <label for="occupation">Occupation:</label>
+                <input type="text" name="occupation" id="occupation" required><br>
+
+                <label for="parent_phone">Parent's Phone:</label>
+                <input type="text" name="parent_phone" id="parent_phone" required><br>
+
+                <label for="student_phone">Student's Phone:</label>
+                <input type="text" name="student_phone" id="student_phone" required><br>
+
+                <label for="present_addr">Present Address:</label>
+                <textarea name="present_addr" id="present_addr" required></textarea><br>
+
+                <label for="permanent_addr">Permanent Address:</label>
+                <textarea name="permanent_addr" id="permanent_addr" required></textarea><br>
+
+                <label for="languages_known">Languages Known:</label>
+                <input type="text" name="languages_known" id="languages_known" required><br>
+
+                <label for="school">School:</label>
+                <input type="text" name="school" id="school" required><br>
+
+                <label for="medium">Medium:</label>
+                <input type="text" name="medium" id="medium" required><br>
+
+                <label for="math">Math:</label>
+                <input type="number" name="math" id="math" required><br>
+
+                <label for="physic">Physics:</label>
+                <input type="number" name="physic" id="physic" required><br>
+
+                <label for="chemis">Chemistry:</label>
+                <input type="number" name="chemis" id="chemis" required><br>
+
+                <label for="quota">Quota:</label>
+                <select name="quota" id="quota" required>
+                    <option value="management">Management</option>
+                    <option value="counselling">Counselling</option>
+                </select><br>
+
+                <div class="h-captcha" data-sitekey="your-hcaptcha-site-key"></div><br>
+                
+                <input type="submit" name="submit_student_info" value="Submit">
+            </form>
+        <?php elseif ($student_data_error): ?>
+            <p class="error"><?php echo $student_data_error; ?></p>
+        <?php endif; ?>
+    </div>
 </body>
 </html>
