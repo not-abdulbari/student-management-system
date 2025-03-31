@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Include database connection
-include 'facilty/db_connect.php';
+include 'faculty/db_connect.php';
 
 $student_data = [];
 $student_data_error = '';
