@@ -7,7 +7,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     exit;
 }
 include 'db_connect.php';
-
+include 'head.php';
 // Fetch distinct values for dropdowns
 $branches = $conn->query("SELECT DISTINCT branch FROM marks WHERE branch IS NOT NULL ORDER BY branch ASC");
 $years = $conn->query("SELECT DISTINCT year FROM marks WHERE year IS NOT NULL ORDER BY year ASC");
