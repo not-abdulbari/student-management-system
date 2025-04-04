@@ -208,7 +208,7 @@ body {
                 if (branch !== "" && year !== "" && section !== "" && semester !== "") {
                     $.ajax({
                         type: "POST",
-                        url: "get_subjects.php",
+                        url: "get_subjects1.php",
                         data: { branch: branch, year: year, section: section, semester: semester },
                         success: function (response) {
                             $("#subject").html(response);
