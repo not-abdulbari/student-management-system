@@ -1,19 +1,21 @@
 <?php
 include 'db_connect.php';
 
-// Get the semester and branch from the GET request
-$semester = isset($_GET['semester']) ? trim($_GET['semester']) : '';
-$branch = isset($_GET['branch']) ? trim($_GET['branch']) : '';
+// Get the parameters from the POST request
+$branch = isset($_POST['branch']) ? trim($_POST['branch']) : '';
+$year = isset($_POST['year']) ? trim($_POST['year']) : '';
+$section = isset($_POST['section']) ? trim($_POST['section']) : '';
+$semester = isset($_POST['semester']) ? trim($_POST['semester']) : '';
 
 // Initialize an empty array to hold the subjects
 $subjects = [];
 
-// Validate that both semester and branch are provided
-if (!empty($semester) && !empty($branch)) {
-    // SQL query to fetch subjects for the selected semester and branch
-    $query = "SELECT subject_code, subject_name FROM subjects WHERE semester = ? AND branch = ?";
+// Validate that all required parameters are provided
+if (!empty($branch) && !empty($year) && !empty($section) && !empty($semester)) {
+    // SQL query to fetch subjects for the selected parameters
+    $query = "SELECT DISTINCT subject FROM marks WHERE branch = ? AND year = ? AND section = ? AND semester = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("ss", $semester, $branch);
+    $stmt->bind_param("ssss", $branch, $year, $section, $semester);
 
     // Execute the query
     if ($stmt->execute()) {
@@ -35,7 +37,7 @@ if (!empty($semester) && !empty($branch)) {
     $stmt->close();
 } else {
     // If required parameters are missing, return an error
-    echo json_encode(["error" => "Semester and branch are required."]);
+    echo json_encode(["error" => "Branch, year, section, and semester are required."]);
 }
 
 // Close the connection
