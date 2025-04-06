@@ -1,6 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 require_once 'db_connect.php'; // Include database connection
 
 try {
@@ -14,6 +12,9 @@ try {
 
 function fetchDistinct($column) {
     global $pdo;
+    if ($pdo === null) {
+        throw new Exception("Database connection is not established.");
+    }
     $stmt = $pdo->prepare("SELECT DISTINCT $column FROM students ORDER BY $column");
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_COLUMN);
