@@ -1,5 +1,5 @@
 <?php
-require_once 'db_connection.php'; // Include database connection
+require_once 'db_connect.php'; // Include database connection
 
 $branch = $_GET['branch'] ?? '';
 $year = $_GET['year'] ?? '';
