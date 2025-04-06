@@ -1,11 +1,14 @@
-
 <?php
 require_once 'db_connect.php'; // Include database connection
 
-// Fetch distinct branches, years, and sections from students table
-$branches = fetchDistinct('branch');
-$years = fetchDistinct('year');
-$sections = fetchDistinct('section');
+try {
+    // Fetch distinct branches, years, and sections from students table
+    $branches = fetchDistinct('branch');
+    $years = fetchDistinct('year');
+    $sections = fetchDistinct('section');
+} catch (Exception $e) {
+    die("Error: " . $e->getMessage());
+}
 
 function fetchDistinct($column) {
     global $pdo;
