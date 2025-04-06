@@ -1,6 +1,6 @@
 <?php
-require_once 'db_connection.php'; // Include database connection
-require_once 'fpdf/fpdf.php'; // Include FPDF library
+require_once 'db_connect.php'; // Include database connection
+require_once '../fpdf186/fpdf.php'; // Include FPDF library
 
 $students = $_POST['students'] ?? [];
 
