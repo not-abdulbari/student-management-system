@@ -1,6 +1,6 @@
 
 <?php
-require_once 'db_connection.php'; // Include database connection
+require_once 'db_connect.php'; // Include database connection
 
 // Fetch distinct branches, years, and sections from students table
 $branches = fetchDistinct('branch');
