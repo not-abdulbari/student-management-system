@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_student_info'])
             box-sizing: border-box;
         }
         input[type="submit"] {
-            background-color: #007bff;
+            background-color: #5cb85c;
             color: #fff;
             border: none;
             padding: 15px 20px;
@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_student_info'])
             box-sizing: border-box;
         }
         input[type="submit"]:hover {
-            background-color: #0056b3;
+            background-color: #4cae4c;
         }
         table {
             width: 100%;
