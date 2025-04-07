@@ -63,23 +63,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_student_info'])
             margin: 0;
             padding: 20px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
-            box-sizing: border-box;
-        }
-        .container {
-            max-width: 700px;
-            width: 100%;
-            background: #fff;
-            padding: 30px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            margin-top: 50px;
             box-sizing: border-box;
         }
         h2, h3 {
-            text-align: center;
             color: #333;
         }
         label {
@@ -108,11 +96,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_student_info'])
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
-        .table-container {
-            margin-top: 20px;
-        }
         table {
             width: 100%;
+            max-width: 700px;
             border-collapse: collapse;
             margin-top: 20px;
         }
@@ -132,6 +118,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_student_info'])
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
+            max-width: 700px;
+            width: 100%;
         }
         .user-details .input-box {
             flex: 1;
@@ -145,101 +133,97 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_student_info'])
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Student Data Entry</h2>
+    <h2>Student Data Entry</h2>
+    <form method="POST" action="">
+        <label for="roll_no">Roll Number</label>
+        <input type="text" name="roll_no" id="roll_no" required>
+        <input type="submit" name="fetch_student" value="Fetch Student Details">
+    </form>
+
+    <?php if (!empty($student_data)): ?>
+        <h3>Student Details</h3>
+        <table>
+            <tr><th>Roll Number</th><td><?php echo htmlspecialchars($student_data['roll_no']); ?></td></tr>
+            <tr><th>Register Number</th><td><?php echo htmlspecialchars($student_data['reg_no']); ?></td></tr>
+            <tr><th>Name</th><td><?php echo htmlspecialchars($student_data['name']); ?></td></tr>
+            <tr><th>Branch</th><td><?php echo htmlspecialchars($student_data['branch']); ?></td></tr>
+            <tr><th>Year</th><td><?php echo htmlspecialchars($student_data['year']); ?></td></tr>
+            <tr><th>Section</th><td><?php echo htmlspecialchars($student_data['section']); ?></td></tr>
+        </table>
+
+        <h3>Additional Information</h3>
         <form method="POST" action="">
-            <label for="roll_no">Roll Number</label>
-            <input type="text" name="roll_no" id="roll_no" required>
-            <input type="submit" name="fetch_student" value="Fetch Student Details">
-        </form>
-
-        <?php if (!empty($student_data)): ?>
-            <div class="table-container">
-                <h3>Student Details</h3>
-                <table>
-                    <tr><th>Roll Number</th><td><?php echo htmlspecialchars($student_data['roll_no']); ?></td></tr>
-                    <tr><th>Register Number</th><td><?php echo htmlspecialchars($student_data['reg_no']); ?></td></tr>
-                    <tr><th>Name</th><td><?php echo htmlspecialchars($student_data['name']); ?></td></tr>
-                    <tr><th>Branch</th><td><?php echo htmlspecialchars($student_data['branch']); ?></td></tr>
-                    <tr><th>Year</th><td><?php echo htmlspecialchars($student_data['year']); ?></td></tr>
-                    <tr><th>Section</th><td><?php echo htmlspecialchars($student_data['section']); ?></td></tr>
-                </table>
-            </div>
-
-            <h3>Additional Information</h3>
-            <form method="POST" action="">
-                <input type="hidden" name="roll_no" value="<?php echo htmlspecialchars($student_data['roll_no']); ?>">
-                <div class="user-details">
-                    <div class="input-box">
-                        <label for="mail">Mail</label>
-                        <input type="email" name="mail" id="mail" required>
-                    </div>
-                    <div class="input-box">
-                        <label for="dob">Date of Birth</label>
-                        <input type="date" name="dob" id="dob" required>
-                    </div>
-                    <div class="input-box">
-                        <label for="father_name">Father's Name</label>
-                        <input type="text" name="father_name" id="father_name" required>
-                    </div>
-                    <div class="input-box">
-                        <label for="occupation">Occupation</label>
-                        <input type="text" name="occupation" id="occupation" required>
-                    </div>
-                    <div class="input-box">
-                        <label for="parent_phone">Parent's Phone</label>
-                        <input type="text" name="parent_phone" id="parent_phone" required>
-                    </div>
-                    <div class="input-box">
-                        <label for="student_phone">Student's Phone</label>
-                        <input type="text" name="student_phone" id="student_phone" required>
-                    </div>
-                    <div class="input-box">
-                        <label for="present_addr">Present Address</label>
-                        <textarea name="present_addr" id="present_addr" required></textarea>
-                    </div>
-                    <div class="input-box">
-                        <label for="permanent_addr">Permanent Address</label>
-                        <textarea name="permanent_addr" id="permanent_addr" required></textarea>
-                    </div>
-                    <div class="input-box">
-                        <label for="languages_known">Languages Known</label>
-                        <input type="text" name="languages_known" id="languages_known" required>
-                    </div>
-                    <div class="input-box">
-                        <label for="school">School</label>
-                        <input type="text" name="school" id="school" required>
-                    </div>
-                    <div class="input-box">
-                        <label for="medium">Medium</label>
-                        <input type="text" name="medium" id="medium" required>
-                    </div>
-                    <div class="input-box">
-                        <label for="math">Math</label>
-                        <input type="number" name="math" id="math" required>
-                    </div>
-                    <div class="input-box">
-                        <label for="physic">Physics</label>
-                        <input type="number" name="physic" id="physic" required>
-                    </div>
-                    <div class="input-box">
-                        <label for="chemis">Chemistry</label>
-                        <input type="number" name="chemis" id="chemis" required>
-                    </div>
-                    <div class="input-box">
-                        <label for="quota">Quota</label>
-                        <select name="quota" id="quota" required>
-                            <option value="management">Management</option>
-                            <option value="counselling">Counselling</option>
-                        </select>
-                    </div>
+            <input type="hidden" name="roll_no" value="<?php echo htmlspecialchars($student_data['roll_no']); ?>">
+            <div class="user-details">
+                <div class="input-box">
+                    <label for="mail">Mail</label>
+                    <input type="email" name="mail" id="mail" required>
                 </div>
-                <div class="h-captcha" data-sitekey="your-hcaptcha-site-key"></div>
-                <input type="submit" name="submit_student_info" value="Submit">
-            </form>
-        <?php elseif ($student_data_error): ?>
-            <p class="error"><?php echo $student_data_error; ?></p>
-        <?php endif; ?>
-    </div>
+                <div class="input-box">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" name="dob" id="dob" required>
+                </div>
+                <div class="input-box">
+                    <label for="father_name">Father's Name</label>
+                    <input type="text" name="father_name" id="father_name" required>
+                </div>
+                <div class="input-box">
+                    <label for="occupation">Occupation</label>
+                    <input type="text" name="occupation" id="occupation" required>
+                </div>
+                <div class="input-box">
+                    <label for="parent_phone">Parent's Phone</label>
+                    <input type="text" name="parent_phone" id="parent_phone" required>
+                </div>
+                <div class="input-box">
+                    <label for="student_phone">Student's Phone</label>
+                    <input type="text" name="student_phone" id="student_phone" required>
+                </div>
+                <div class="input-box">
+                    <label for="present_addr">Present Address</label>
+                    <textarea name="present_addr" id="present_addr" required></textarea>
+                </div>
+                <div class="input-box">
+                    <label for="permanent_addr">Permanent Address</label>
+                    <textarea name="permanent_addr" id="permanent_addr" required></textarea>
+                </div>
+                <div class="input-box">
+                    <label for="languages_known">Languages Known</label>
+                    <input type="text" name="languages_known" id="languages_known" required>
+                </div>
+                <div class="input-box">
+                    <label for="school">School</label>
+                    <input type="text" name="school" id="school" required>
+                </div>
+                <div class="input-box">
+                    <label for="medium">Medium</label>
+                    <input type="text" name="medium" id="medium" required>
+                </div>
+                <div class="input-box">
+                    <label for="math">Math</label>
+                    <input type="number" name="math" id="math" required>
+                </div>
+                <div class="input-box">
+                    <label for="physic">Physics</label>
+                    <input type="number" name="physic" id="physic" required>
+                </div>
+                <div class="input-box">
+                    <label for="chemis">Chemistry</label>
+                    <input type="number" name="chemis" id="chemis" required>
+                </div>
+                <div class="input-box">
+                    <label for="quota">Quota</label>
+                    <select name="quota" id="quota" required>
+                        <option value="management">Management</option>
+                        <option value="counselling">Counselling</option>
+                    </select>
+                </div>
+            </div>
+            <div class="h-captcha" data-sitekey="your-hcaptcha-site-key"></div>
+            <input type="submit" name="submit_student_info" value="Submit">
+        </form>
+    <?php elseif ($student_data_error): ?>
+        <p class="error"><?php echo $student_data_error; ?></p>
+    <?php endif; ?>
 </body>
 </html>
