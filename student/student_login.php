@@ -331,6 +331,7 @@ $conn->close(); // Keep this at the very end of the script to close the connecti
 </head>
 <body>
     <div class="container">
+        <h1 style="text-align: center;">Student Dashboard</h1>
         <?php
         if (isset($student_data_error)) { echo "<p class='error'>$student_data_error</p>"; }
         if (isset($student_data)) {
