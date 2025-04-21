@@ -1,6 +1,27 @@
 <?php
+session_start();
+if (!isset($_SESSION['student_logged_in']) || !isset($_SESSION['roll_no'])) {
+    header('Location: ../index.php');
+    exit();
+}
 include '../faculty/db_connect.php';
-include 'head.php';
+
+$roll_number = $_SESSION['roll_no'];
+$sql_student = "SELECT roll_no, reg_no, name, branch, year, section FROM students WHERE roll_no = ?";
+$stmt = $conn->prepare($sql_student);
+$stmt->bind_param("s", $roll_number);
+$stmt->execute();
+$result_student = $stmt->get_result();
+
+if ($result_student->num_rows > 0) {
+    $student_data = $result_student->fetch_assoc();
+} else {
+    echo "Student data not found.";
+    exit();
+}
+$stmt->close();
+$conn->close();
+
 // Handling form submission
 $marks_data = [];
 $attendance_data = [];
@@ -309,11 +330,12 @@ $conn->close();
 <body>
     <div class="container">
         <h1>STUDENT DASHBOARD</h1>
-        <form method="POST" action="student_login.php">
-            <label for="roll_number">Enter Roll Number:</label>
-            <input type="text" name="roll_number" id="roll_number" required>
-            <input type="submit" name="submit" value="View Details">
-        </form>
+        <p>Welcome, <?php echo htmlspecialchars($student_data['name']); ?>!</p>
+        <p>Roll Number: <?php echo htmlspecialchars($student_data['roll_no']); ?></p>
+        <p>Branch: <?php echo htmlspecialchars($student_data['branch']); ?></p>
+        <p>Year: <?php echo htmlspecialchars($student_data['year']); ?></p>
+        <p>Section: <?php echo htmlspecialchars($student_data['section']); ?></p>
+
 
         <?php
         if (isset($student_data_error)) { echo "<p class='error'>$student_data_error</p>"; }
