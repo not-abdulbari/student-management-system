@@ -81,12 +81,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
         $error = 'hCaptcha verification failed. Please try again.';
     } else {
         $input_roll_no = htmlspecialchars($_POST['roll_no']);
-        $input_dob = htmlspecialchars($_POST['dob']);
+        // $input_dob = htmlspecialchars($_POST['dob']);
 
-        $sql = "SELECT * FROM students WHERE roll_no = ? AND dob = ?";
+        $sql = "SELECT * FROM students WHERE roll_no = ? ";
         $stmt = $conn->prepare($sql);
         if ($stmt) {
-            $stmt->bind_param('ss', $input_roll_no, $input_dob);
+            $stmt->bind_param('s', $input_roll_no);
             $stmt->execute();
             $result = $stmt->get_result();
             if ($result->num_rows > 0) {
@@ -293,7 +293,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
             <h2>Student Login</h2>
             <form id="studentLoginForm" action="" method="POST">
                 <input type="text" name="roll_no" placeholder="Roll Number" required>
-                <input type="text" name="dob" placeholder="Date of Birth (DD/MM/YYYY)" required>
+                <input type="text" name="dob" placeholder="Date of Birth (DD/MM/YYYY)">
                 <div class="h-captcha" data-sitekey="<?php echo $config['HCAPTCHA_SITE_KEY']; ?>"></div>
                 <button type="submit">Login</button>
             </form>
