@@ -25,13 +25,13 @@ $stmt->close();
 // Remove $conn->close() here to avoid closing the connection prematurely.
 
 // Handling form submission
-// No additional initialization needed here, as the data is already being fetched and processed below.
+$marks_data = [];
 $attendance_data = [];
 $grades_data = [];
 $report_data = null;
 $university_results_data = []; // General array for all university results
 $student_data_error = null;
-// $student_data = null; // Removed to prevent overwriting fetched student data
+$student_data = null; // Initialize student_data
 $year_of_passing = null; // Initialize year of passing
 $branch = null; // Initialize branch
 
@@ -331,14 +331,6 @@ $conn->close(); // Keep this at the very end of the script to close the connecti
 </head>
 <body>
     <div class="container">
-        <h1>STUDENT DASHBOARD</h1>
-        <p>Welcome, <?php echo htmlspecialchars($student_data['name']); ?>!</p>
-        <p>Roll Number: <?php echo htmlspecialchars($student_data['roll_no']); ?></p>
-        <p>Branch: <?php echo htmlspecialchars($student_data['branch']); ?></p>
-        <p>Year: <?php echo htmlspecialchars($student_data['year']); ?></p>
-        <p>Section: <?php echo htmlspecialchars($student_data['section']); ?></p>
-
-
         <?php
         if (isset($student_data_error)) { echo "<p class='error'>$student_data_error</p>"; }
         if (isset($student_data)) {
