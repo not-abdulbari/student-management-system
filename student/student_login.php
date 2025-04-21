@@ -362,6 +362,14 @@ $conn->close(); // Keep this at the very end of the script to close the connecti
             ksort($all_semesters);
 
             // Generate semester tabs only if there is data for that semester
+            foreach ($all_semesters as $semester => $data) {
+                $has_data = !empty($data['marks']) || !empty($data['attendance']) || !empty($data['grades']) || isset($data['report']) || !empty($data['university_results']);
+                $is_pg_sem3 = in_array(strtoupper($branch), ['MBA', 'MCA']) && $semester == 3 && isset($data['university_results']) && !empty($data['university_results']);
+
+                if ($has_data || $is_pg_sem3) {
+                    echo "<button class='tab-link' onclick=\"openTab(event, 'semester-$semester')\">Semester $semester</button>";
+                }
+            }
             for ($i = 1; $i <= 8; $i++) {
                 $has_data = isset($all_semesters[$i]) && (!empty($all_semesters[$i]['marks']) || !empty($all_semesters[$i]['attendance']) || !empty($all_semesters[$i]['grades']) || isset($all_semesters[$i]['report']) || !empty($all_semesters[$i]['university_results']));
                 $is_pg_sem3 = in_array(strtoupper($branch), ['MBA', 'MCA']) && $i == 3 && isset($all_semesters[3]['university_results']) && !empty($all_semesters[3]['university_results']);
