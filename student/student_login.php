@@ -4,11 +4,13 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('log_errors', 1);
 
+
+include '../faculty/db_connect.php';
+
 if (!isset($_SESSION['student_logged_in']) || !isset($_SESSION['roll_no'])) {
     header('Location: ../index.php');
     exit();
 }
-include '../faculty/db_connect.php';
 
 $roll_number = $_SESSION['roll_no'];
 $sql_student = "SELECT roll_no, reg_no, name, branch, year, section FROM students WHERE roll_no = ?";
