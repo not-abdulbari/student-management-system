@@ -333,7 +333,46 @@ $conn->close(); // Keep this at the very end of the script to close the connecti
     <div class="container">
         <h1 style="text-align: center;">Student Dashboard</h1>
         <?php
-        if (isset($student_data_error)) { echo "<p class='error'>$student_data_error</p>"; }
+        if (isset($student_data_error)) { 
+            echo "<p class='error'>$student_data_error</p>"; 
+        } else {
+            $all_semesters = [];
+            foreach ($marks_data as $semester => $marks) {
+            $all_semesters[$semester]['marks'] = $marks;
+            }
+            foreach ($attendance_data as $semester => $entries) {
+            $all_semesters[$semester]['attendance'] = $entries;
+            }
+            foreach ($grades_data as $display_semester => $entries) {
+            $all_semesters[$display_semester]['grades'] = $entries;
+            }
+            foreach ($report_data as $display_semester => $report) {
+            if (!isset($all_semesters[$display_semester])) {
+                $all_semesters[$display_semester] = [];
+            }
+            $all_semesters[$display_semester]['report'] = $report;
+            }
+            foreach ($university_results_data as $semester => $results) {
+            if (!isset($all_semesters[$semester])) {
+                $all_semesters[$semester] = [];
+            }
+            $all_semesters[$semester]['university_results'] = $results;
+            }
+
+            ksort($all_semesters);
+
+            echo "<div class='tabs'>";
+            echo "<button class='tab-link' onclick=\"openTab(event, 'profile')\">Profile</button>";
+            for ($i = 1; $i <= 8; $i++) {
+            $has_data = isset($all_semesters[$i]) && (!empty($all_semesters[$i]['marks']) || !empty($all_semesters[$i]['attendance']) || !empty($all_semesters[$i]['grades']) || isset($all_semesters[$i]['report']) || !empty($all_semesters[$i]['university_results']));
+            $is_pg_sem3 = in_array(strtoupper($branch), ['MBA', 'MCA']) && $i == 3 && isset($all_semesters[3]['university_results']) && !empty($all_semesters[3]['university_results']);
+
+            if ($has_data || $is_pg_sem3) {
+                echo "<button class='tab-link' onclick=\"openTab(event, 'semester-$i')\">Semester $i</button>";
+            }
+            }
+            echo "</div>";
+        }
         if (isset($student_data)) {
             echo "<div class='tabs'>
                           <button class='tab-link' onclick=\"openTab(event, 'profile')\">Profile</button>";
