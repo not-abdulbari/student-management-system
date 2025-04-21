@@ -25,7 +25,7 @@ $stmt->close();
 // Remove $conn->close() here to avoid closing the connection prematurely.
 
 // Handling form submission
-$marks_data = [];
+// No additional initialization needed here, as the data is already being fetched and processed below.
 $attendance_data = [];
 $grades_data = [];
 $report_data = null;
