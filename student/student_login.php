@@ -336,6 +336,14 @@ $conn->close(); // Keep this at the very end of the script to close the connecti
         if (isset($student_data)) {
             echo "<div class='tabs'>
                           <button class='tab-link' onclick=\"openTab(event, 'profile')\">Profile</button>";
+            for ($i = 1; $i <= 8; $i++) {
+                $has_data = isset($all_semesters[$i]) && (!empty($all_semesters[$i]['marks']) || !empty($all_semesters[$i]['attendance']) || !empty($all_semesters[$i]['grades']) || isset($all_semesters[$i]['report']) || !empty($all_semesters[$i]['university_results']));
+                $is_pg_sem3 = in_array(strtoupper($branch), ['MBA', 'MCA']) && $i == 3 && isset($all_semesters[3]['university_results']) && !empty($all_semesters[3]['university_results']);
+
+                if ($has_data || $is_pg_sem3) {
+                    echo "<button class='tab-link' onclick=\"openTab(event, 'semester-$i')\">Semester $i</button>";
+                }
+            }
 
             $all_semesters = [];
             foreach ($marks_data as $semester => $marks) {
