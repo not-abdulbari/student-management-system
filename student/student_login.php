@@ -4,7 +4,6 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('log_errors', 1);
 
-session_start();
 if (!isset($_SESSION['student_logged_in']) || !isset($_SESSION['roll_no'])) {
     header('Location: ../index.php');
     exit();
@@ -25,7 +24,7 @@ if ($result_student->num_rows > 0) {
     exit();
 }
 $stmt->close();
-$conn->close();
+// Remove $conn->close() here to avoid closing the connection prematurely.
 
 // Handling form submission
 $marks_data = [];
@@ -167,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
         $stmt->close();
     }
 }
-$conn->close();
+$conn->close(); // Keep this at the very end of the script to close the connection after all operations.
 ?>
 
 <!DOCTYPE html>
