@@ -31,7 +31,7 @@ $grades_data = [];
 $report_data = null;
 $university_results_data = []; // General array for all university results
 $student_data_error = null;
-$student_data = null; // Initialize student_data
+// $student_data = null; // Removed to prevent overwriting fetched student data
 $year_of_passing = null; // Initialize year of passing
 $branch = null; // Initialize branch
 
