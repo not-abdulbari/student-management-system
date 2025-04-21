@@ -4,35 +4,110 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 $show_alert = false; // Flag to control alert display
+$config = include('config.php');
+
+// Function to verify hCaptcha
+function verify_hcaptcha($hcaptchaResponse, $secretKey) {
+    $verifyUrl = 'https://hcaptcha.com/siteverify';
+    $data = [
+        'secret' => $secretKey,
+        'response' => $hcaptchaResponse,
+        'remoteip' => $_SERVER['REMOTE_ADDR']
+    ];
+
+    $options = [
+        'http' => [
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data),
+        ]
+    ];
+
+    $context  = stream_context_create($options);
+    $result = file_get_contents($verifyUrl, false, $context);
+    $resultJson = json_decode($result, true);
+
+    return $resultJson['success'] === true;
+}
 
 // Handle Institution Login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
     include 'faculty/db_connect.php';
 
-    $input_username = $_POST['username'];
-    $input_password = $_POST['password'];
-    $input_hashed_password = hash('sha256', $input_password);
+    $hcaptchaResponse = $_POST['h-captcha-response'];
+    $secretKey = $config['HCAPTCHA_SECRET_KEY'];
 
-    $sql = "SELECT hashed_password FROM users WHERE username = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('s', $input_username);
-    $stmt->execute();
-    $stmt->bind_result($stored_hashed_password);
-    $stmt->fetch();
-
-    if ($input_hashed_password === $stored_hashed_password) {
-        $_SESSION['logged_in'] = true;
-        $stmt->close();
-        $conn->close();
-        header('Location: faculty/home.php');
-        exit();
+    if (!verify_hcaptcha($hcaptchaResponse, $secretKey)) {
+        $error = 'hCaptcha verification failed. Please try again.';
     } else {
-        $show_alert = true; // Set flag for invalid credentials
-    }
+        $input_username = htmlspecialchars($_POST['username']);
+        $input_password = htmlspecialchars($_POST['password']);
+        $input_hashed_password = hash('sha256', $input_password);
 
-    $stmt->close();
-    $conn->close();
+        $sql = "SELECT hashed_password FROM users WHERE username = ?";
+        $stmt = $conn->prepare($sql);
+        if ($stmt) {
+            $stmt->bind_param('s', $input_username);
+            $stmt->execute();
+            $stmt->bind_result($stored_hashed_password);
+            $stmt->fetch();
+
+            if ($input_hashed_password === $stored_hashed_password) {
+                $_SESSION['logged_in'] = true;
+                $stmt->close();
+                $conn->close();
+                header('Location: faculty/home.php');
+                exit();
+            } else {
+                $show_alert = true;
+            }
+
+            $stmt->close();
+        } else {
+            die('Error preparing the SQL statement.');
+        }
+        $conn->close();
+    }
 }
+
+// Handle Student Login
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
+    include 'faculty/db_connect.php';
+
+    $hcaptchaResponse = $_POST['h-captcha-response'];
+    $secretKey = $config['HCAPTCHA_SECRET_KEY'];
+
+    if (!verify_hcaptcha($hcaptchaResponse, $secretKey)) {
+        $error = 'hCaptcha verification failed. Please try again.';
+    } else {
+        $input_roll_no = htmlspecialchars($_POST['roll_no']);
+        $input_dob = htmlspecialchars($_POST['dob']);
+
+        $sql = "SELECT * FROM students WHERE roll_no = ? AND dob = ?";
+        $stmt = $conn->prepare($sql);
+        if ($stmt) {
+            $stmt->bind_param('ss', $input_roll_no, $input_dob);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                $_SESSION['student_logged_in'] = true;
+                $_SESSION['roll_no'] = $input_roll_no;
+                $stmt->close();
+                $conn->close();
+                header('Location: student/student_login.php');
+                exit();
+            } else {
+                $show_alert = true;
+            }
+
+            $stmt->close();
+        } else {
+            die('Error preparing the SQL statement.');
+        }
+        $conn->close();
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -46,8 +121,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Login Page</title>
     <style>
-        /* Existing styles remain unchanged */
-        body {
+                /* Existing styles remain unchanged */
+                body {
             margin: 0;
             padding: 0;
             font-family: 'Arial', sans-serif;
@@ -63,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         .header img {
             width: 100%;
             height: auto;
-            }
+        }
 
         .banner {
             margin-top: 0;
@@ -112,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         }
 
         input {
-            width: 80%;
+            width: 90%;
             padding: 10px;
             margin: 10px 0;
             border: 2px solid #ddd;
@@ -121,7 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
             font-size: 1em;
             color: #333;
         }
-
+        
         button {
             background-color: #2575fc;
             color: white;
@@ -143,7 +218,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
         .eye-icon i {
             position: absolute;
-            right: 15%;
+            right: 10%;
             color: grey;
         }
 
@@ -157,16 +232,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
         input[type="password"]::-ms-reveal,
         input[type="password"]::-ms-clear {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            background-color: #f4f4f4;
+            font-size: 1em;
+            color: #333;
             display: none;
         }
-
-
+        
+               
         @media (max-width: 768px) {
             .main-container {
                 flex-direction: column;
                 align-items: center;
             }
 
+            
             .header {
                 width: 100%;
                 height: 70px;
@@ -177,8 +261,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
                 width: 80%;
             }
         }
+
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://hcaptcha.com/1/api.js" async defer></script>
 </head>
 
 <body>
@@ -199,15 +285,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
                     <input type="password" name="password" id="password" placeholder="Password" required>
                     <i class="fas fa-eye-slash icon"></i>
                 </div>
+                <div class="h-captcha" data-sitekey="<?php echo $config['HCAPTCHA_SITE_KEY']; ?>"></div>
                 <button type="submit">Login</button>
             </form>
         </div>
-        <!-- Rest of your existing HTML remains unchanged -->
         <div class="container">
             <h2>Student Login</h2>
-            <form action="student/student_profile.php" method="POST">
+            <form id="studentLoginForm" action="" method="POST">
                 <input type="text" name="roll_no" placeholder="Roll Number" required>
-                <input type="text" name="dob" placeholder="Date of Birth (DD/MM/YYYY)">
+                <input type="text" name="dob" placeholder="Date of Birth (DD/MM/YYYY)" required>
+                <div class="h-captcha" data-sitekey="<?php echo $config['HCAPTCHA_SITE_KEY']; ?>"></div>
                 <button type="submit">Login</button>
             </form>
         </div>
@@ -220,8 +307,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
             </marquee>
         </div>
     </div>
-
-    <script>
+    <script>>
         document.querySelector('.icon').addEventListener('click', function () {
             let passwordInput = document.getElementById('password');
             let icon = document.querySelector('.icon');
@@ -237,7 +323,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
             }
         });
 
-        // AJAX form submission
+        // AJAX form submission for Institution Login
         $(document).ready(function () {
             $('#loginForm').on('submit', function (e) {
                 e.preventDefault(); // Prevent the form from submitting
@@ -251,6 +337,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
                             alert('Invalid username or password');
                         } else {
                             window.location.href = 'faculty/home.php';
+                        }
+                    }
+                });
+            });
+
+            // AJAX form submission for Student Login
+            $('#studentLoginForm').on('submit', function (e) {
+                e.preventDefault(); // Prevent the form from submitting
+
+                $.ajax({
+                    url: '', // The same page
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        if (response.includes('Invalid roll number or date of birth')) {
+                            alert('Invalid roll number or date of birth');
+                        } else {
+                            window.location.href = 'student/student_login.php';
                         }
                     }
                 });
