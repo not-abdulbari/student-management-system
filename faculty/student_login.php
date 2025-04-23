@@ -677,11 +677,13 @@ table tr:hover {
                                 <label for="languages_known">Languages Known:</label>
                                 <input type="text" id="languages_known" name="languages_known" value="<?php echo htmlspecialchars($student_data['languages_known'] ?? ''); ?>">
                             </div>
-                            <div class="form-group">
-                                <label for="quota">Admission Quota:</label>
-                                <input type="text" id="quota" name="quota" value="<?php echo htmlspecialchars($student_data['quota'] ?? ''); ?>">
+                        <div class="form-group">
+                                    <label for="quota">Admission Quota:</label>
+                                    <select id="quota" name="quota" class="form-control">
+                                        <option value="management" <?php echo (isset($student_data['quota']) && $student_data['quota'] === 'management') ? 'selected' : ''; ?>>Management</option>
+                                        <option value="counselling" <?php echo (isset($student_data['quota']) && $student_data['quota'] === 'counselling') ? 'selected' : ''; ?>>Counselling</option>
+                                    </select>
                             </div>
-                        </div>
                         
                         <div class="form-group">
                             <label for="present_addr">Present Address:</label>
