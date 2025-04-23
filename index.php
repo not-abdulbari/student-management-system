@@ -195,10 +195,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
             width: 100%;
             margin: 10px 0;
         }
-        #password {
-            width: 100%;
-        }
-
         input {
             flex: 1;
             max-width: 350px;
@@ -245,6 +241,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
         }
         input[type="password"]::-ms-reveal,
         input[type="password"]::-ms-clear {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            background-color: #f4f4f4;
+            font-size: 1em;
+            color: #333;
             display: none;
         }
         @media (max-width: 768px) {
@@ -287,7 +291,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
                 </div>
                 <div class="input-group">
                     <div class="eye-icon">
-                        <input type="password" name="password" id="password" placeholder="Password" required style="width: 100%;">
+                        <input type="password" name="password" placeholder="Password" required style="width: 100%;">
                         <i class="fas fa-eye-slash icon"></i>
                     </div>
                 </div>
