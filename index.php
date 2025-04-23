@@ -3,75 +3,141 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+$show_alert = false; // Flag to control alert display
+$config = include('config.php'); // Include the config.php file
+
 // Handle Institution Login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
     include 'faculty/db_connect.php';
-    $input_username = $_POST['username'];
-    $input_password = $_POST['password'];
-    $input_hashed_password = hash('sha256', $input_password);
-    $sql = "SELECT hashed_password FROM users WHERE username = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('s', $input_username);
-    $stmt->execute();
-    $stmt->bind_result($stored_hashed_password);
-    $stmt->fetch();
-    if ($input_hashed_password === $stored_hashed_password) {
-        $_SESSION['logged_in'] = true;
-        $stmt->close();
-        $conn->close();
-        echo json_encode(['status' => 'success', 'redirect' => 'faculty/home.php']);
-        exit();
+
+    // Verify hCaptcha
+    $hcaptchaResponse = $_POST['h-captcha-response'];
+    $secretKey = $config['HCAPTCHA_SECRET_KEY'];
+
+    $verifyUrl = 'https://hcaptcha.com/siteverify';
+    $data = [
+        'secret' => $secretKey,
+        'response' => $hcaptchaResponse,
+        'remoteip' => $_SERVER['REMOTE_ADDR']
+    ];
+
+    $options = [
+        'http' => [
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data),
+        ]
+    ];
+    $context  = stream_context_create($options);
+    $result = file_get_contents($verifyUrl, false, $context);
+    $resultJson = json_decode($result, true);
+
+    if ($resultJson['success'] !== true) {
+        $error = 'hCaptcha verification failed. Please try again.';
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'Invalid username or password']);
-        exit();
+        // Sanitize user inputs
+        $input_username = htmlspecialchars($_POST['username']);
+        $input_password = htmlspecialchars($_POST['password']);
+        $input_hashed_password = hash('sha256', $input_password);
+
+        // Prepare and execute SQL statement securely
+        $sql = "SELECT hashed_password FROM users WHERE username = ?";
+        $stmt = $conn->prepare($sql);
+        if ($stmt) {
+            $stmt->bind_param('s', $input_username);
+            $stmt->execute();
+            $stmt->bind_result($stored_hashed_password);
+            $stmt->fetch();
+            
+            // Verify password
+            if ($input_hashed_password === $stored_hashed_password) {
+                $_SESSION['logged_in'] = true;
+                $stmt->close();
+                $conn->close();
+                header('Location: faculty/home.php');
+                exit();
+            } else {
+                $show_alert = true; // Set flag for invalid credentials
+            }
+            
+            $stmt->close();
+        } else {
+            die('Error preparing the SQL statement.');
+        }
+        $conn->close();
     }
-    $stmt->close();
-    $conn->close();
 }
 
 // Handle Student Login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
     include 'faculty/db_connect.php';
-    $roll_no = $_POST['roll_no'];
-    $dob_input = $_POST['dob'];
-    // Convert dd-mm-yyyy to yyyy-mm-dd for database comparison
-    $dob_parts = explode('-', $dob_input);
-    if (count($dob_parts) === 3) {
-        $dob_db_format = $dob_parts[2] . '-' . $dob_parts[1] . '-' . $dob_parts[0];
+
+    // Verify hCaptcha
+    $hcaptchaResponse = $_POST['h-captcha-response'];
+    $secretKey = $config['HCAPTCHA_SECRET_KEY'];
+
+    $verifyUrl = 'https://hcaptcha.com/siteverify';
+    $data = [
+        'secret' => $secretKey,
+        'response' => $hcaptchaResponse,
+        'remoteip' => $_SERVER['REMOTE_ADDR']
+    ];
+
+    $options = [
+        'http' => [
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data),
+        ]
+    ];
+    $context  = stream_context_create($options);
+    $result = file_get_contents($verifyUrl, false, $context);
+    $resultJson = json_decode($result, true);
+
+    if ($resultJson['success'] !== true) {
+        $error = 'hCaptcha verification failed. Please try again.';
     } else {
-        $dob_db_format = $dob_input; // fallback if format is unexpected
-    }
-    // Query to check if the roll number and DOB match
-    $sql = "SELECT si.dob FROM students s JOIN student_information si ON s.roll_no = si.roll_no WHERE s.roll_no = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('s', $roll_no);
-    $stmt->execute();
-    $stmt->bind_result($stored_dob);
-    $stmt->fetch();
-    $stmt->close();
-    if ($stored_dob && $dob_db_format === $stored_dob) {
-        // Credentials match, set session and redirect
-        $_SESSION['student_roll_no'] = $roll_no;
+        // Sanitize user inputs
+        $input_roll_no = htmlspecialchars($_POST['roll_no']);
+        $input_dob = htmlspecialchars($_POST['dob']);
+
+        // Prepare and execute SQL statement securely
+        $sql = "SELECT * FROM students WHERE roll_no = ? AND dob = ?";
+        $stmt = $conn->prepare($sql);
+        if ($stmt) {
+            $stmt->bind_param('ss', $input_roll_no, $input_dob);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                $_SESSION['student_logged_in'] = true;
+                $_SESSION['roll_no'] = $input_roll_no;
+                $stmt->close();
+                $conn->close();
+                header('Location: student/student_login.php');
+                exit();
+            } else {
+                $show_alert = true; // Set flag for invalid credentials
+            }
+            
+            $stmt->close();
+        } else {
+            die('Error preparing the SQL statement.');
+        }
         $conn->close();
-        echo json_encode(['status' => 'success', 'redirect' => 'student/student_login.php']);
-        exit();
-    } else {
-        // Invalid credentials
-        echo json_encode(['status' => 'error', 'message' => 'Invalid roll number or date of birth']);
-        exit();
     }
-    $conn->close();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>CAHCET LMS - Login</title>
+    <title>Login Page</title>
     <style>
         /* Modern Professional Theme */
         body {
@@ -205,60 +271,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
             margin-top: 10px;
         }
     </style>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://hcaptcha.com/1/api.js" async defer></script>
 </head>
+
 <body>
     <div class="header">
-        <img src="assets/789asdfkl.webp" alt="Sunridge University LMS Portal Image">
+        <img src="assets/789asdfkl.webp" alt="LMS Portal Image">
     </div>
     <div class="banner">
         <marquee behavior="scroll" direction="left">
-            <p>Welcome to the CAHCET - Learning Management System</p>
+            <p>Welcome to the Learning Management System</p>
         </marquee>
     </div>
     <div class="main-container">
         <div class="container">
             <h2>Institution Login</h2>
             <form id="loginForm" action="" method="POST">
-                <div class="input-group">
-                    <input type="text" name="username" placeholder="Username" required>
+                <input type="text" name="username" placeholder="Username" required>
+                <div class="eye-icon">
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+                    <i class="fas fa-eye-slash icon"></i>
                 </div>
-                <div class="input-group">
-                    <div class="eye-icon">
-                        <input type="password" name="password" id="password" placeholder="Password" required>
-                        <i class="fas fa-eye-slash icon"></i>
-                    </div>
-                </div>
+                <div class="h-captcha" data-sitekey="<?php echo $config['HCAPTCHA_SITE_KEY']; ?>"></div>
                 <button type="submit">Login</button>
             </form>
         </div>
         <div class="container">
             <h2>Student Login</h2>
             <form id="studentLoginForm" action="" method="POST">
-                <div class="input-group">
-                    <input type="text" name="roll_no" placeholder="Roll Number" required>
-                </div>
-                <div class="input-group">
-                    <input type="text" name="dob" placeholder="Date of Birth (DD-MM-YYYY)" required>
-                </div>
+                <input type="text" name="roll_no" placeholder="Roll Number" required>
+                <input type="text" name="dob" placeholder="Date of Birth (DD/MM/YYYY)" required>
+                <div class="h-captcha" data-sitekey="<?php echo $config['HCAPTCHA_SITE_KEY']; ?>"></div>
                 <button type="submit">Login</button>
             </form>
         </div>
         <div class="notice_board">
             <h2>Notice Board</h2>
-            <marquee behavior="scroll" direction="left" scrollamount="3">
+            <marquee behavior="scroll" direction="left">
                 <p>Important: Faculty and Student Login Details are available on the portal.</p>
                 <p>Note: The system will be down for maintenance from 2:00 AM to 4:00 AM tomorrow.</p>
                 <p>Reminder: Mark your attendance before the deadline to avoid penalties.</p>
-                <p>New: Updated student portal is now live with improved navigation.</p>
-                <p>Announcement: End semester exams schedule has been published.</p>
             </marquee>
         </div>
     </div>
+
     <script>
         document.querySelector('.icon').addEventListener('click', function () {
             let passwordInput = document.getElementById('password');
-            let icon = this;
+            let icon = document.querySelector('.icon');
+
             if (passwordInput.type === "password") {
                 passwordInput.type = "text";
                 icon.classList.remove("fa-eye-slash");
@@ -270,53 +333,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
             }
         });
 
+        // AJAX form submission for Institution Login
         $(document).ready(function () {
-            // Handle Institution Login
             $('#loginForm').on('submit', function (e) {
-                e.preventDefault(); // Prevent form submission
+                e.preventDefault(); // Prevent the form from submitting
+
                 $.ajax({
-                    url: '',
+                    url: '', // The same page
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function (response) {
-                        let res = JSON.parse(response);
-                        if (res.status === 'error') {
-                            alert(res.message); // Show alert for invalid credentials
-                            window.location.reload(); // Reload the page after user clicks OK
-                        } else if (res.status === 'success') {
-                            window.location.href = res.redirect; // Redirect on success
+                        if (response.includes('Invalid username or password')) {
+                            alert('Invalid username or password');
+                        } else {
+                            window.location.href = 'faculty/home.php';
                         }
-                    },
-                    error: function () {
-                        alert('An unexpected error occurred. Please try again.');
-                        window.location.reload(); // Reload the page in case of an error
                     }
                 });
             });
 
-            // Handle Student Login
+            // AJAX form submission for Student Login
             $('#studentLoginForm').on('submit', function (e) {
-                e.preventDefault(); // Prevent form submission
+                e.preventDefault(); // Prevent the form from submitting
+
                 $.ajax({
-                    url: '',
+                    url: '', // The same page
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function (response) {
-                        let res = JSON.parse(response);
-                        if (res.status === 'error') {
-                            alert(res.message); // Show alert for invalid credentials
-                            window.location.reload(); // Reload the page after user clicks OK
-                        } else if (res.status === 'success') {
-                            window.location.href = res.redirect; // Redirect on success
+                        if (response.includes('Invalid roll number or date of birth')) {
+                            alert('Invalid roll number or date of birth');
+                        } else {
+                            window.location.href = 'student/student_login.php';
                         }
-                    },
-                    error: function () {
-                        alert('An unexpected error occurred. Please try again.');
-                        window.location.reload(); // Reload the page in case of an error
                     }
                 });
             });
         });
     </script>
 </body>
+
 </html>
