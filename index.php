@@ -3,8 +3,39 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Load hCaptcha configuration
+$config = include 'config.php';
+
 // Handle Institution Login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
+    $hcaptcha_response = $_POST['h-captcha-response'] ?? '';
+    if (empty($hcaptcha_response)) {
+        echo json_encode(['status' => 'error', 'message' => 'Please complete the hCaptcha.']);
+        exit();
+    }
+
+    // Verify hCaptcha
+    $data = [
+        'secret' => $config['HCAPTCHA_SECRET_KEY'],
+        'response' => $hcaptcha_response,
+    ];
+    $options = [
+        'http' => [
+            'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method' => 'POST',
+            'content' => http_build_query($data),
+        ],
+    ];
+    $context = stream_context_create($options);
+    $response = file_get_contents('https://hcaptcha.com/siteverify', false, $context);
+    $result = json_decode($response, true);
+
+    if (!$result['success']) {
+        echo json_encode(['status' => 'error', 'message' => 'hCaptcha verification failed.']);
+        exit();
+    }
+
+    // Proceed with login logic
     include 'faculty/db_connect.php';
     $input_username = $_POST['username'];
     $input_password = $_POST['password'];
@@ -25,12 +56,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         echo json_encode(['status' => 'error', 'message' => 'Invalid username or password']);
         exit();
     }
-    $stmt->close();
-    $conn->close();
 }
 
 // Handle Student Login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
+    $hcaptcha_response = $_POST['h-captcha-response'] ?? '';
+    if (empty($hcaptcha_response)) {
+        echo json_encode(['status' => 'error', 'message' => 'Please complete the hCaptcha.']);
+        exit();
+    }
+
+    // Verify hCaptcha
+    $data = [
+        'secret' => $config['HCAPTCHA_SECRET_KEY'],
+        'response' => $hcaptcha_response,
+    ];
+    $options = [
+        'http' => [
+            'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method' => 'POST',
+            'content' => http_build_query($data),
+        ],
+    ];
+    $context = stream_context_create($options);
+    $response = file_get_contents('https://hcaptcha.com/siteverify', false, $context);
+    $result = json_decode($response, true);
+
+    if (!$result['success']) {
+        echo json_encode(['status' => 'error', 'message' => 'hCaptcha verification failed.']);
+        exit();
+    }
+
+    // Proceed with login logic
     include 'faculty/db_connect.php';
     $roll_no = $_POST['roll_no'];
     $dob_input = $_POST['dob'];
@@ -60,7 +117,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
         echo json_encode(['status' => 'error', 'message' => 'Invalid roll number or date of birth']);
         exit();
     }
-    $conn->close();
 }
 ?>
 <!DOCTYPE html>
@@ -71,6 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     <title>CAHCET LMS - Login</title>
     <style>
         /* Modern Professional Theme */
@@ -229,6 +286,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
                         <i class="fas fa-eye-slash icon"></i>
                     </div>
                 </div>
+                <div class="h-captcha" data-sitekey="<?php echo $config['HCAPTCHA_SITE_KEY']; ?>"></div>
                 <button type="submit">Login</button>
             </form>
         </div>
@@ -241,6 +299,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
                 <div class="input-group">
                     <input type="text" name="dob" placeholder="Date of Birth (DD-MM-YYYY)" required>
                 </div>
+                <div class="h-captcha" data-sitekey="<?php echo $config['HCAPTCHA_SITE_KEY']; ?>"></div>
                 <button type="submit">Login</button>
             </form>
         </div>
@@ -269,7 +328,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
                 icon.classList.add("fa-eye-slash");
             }
         });
-
         $(document).ready(function () {
             // Handle Institution Login
             $('#loginForm').on('submit', function (e) {
