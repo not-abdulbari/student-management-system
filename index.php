@@ -1,63 +1,4 @@
 <?php
-$config = include('config.php');
-
-// Verify hCaptcha for Institution Login
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
-    $hcaptchaResponse = $_POST['h-captcha-response'];
-    $secretKey = $config['HCAPTCHA_SECRET_KEY'];
-    $verifyUrl = 'https://hcaptcha.com/siteverify';
-
-    $data = [
-        'secret' => $secretKey,
-        'response' => $hcaptchaResponse,
-        'remoteip' => $_SERVER['REMOTE_ADDR']
-    ];
-
-    $options = [
-        'http' => [
-            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-            'method'  => 'POST',
-            'content' => http_build_query($data),
-        ],
-    ];
-    $context  = stream_context_create($options);
-    $result = file_get_contents($verifyUrl, false, $context);
-    $resultJson = json_decode($result, true);
-
-    if ($resultJson['success'] !== true) {
-        echo json_encode(['status' => 'error', 'message' => 'hCaptcha verification failed. Please try again.']);
-        exit();
-    }
-}
-
-// Verify hCaptcha for Student Login
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
-    $hcaptchaResponse = $_POST['h-captcha-response'];
-    $secretKey = $config['HCAPTCHA_SECRET_KEY'];
-    $verifyUrl = 'https://hcaptcha.com/siteverify';
-
-    $data = [
-        'secret' => $secretKey,
-        'response' => $hcaptchaResponse,
-        'remoteip' => $_SERVER['REMOTE_ADDR']
-    ];
-
-    $options = [
-        'http' => [
-            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-            'method'  => 'POST',
-            'content' => http_build_query($data),
-        ],
-    ];
-    $context  = stream_context_create($options);
-    $result = file_get_contents($verifyUrl, false, $context);
-    $resultJson = json_decode($result, true);
-
-    if ($resultJson['success'] !== true) {
-        echo json_encode(['status' => 'error', 'message' => 'hCaptcha verification failed. Please try again.']);
-        exit();
-    }
-}
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -65,11 +6,6 @@ ini_set('display_errors', 1);
 // Handle Institution Login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
     include 'faculty/db_connect.php';
-    // Validate hCaptcha response
-    if (!isset($_POST['h-captcha-response']) || empty($_POST['h-captcha-response'])) {
-        echo json_encode(['status' => 'error', 'message' => 'hCaptcha response is missing.']);
-        exit();
-    }
     $input_username = $_POST['username'];
     $input_password = $_POST['password'];
     $input_hashed_password = hash('sha256', $input_password);
@@ -96,36 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 // Handle Student Login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
     include 'faculty/db_connect.php';
-    // Validate hCaptcha response
-    if (!isset($_POST['h-captcha-response']) || empty($_POST['h-captcha-response'])) {
-        echo json_encode(['status' => 'error', 'message' => 'hCaptcha response is missing.']);
-        exit();
-    }
-    $hcaptchaResponse = $_POST['h-captcha-response'];
-    $secretKey = $config['HCAPTCHA_SECRET_KEY'];
-    $verifyUrl = 'https://hcaptcha.com/siteverify';
-
-    $data = [
-        'secret' => $secretKey,
-        'response' => $hcaptchaResponse,
-        'remoteip' => $_SERVER['REMOTE_ADDR']
-    ];
-
-    $options = [
-        'http' => [
-            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-            'method'  => 'POST',
-            'content' => http_build_query($data),
-        ],
-    ];
-    $context  = stream_context_create($options);
-    $result = file_get_contents($verifyUrl, false, $context);
-    $resultJson = json_decode($result, true);
-
-    if ($resultJson['success'] !== true) {
-        echo json_encode(['status' => 'error', 'message' => 'hCaptcha verification failed. Please try again.']);
-        exit();
-    }
     $roll_no = $_POST['roll_no'];
     $dob_input = $_POST['dob'];
     // Convert dd-mm-yyyy to yyyy-mm-dd for database comparison
@@ -303,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
 </head>
 <body>
     <div class="header">
-        <img src="assets/789asdfkl.webp" alt="LMS Portal Image">
+        <img src="assets/789asdfkl.webp" alt="Sunridge University LMS Portal Image">
     </div>
     <div class="banner">
         <marquee behavior="scroll" direction="left">
@@ -323,10 +229,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
                         <i class="fas fa-eye-slash icon"></i>
                     </div>
                 </div>
-                <div class="input-group">
-                    <div class="h-captcha" data-sitekey="<?php echo $config['HCAPTCHA_SITE_KEY']; ?>"></div>
-                </div>
-
                 <button type="submit">Login</button>
             </form>
         </div>
@@ -338,9 +240,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
                 </div>
                 <div class="input-group">
                     <input type="text" name="dob" placeholder="Date of Birth (DD-MM-YYYY)" required>
-                </div>
-                <div class="input-group">
-                    <div class="h-captcha" data-sitekey="<?php echo $config['HCAPTCHA_SITE_KEY']; ?>"></div>
                 </div>
                 <button type="submit">Login</button>
             </form>
