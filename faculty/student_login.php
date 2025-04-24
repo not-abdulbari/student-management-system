@@ -19,6 +19,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
     $roll_number = $_POST['roll_no'];
     $reg_no = $_POST['reg_no'];
     
+    // // Update students table
+    // $sql_update_student = "UPDATE students SET 
+    //                       name = ?,
+    //                       branch = ?,
+    //                       year = ?,
+    //                       section = ?
+    //                       WHERE roll_no = ?";
+    // $stmt = $conn->prepare($sql_update_student);
+    // $stmt->bind_param("sssss", 
+    //                  $_POST['name'],
+    //                  $_POST['branch'],
+    //                  $_POST['year'],
+    //                  $_POST['section'],
+    //                  $roll_number);
+    // $stmt->execute();
+    // $stmt->close();
     
     // Update student_information table
     $sql_update_info = "UPDATE student_information SET 
@@ -226,6 +242,8 @@ $conn->close();
     --light-color: #f5f5f5; /* Light gray for backgrounds */
     --white-color: #ffffff; /* White */
     --dark-color: #000000; /* Black for text */
+    --seagreen-color: #2e8b57; /* Sea green for view details button */
+    --lawngreen-color: #7cfc00; /* Lawn green for edit button */
     --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -264,6 +282,9 @@ h1 {
 h3 {
     font-size: 1.5em;
     margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 h4 {
@@ -348,6 +369,41 @@ input[type="submit"]:hover {
 
 .secondary-btn:hover {
     background-color: #616161;
+}
+
+.green {
+    background-color: var(--seagreen-color);
+}
+
+.green:hover {
+    background-color: #1e6e3c;
+}
+
+.edit-btn {
+    background-color: #5ba318;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #5ba318;
+}
+
+.cancel-btn {
+    background-color: var(--danger-color);
+    color: var(--white-color);
+}
+
+.cancel-btn:hover {
+    background-color: #d32f2f;
+}
+
+.save-btn {
+    background-color: var(--success-color);
+    color: var(--white-color);
+}
+
+.save-btn:hover {
+    background-color: #388e3c;
 }
 
 .error {
@@ -475,9 +531,32 @@ table tr:hover {
     cursor: not-allowed;
 }
 
-.green {
-
+.styled-dropdown {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    font-size: 16px;
+    color: var(--dark-color); /* Black text */
+    background-color: var(--light-color);
+    appearance: none; /* Remove default select arrow for consistent styling across browsers */
 }
+
+.styled-dropdown:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 5px rgba(63, 81, 181, 0.2);
+}
+
+.header-with-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 @media (max-width: 768px) {
     .container {
         width: 95%;
@@ -677,13 +756,14 @@ table tr:hover {
                                 <label for="languages_known">Languages Known:</label>
                                 <input type="text" id="languages_known" name="languages_known" value="<?php echo htmlspecialchars($student_data['languages_known'] ?? ''); ?>">
                             </div>
-                        <div class="form-group">
-                                    <label for="quota">Admission Quota:</label>
-                                    <select id="quota" name="quota" class="form-control">
-                                        <option value="management" <?php echo (isset($student_data['quota']) && $student_data['quota'] === 'management') ? 'selected' : ''; ?>>Management</option>
-                                        <option value="counselling" <?php echo (isset($student_data['quota']) && $student_data['quota'] === 'counselling') ? 'selected' : ''; ?>>Counselling</option>
-                                    </select>
+                            <div class="form-group">
+                                <label for="quota">Admission Quota:</label>
+                                <select id="quota" name="quota" class="styled-dropdown">
+                                    <option value="management" <?php echo (isset($student_data['quota']) && $student_data['quota'] == 'Management') ? 'selected' : ''; ?>>management</option>
+                                    <option value="counselling" <?php echo (isset($student_data['quota']) && $student_data['quota'] == 'Counselling') ? 'selected' : ''; ?>>counselling</option>
+                                </select>
                             </div>
+                        </div>
                         
                         <div class="form-group">
                             <label for="present_addr">Present Address:</label>
