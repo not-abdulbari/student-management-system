@@ -143,23 +143,21 @@ $conn->close();
     <title>Parent - View Student Marks, Attendance, Grades, Report & University Results</title>
 <style>
     :root {
-        --primary-color: #673AB7; /* Deep Purple */
-        --secondary-color: #03A9F4; /* Light Blue */
+        --primary-color: #333399; /* Deep Blue */
+        --secondary-color: #666699; /* Muted Blue */
         --success-color: #4CAF50; /* Green */
-        --danger-color: #E91E63; /* Pink */
-        --warning-color: #FF9800; /* Orange */
-        --info-color: #00BCD4; /* Cyan */
-        --light-color: #F5F5F5; /* Light Grey */
+        --danger-color: #E53935; /* Red */
+        --warning-color: #FFC107; /* Amber */
+        --info-color: #2196F3; /* Blue */
+        --light-color: #F1F1F1; /* Light Grey */
         --dark-color: #212121; /* Almost Black */
         --white-color: #FFFFFF; /* White */
-        --font-family: 'Poppins', Arial, sans-serif;
-        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        --transition: all 0.3s ease-in-out;
+        --font-family: 'Arial', sans-serif;
     }
 
     body {
         font-family: var(--font-family);
-        background: linear-gradient(135deg, var(--light-color), var(--secondary-color));
+        background-color: var(--light-color);
         color: var(--dark-color);
         margin: 0;
         padding: 20px;
@@ -169,22 +167,13 @@ $conn->close();
     h1 {
         color: var(--primary-color);
         margin-bottom: 20px;
-        font-size: 36px;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        font-size: 28px;
     }
 
     form {
         margin: 0 auto 20px;
         display: inline-block;
-        background: var(--white-color);
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: var(--box-shadow);
-        transition: var(--transition);
-    }
-
-    form:hover {
-        transform: scale(1.02);
+        text-align: left; /* Form content aligned left */
     }
 
     label {
@@ -195,37 +184,27 @@ $conn->close();
     }
 
     input[type="text"] {
-        width: 80%;
-        padding: 12px;
+        width: 100%;
+        padding: 10px;
         margin-bottom: 15px;
         border: 1px solid var(--secondary-color);
         border-radius: 4px;
         font-size: 16px;
-        text-align: center;
-        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-        transition: var(--transition);
-    }
-
-    input[type="text"]:focus {
-        border-color: var(--primary-color);
-        outline: none;
-        box-shadow: 0 0 8px rgba(103, 58, 183, 0.5);
+        box-sizing: border-box;
     }
 
     input[type="submit"] {
-        padding: 12px 30px;
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        padding: 10px 20px;
+        background-color: var(--primary-color);
         color: var(--white-color);
         border: none;
         border-radius: 4px;
         cursor: pointer;
         font-size: 16px;
-        transition: var(--transition);
     }
 
     input[type="submit"]:hover {
-        background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-        box-shadow: var(--box-shadow);
+        background-color: var(--dark-color);
     }
 
     .error {
@@ -240,25 +219,20 @@ $conn->close();
         justify-content: center;
         margin-bottom: 20px;
         gap: 5px;
-        padding: 10px;
-        background: var(--white-color);
-        border-radius: 8px;
-        box-shadow: var(--box-shadow);
     }
 
     .tabs button {
         padding: 10px 20px;
         border: 1px solid var(--secondary-color);
-        background-color: var(--light-color);
+        background-color: var(--white-color);
         cursor: pointer;
         font-size: 14px;
         border-radius: 4px;
-        transition: var(--transition);
     }
 
     .tabs button:hover,
     .tabs button.active {
-        background: var(--primary-color);
+        background-color: var(--primary-color);
         color: var(--white-color);
         border-color: var(--primary-color);
     }
@@ -266,10 +240,6 @@ $conn->close();
     .tab-content {
         display: none;
         text-align: center;
-        background: var(--white-color);
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: var(--box-shadow);
     }
 
     .tab-content.active {
@@ -279,33 +249,19 @@ $conn->close();
     table {
         margin: 20px auto;
         border-collapse: collapse;
-        width: 90%;
-        background: var(--white-color);
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: var(--box-shadow);
+        width: 80%;
     }
 
     table th,
     table td {
         padding: 12px;
         border: 1px solid var(--secondary-color);
-        text-align: center;
+        text-align: left;
         word-wrap: break-word;
-        transition: var(--transition);
     }
 
     table th {
-        background: var(--primary-color);
-        color: var(--white-color);
-    }
-
-    table td {
-        background: var(--light-color);
-    }
-
-    table tr:hover td {
-        background: var(--success-color);
+        background-color: var(--primary-color);
         color: var(--white-color);
     }
 
@@ -315,10 +271,6 @@ $conn->close();
         text-align: left;
         display: inline-block;
         margin: 0 auto;
-        background: var(--white-color);
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: var(--box-shadow);
     }
 
     .report ul li {
@@ -328,11 +280,10 @@ $conn->close();
     /* Responsive Design */
     @media (max-width: 768px) {
         h1 {
-            font-size: 28px;
+            font-size: 24px;
         }
 
         input[type="text"] {
-            width: 90%;
             font-size: 14px;
         }
 
@@ -358,7 +309,7 @@ $conn->close();
         }
 
         h1 {
-            font-size: 24px;
+            font-size: 20px;
         }
 
         input[type="text"] {
@@ -379,10 +330,6 @@ $conn->close();
         .tabs button {
             font-size: 10px;
             padding: 8px;
-        }
-
-        .report ul {
-            padding: 15px;
         }
     }
 </style>
