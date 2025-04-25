@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
         .banner {
             margin-top: 0;
             padding: 0;
-            background-color: #003366;
+            background-color: #00838F;
             color: white;
             height: auto;
             display: flex;
