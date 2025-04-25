@@ -31,103 +31,63 @@ if (!function_exists('getCurrentDateTime')) {
             font-family: 'Roboto', sans-serif;
             background-color: #f4f6f9;
             color: #333;
-            font-size: 12px; /* Reduced font size for a more compact design */
+            font-size: 14px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
         /* Header Container */
-        .header-container {
-            text-align: center;
-            padding: 10px;
-            background-color: #ffffff;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: 100%;
-        }
-
-        /* Header Image */
-        .header-image {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
-
-        /* Banner */
         .banner {
-            background-color: #4caf50; /* Lively green banner */
+            background-color: #4caf50;
             color: #ffffff;
-            padding: 15px; /* Reduced padding */
+            padding: 15px;
             text-align: center;
-            border-bottom: 3px solid #ffffff;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease;
-        }
-
-        .banner:hover {
-            background-color: #66bb6a; /* Lighter green on hover */
-        }
-
-        /* Date-Time */
-        .datetime {
-            font-size: 14px; /* Reduced font size */
-            margin-top: 5px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-        }
-
-        /* Navigation */
-        nav {
-            background-color: #3f51b5; /* Deep blue for navigation */
-            padding: 8px 0; /* Reduced padding */
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             width: 100%;
+        }
+
+        .banner h1 {
+            margin-bottom: 5px;
+        }
+
+        .datetime {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Navigation Styles */
+        nav {
+            background-color: #3f51b5;
+            width: 100%;
+            position: relative;
+        }
+
+        nav .menu-toggle {
+            display: none;
+            background-color: #3f51b5;
+            color: white;
+            border: none;
+            font-size: 24px;
+            padding: 10px;
+            cursor: pointer;
         }
 
         nav ul {
             list-style: none;
-            margin: 0;
-            padding: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
+            padding: 10px 0;
         }
 
         nav ul li {
-            margin-right: 12px; /* Reduced space between links */
-            position: relative; /* Needed for dropdown */
+            margin: 0 15px;
         }
 
         nav ul li a {
-            color: #ffffff;
+            color: white;
             text-decoration: none;
-            padding: 8px 12px; /* Reduced padding */
-            display: inline-block;
+            font-size: 16px;
             font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 4px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            font-size: 12px; /* Reduced font size */
-        }
-
-        nav ul li a:hover {
-            background-color: #2c387e; /* Darker blue for hover effect */
-            transform: scale(1.05);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        nav ul li a:active {
-            transform: scale(0.98);
-        }
-
-        /* Active Links */
-        nav ul li a.active {
-            background-color: #2c387e; /* Active link color */
-            transform: scale(1.05);
         }
 
         /* Dropdown Menu */
@@ -135,60 +95,59 @@ if (!function_exists('getCurrentDateTime')) {
             display: none;
             position: absolute;
             background-color: #3f51b5;
-            min-width: 160px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .dropdown-content a {
-            color: #ffffff;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
             text-align: left;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #2c387e;
+            padding: 10px;
+            border-radius: 5px;
         }
 
         .dropdown:hover .dropdown-content {
             display: block;
         }
 
-        /* Responsive Design */
+        .dropdown-content a {
+            display: block;
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Responsive Styles */
         @media screen and (max-width: 768px) {
             nav ul {
+                display: none;
                 flex-direction: column;
                 align-items: flex-start;
+                background-color: #3f51b5;
+                width: 100%;
+                position: absolute;
+                top: 50px;
+                left: 0;
+                z-index: 1000;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            nav .menu-toggle {
+                display: block;
             }
 
             nav ul li {
-                margin-bottom: 8px; /* Reduced bottom margin */
-                margin-right: 0;
-            }
-
-            .datetime {
-                font-size: 12px; /* Further reduced font size for smaller screens */
-                text-align: center;
+                margin: 10px 0;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- <div class="header-container">
-        <img src="logo.jpg" alt="College Logo" class="header-image">
-    </div>
-     -->
     <div class="banner">
         <h1>Welcome - C. Abdul Hakeem College of Engineering & Technology</h1>
         <div class="datetime" id="datetime"><?php echo getCurrentDateTime(); ?></div>
     </div>
 
     <nav>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
         <ul>
             <li><a href="home.php">Home</a></li>
             <li><a href="faculty_dashboard.php">Marks</a></li>
@@ -216,7 +175,7 @@ if (!function_exists('getCurrentDateTime')) {
                     <a href="student_profile.php">Under Development</a>
                 </div>
             </li>
-            <li><a href="logout.php" class="logout-link">Logout</a></li>
+            <li><a href="logout.php">Logout</a></li>
         </ul>
     </nav>
 
@@ -236,16 +195,14 @@ if (!function_exists('getCurrentDateTime')) {
             datetimeElement.innerText = now.toLocaleString('en-US', options);
         }
 
+        function toggleMenu() {
+            const nav = document.querySelector('nav ul');
+            nav.classList.toggle('show');
+        }
+
         setInterval(updateDateTime, 1000);
         updateDateTime();
-
-        // Adding 'active' class to the current page link
-        const links = document.querySelectorAll('nav ul li a');
-        links.forEach(link => {
-            if (window.location.href.includes(link.getAttribute('href'))) {
-                link.classList.add('active');
-            }
-        });
     </script>
+
 </body>
 </html>
