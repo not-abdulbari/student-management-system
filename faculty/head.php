@@ -18,7 +18,6 @@ if (!function_exists('getCurrentDateTime')) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to C. Abdul Hakeem College of Engineering & Technology</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMt23cez/3paNdF+GZPl+4tJH9Aa71wQK5R5h7g" crossorigin="anonymous">
     <style>
         /* General Reset */
         * {
@@ -29,39 +28,37 @@ if (!function_exists('getCurrentDateTime')) {
 
         /* Body Styling */
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Roboto', sans-serif;
             background-color: #f4f6f9;
             color: #333;
-            font-size: 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* Header Banner */
+        /* Banner */
         .banner {
-            background-color: #004085;
-            color: #ffffff;
-            padding: 20px;
+            background-color: #4a148c; /* Royal purple */
+            color: #ffffff; /* Permanent white */
+            padding: 15px;
             text-align: center;
-            width: 100%;
-        }
-
-        .banner h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
+            border-bottom: 3px solid #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .datetime {
             font-size: 14px;
-            font-weight: 600;
             margin-top: 5px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
-        /* Navigation Styles */
+        /* Navigation */
         nav {
-            background-color: #343a40;
+            background-color: #512da8; /* Royal purple navigation bar */
+            color: #ffffff;
             width: 100%;
+            position: relative;
         }
 
         nav .menu {
@@ -69,95 +66,86 @@ if (!function_exists('getCurrentDateTime')) {
             justify-content: space-between;
             align-items: center;
             padding: 10px 20px;
-            color: #ffffff;
         }
 
-        nav .menu .hamburger {
-            display: none;
-            font-size: 24px;
-            cursor: pointer;
+        nav .menu .logo {
+            font-size: 18px;
+            font-weight: bold;
         }
 
         nav ul {
             list-style: none;
-            display: flex;
-            justify-content: center;
+            display: none; /* Hidden for mobile view */
+            flex-direction: column;
+            background-color: #673ab7; /* Slightly lighter royal purple for dropdown */
+            position: absolute;
+            top: 50px;
+            left: 0;
+            right: 0;
             padding: 10px 0;
         }
 
+        nav ul.show {
+            display: flex;
+        }
+
         nav ul li {
-            margin: 0 15px;
+            text-align: center;
+            padding: 10px 0;
         }
 
         nav ul li a {
-            color: white;
+            color: #ffffff;
             text-decoration: none;
-            font-size: 16px;
-            font-weight: bold;
-            transition: color 0.3s ease-in-out;
+            padding: 10px 20px;
+            display: inline-block;
         }
 
         nav ul li a:hover {
-            color: #f8f9fa;
-        }
-
-        /* Dropdown Menu */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #343a40;
-            text-align: left;
-            padding: 10px;
+            background-color: #9575cd; /* Hover lighter royal purple */
             border-radius: 5px;
-            margin-top: 10px;
         }
 
-        .dropdown:hover .dropdown-content {
-            display: block;
+        /* Hamburger Button */
+        .hamburger {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 20px;
         }
 
-        .dropdown-content a {
-            display: block;
-            padding: 10px;
-            color: white;
-            text-decoration: none;
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #ffffff;
         }
 
-        .dropdown-content a:hover {
-            background-color: #495057;
-        }
-
-        /* Responsive Styles */
-        @media screen and (max-width: 768px) {
-            nav .menu .hamburger {
-                display: block;
-            }
-
+        /* Responsive Design */
+        @media screen and (min-width: 768px) {
             nav ul {
-                display: none;
-                flex-direction: column;
-                align-items: flex-start;
-                background-color: #343a40;
-                width: 100%;
-                position: absolute;
-                top: 60px;
-                left: 0;
-                z-index: 1000;
-            }
-
-            nav ul.show {
                 display: flex;
+                flex-direction: row;
+                position: static;
+                background-color: transparent;
+                padding: 0;
             }
 
             nav ul li {
-                margin: 10px 0;
-                padding-left: 20px;
+                padding: 0;
+            }
+
+            nav ul li a {
+                padding: 10px 15px;
+            }
+
+            .hamburger {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
-
     <div class="banner">
         <h1>Welcome - C. Abdul Hakeem College of Engineering & Technology</h1>
         <div class="datetime" id="datetime"><?php echo getCurrentDateTime(); ?></div>
@@ -165,37 +153,42 @@ if (!function_exists('getCurrentDateTime')) {
 
     <nav>
         <div class="menu">
-            <span class="hamburger" onclick="toggleMenu()">☰</span>
-            <ul>
-                <li><a href="home.php">Home</a></li>
-                <li><a href="faculty_dashboard.php">Marks</a></li>
-                <li><a href="attendance_dashboard.php">Attendance</a></li>
-                <li><a href="add_grades.php">Grade</a></li>
-                <li><a href="add_subject.php">Subject</a></li>
-                <li><a href="student_report.php">Students Report</a></li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">Reports</a>
-                    <div class="dropdown-content">
-                        <a href="report_selection.php">Result Analysis</a>
-                        <a href="generate_marksheet.php">Mark List</a>
-                        <a href="progress_prelims.php">Progress Report</a>
-                        <a href="class_performance.php">Consolidated Result Analysis</a>
-                        <a href="capa_select.php">CAPA Form</a>
-                        <a href="generate_namelist.php">NAMELIST</a>
-                        <a href="consolidated_marklist.php">Consolidated Marklist</a>
-                        <a href="university_results.php">University Progress Report</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)">Student</a>
-                    <div class="dropdown-content">
-                        <a href="student_login.php">Student Login</a>
-                        <a href="student_profile.php">Under Development</a>
-                    </div>
-                </li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
+            <div class="logo">CAHCET</div>
+            <div class="hamburger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
         </div>
+        <ul id="nav-links">
+            <li><a href="home.php">Home</a></li>
+            <li><a href="faculty_dashboard.php">Marks</a></li>
+            <li><a href="attendance_dashboard.php">Attendance</a></li>
+            <li><a href="add_grades.php">Grade</a></li>
+            <li><a href="add_subject.php">Subject</a></li>
+            <li><a href="student_report.php">Students Report</a></li>
+            <li class="dropdown">
+                <a href="javascript:void(0)">Reports</a>
+                <ul class="dropdown-content">
+                    <li><a href="report_selection.php">Result Analysis</a></li>
+                    <li><a href="generate_marksheet.php">Mark List</a></li>
+                    <li><a href="progress_prelims.php">Progress Report</a></li>
+                    <li><a href="class_performance.php">Consolidated Result Analysis</a></li>
+                    <li><a href="capa_select.php">CAPA Form</a></li>
+                    <li><a href="generate_namelist.php">NAMELIST</a></li>
+                    <li><a href="consolidated_marklist.php">Consolidated Marklist</a></li>
+                    <li><a href="university_results.php">University Progress Report</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="javascript:void(0)">STUDENT</a>
+                <ul class="dropdown-content">
+                    <li><a href="student_login.php">STUDENT LOGIN</a></li>
+                    <li><a href="student_profile.php">Under Development</a></li>
+                </ul>
+            </li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
     </nav>
 
     <script>
@@ -214,14 +207,13 @@ if (!function_exists('getCurrentDateTime')) {
             datetimeElement.innerText = now.toLocaleString('en-US', options);
         }
 
-        function toggleMenu() {
-            const nav = document.querySelector('nav ul');
-            nav.classList.toggle('show');
-        }
-
         setInterval(updateDateTime, 1000);
         updateDateTime();
-    </script>
 
+        function toggleMenu() {
+            const navLinks = document.getElementById("nav-links");
+            navLinks.classList.toggle("show");
+        }
+    </script>
 </body>
 </html>
