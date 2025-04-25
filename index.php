@@ -227,7 +227,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
             cursor: pointer;
         }
         button {
-            background-color: #2575fc;
+            background-color: #00838F;
             color: white;
             border: none;
             padding: 12px 20px;
@@ -237,7 +237,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
             transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #6a11cb;
+            background-color: #005B63;
         }
         input[type="password"]::-ms-reveal,
         input[type="password"]::-ms-clear {
