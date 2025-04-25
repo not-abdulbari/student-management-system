@@ -141,128 +141,192 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parent - View Student Marks, Attendance, Grades, Report & University Results</title>
-    <style>
-        :root {
-            --primary-color: #007BFF;
-            --secondary-color: #6C757D;
-            --success-color: #28A745;
-            --danger-color: #DC3545;
-            --warning-color: #FFC107;
-            --info-color: #17A2B8;
-            --light-color: #F8F9FA;
-            --dark-color: #343A40;
-            --white-color: #FFF;
-            --font-family: Arial, sans-serif;
-        }
-        body {
-            font-family: var(--font-family);
-            background-color: var(--light-color);
-            color: var(--dark-color);
-            margin: 0;
-            padding: 20px;
-        }
-      
+<style>
+    :root {
+        --primary-color: #007BFF;
+        --secondary-color: #6C757D;
+        --success-color: #28A745;
+        --danger-color: #DC3545;
+        --warning-color: #FFC107;
+        --info-color: #17A2B8;
+        --light-color: #F8F9FA;
+        --dark-color: #343A40;
+        --white-color: #FFF;
+        --font-family: Arial, sans-serif;
+    }
+
+    body {
+        font-family: var(--font-family);
+        background-color: var(--light-color);
+        color: var(--dark-color);
+        margin: 0;
+        padding: 20px;
+        line-height: 1.6;
+    }
+
+    h1 {
+        text-align: center;
+        color: var(--primary-color);
+        margin-bottom: 20px;
+    }
+
+    form {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        font-weight: bold;
+        color: var(--dark-color);
+        margin-bottom: 5px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid var(--secondary-color);
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    input[type="submit"] {
+        padding: 10px;
+        background-color: var(--primary-color);
+        color: var(--white-color);
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-size: 16px;
+    }
+
+    input[type="submit"]:hover {
+        background-color: var(--dark-color);
+    }
+
+    .error {
+        color: var(--danger-color);
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    .tabs {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+        gap: 5px;
+    }
+
+    .tabs button {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid var(--secondary-color);
+        background-color: var(--light-color);
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+        font-size: 14px;
+    }
+
+    .tabs button:hover,
+    .tabs button.active {
+        background-color: var(--primary-color);
+        color: var(--white-color);
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    table {
+        width: 100%;
+        max-width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    table th,
+    table td {
+        padding: 10px;
+        border: 1px solid var(--secondary-color);
+        text-align: left;
+        word-wrap: break-word;
+    }
+
+    table th {
+        background-color: var(--secondary-color);
+        color: var(--white-color);
+    }
+
+    .report ul {
+        list-style-type: disc;
+        padding-left: 20px;
+    }
+
+    .report ul li {
+        margin-bottom: 5px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
         h1 {
-            text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 20px;
+            font-size: 24px;
         }
-        form {
-            margin-bottom: 20px;
-        }
-        label {
-            font-weight: bold;
-            color: var(--dark-color);
-        }
+
         input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid var(--secondary-color);
-            border-radius: 4px;
+            font-size: 14px;
         }
+
         input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            background-color: var(--primary-color);
-            color: var(--white-color);
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+            font-size: 14px;
         }
-        input[type="submit"]:hover {
-            background-color: var(--dark-color);
-        }
-        .error {
-            color: var(--danger-color);
-            text-align: center;
-            margin: 10px 0;
-        }
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
+
         .tabs button {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid var(--secondary-color);
-            background-color: var(--light-color);
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
+            font-size: 12px;
         }
-        .tabs button:hover,
-        .tabs button.active {
-            background-color: var(--primary-color);
-            color: var(--white-color);
-        }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
+
         table th,
         table td {
+            padding: 8px;
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        body {
             padding: 10px;
-            border: 1px solid var(--secondary-color);
-            text-align: left;
         }
-        table th {
-            background-color: var(--secondary-color);
-            color: var(--white-color);
+
+        h1 {
+            font-size: 20px;
         }
-        .report ul {
-            list-style-type: disc;
-            padding-left: 20px;
+
+        input[type="text"] {
+            font-size: 12px;
         }
-        .report ul li {
-            margin-bottom: 5px;
+
+        input[type="submit"] {
+            font-size: 12px;
+            padding: 8px;
         }
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 24px;
-            }
-            input[type="text"] {
-                width: 90%;
-                padding: 10px;
-                margin: 10px 0;
-                border: 1px solid var(--secondary-color);
-                border-radius: 4px;
-            }
-            table th,
-            table td {
-                padding: 8px;
-                font-size: 14px;
-            }
+
+        table th,
+        table td {
+            padding: 6px;
+            font-size: 12px;
         }
-    </style>
+
+        .tabs button {
+            font-size: 10px;
+            padding: 8px;
+        }
+    }
+</style>
 </head>
 <body>
     <div>
@@ -324,7 +388,7 @@ $conn->close();
             // Profile tab
             echo "<div id='profile' class='tab-content active'>
                           <h3>Student Information</h3>
-                          <table style='width: 100%;'>
+                          <table style='width: 70%;'>
                               <tr><th>Name</th><td>" . htmlspecialchars($student_data['name']) . "</td></tr>
                               <tr><th>Roll Number</th><td>" . htmlspecialchars($student_data['roll_no']) . "</td></tr>
                               <tr><th>Register Number</th><td>" . htmlspecialchars($student_data['reg_no']) . "</td></tr>
@@ -351,7 +415,7 @@ $conn->close();
                     // Marks
                     if (isset($data['marks']) && !empty($data['marks'])) {
                         echo "<h4>Internal Assessment Marks</h4>
-                              <table class='marks-table' style='width: 100%;'>
+                              <table class='marks-table' style='width: 70%;'>
                                   <tr><th>Subject Code</th><th>Subject Name</th><th>CAT-1</th><th>CAT-2</th><th>Model Exam</th></tr>";
                         foreach ($data['marks'] as $subject) {
                             echo "<tr>
@@ -368,7 +432,7 @@ $conn->close();
                     // Attendance
                     if (isset($data['attendance']) && !empty($data['attendance'])) {
                         echo "<h4>Attendance</h4>
-                              <table class='attendance-table' style='width: 100%;'>
+                              <table class='attendance-table' style='width: 70%;'>
                                   <tr><th>Entry Number</th><th>Percentage</th></tr>";
                         foreach ($data['attendance'] as $entry) {
                             echo "<tr>
@@ -382,7 +446,7 @@ $conn->close();
                     // Grades
                     if (isset($data['grades']) && !empty($data['grades'])) {
                         echo "<h4>Internal Grades</h4>
-                              <table class='grades-table' style='width: 100%;'>
+                              <table class='grades-table' style='width: 70%;'>
                                   <tr><th>Semester</th><th>Subject Code</th><th>Grade</th></tr>";
                         foreach ($data['grades'] as $entry) {
                             echo "<tr>
@@ -416,7 +480,7 @@ $conn->close();
                     // University Results
                     if (isset($data['university_results']) && !empty($data['university_results'])) {
                         echo "<h4>University Exam Results</h4>
-                              <table class='university-results-table' style='width: 100%;'>
+                              <table class='university-results-table' style='width: 70%;'>
                                   <tr><th>Semester</th><th>Subject Code</th><th>Subject Name</th><th>Grade</th><th>Result</th></tr>";
                         foreach ($data['university_results'] as $result) {
                             $final_result = (in_array(strtoupper($result['grade']), ['U', 'UA'])) ? 'RA' : 'Pass';
