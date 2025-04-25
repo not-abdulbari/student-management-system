@@ -143,16 +143,16 @@ $conn->close();
     <title>Parent - View Student Marks, Attendance, Grades, Report & University Results</title>
 <style>
     :root {
-        --primary-color: #007BFF;
-        --secondary-color: #6C757D;
-        --success-color: #28A745;
-        --danger-color: #DC3545;
-        --warning-color: #FFC107;
-        --info-color: #17A2B8;
-        --light-color: #F8F9FA;
-        --dark-color: #343A40;
-        --white-color: #FFF;
-        --font-family: Arial, sans-serif;
+        --primary-color: #4CAF50; /* Green */
+        --secondary-color: #607D8B; /* Blue Grey */
+        --success-color: #8BC34A; /* Light Green */
+        --danger-color: #F44336; /* Red */
+        --warning-color: #FFC107; /* Amber */
+        --info-color: #03A9F4; /* Light Blue */
+        --light-color: #ECEFF1; /* Light Grey */
+        --dark-color: #212121; /* Dark Grey */
+        --white-color: #FFFFFF; /* White */
+        --font-family: 'Roboto', Arial, sans-serif;
     }
 
     body {
@@ -161,38 +161,37 @@ $conn->close();
         color: var(--dark-color);
         margin: 0;
         padding: 20px;
-        line-height: 1.6;
+        text-align: center; /* Align all elements to the center */
     }
 
     h1 {
-        text-align: center;
         color: var(--primary-color);
         margin-bottom: 20px;
     }
 
     form {
-        margin-bottom: 20px;
-        display: flex;
-        flex-direction: column;
+        margin: 0 auto 20px; /* Center form */
+        display: inline-block; /* Make the form inline-block for alignment */
     }
 
     label {
         font-weight: bold;
         color: var(--dark-color);
+        display: block;
         margin-bottom: 5px;
     }
 
     input[type="text"] {
-        width: 100%;
         padding: 10px;
         margin-bottom: 10px;
         border: 1px solid var(--secondary-color);
         border-radius: 4px;
         font-size: 16px;
+        text-align: center; /* Align text inside input to center */
     }
 
     input[type="submit"] {
-        padding: 10px;
+        padding: 10px 20px;
         background-color: var(--primary-color);
         color: var(--white-color);
         border: none;
@@ -208,19 +207,18 @@ $conn->close();
 
     .error {
         color: var(--danger-color);
-        text-align: center;
         margin: 10px 0;
     }
 
     .tabs {
-        display: flex;
+        display: inline-flex;
         flex-wrap: wrap;
+        justify-content: center;
         margin-bottom: 20px;
         gap: 5px;
     }
 
     .tabs button {
-        flex: 1;
         padding: 10px;
         border: 1px solid var(--secondary-color);
         background-color: var(--light-color);
@@ -237,6 +235,7 @@ $conn->close();
 
     .tab-content {
         display: none;
+        text-align: center;
     }
 
     .tab-content.active {
@@ -244,17 +243,16 @@ $conn->close();
     }
 
     table {
-        width: 100%;
-        max-width: 100%;
+        margin: 0 auto 20px; /* Center the table */
         border-collapse: collapse;
-        margin-bottom: 20px;
+        width: 80%;
     }
 
     table th,
     table td {
         padding: 10px;
         border: 1px solid var(--secondary-color);
-        text-align: left;
+        text-align: center; /* Align table content to center */
         word-wrap: break-word;
     }
 
@@ -266,6 +264,8 @@ $conn->close();
     .report ul {
         list-style-type: disc;
         padding-left: 20px;
+        text-align: left; /* Keep list aligned left for readability */
+        display: inline-block; /* Center the list as a block */
     }
 
     .report ul li {
