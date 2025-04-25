@@ -161,14 +161,7 @@ $conn->close();
             margin: 0;
             padding: 20px;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: var(--white-color);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+      
         h1 {
             text-align: center;
             color: var(--primary-color);
@@ -253,9 +246,6 @@ $conn->close();
             margin-bottom: 5px;
         }
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
             h1 {
                 font-size: 24px;
             }
@@ -275,7 +265,7 @@ $conn->close();
     </style>
 </head>
 <body>
-    <div class="container">
+    <div>
         <h1>STUDENT DASHBOARD</h1>
         <?php
         if (isset($student_data_error)) {
