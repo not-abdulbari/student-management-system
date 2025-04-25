@@ -143,16 +143,16 @@ $conn->close();
     <title>Parent - View Student Marks, Attendance, Grades, Report & University Results</title>
 <style>
     :root {
-        --primary-color: #333399; /* Deep Blue */
-        --secondary-color: #666699; /* Muted Blue */
-        --success-color: #4CAF50; /* Green */
-        --danger-color: #E53935; /* Red */
-        --warning-color: #FFC107; /* Amber */
-        --info-color: #2196F3; /* Blue */
-        --light-color: #F1F1F1; /* Light Grey */
-        --dark-color: #212121; /* Almost Black */
-        --white-color: #FFFFFF; /* White */
-        --font-family: 'Arial', sans-serif;
+        --primary-color: #0056b3; /* A deeper blue for professionalism */
+        --secondary-color: #6c757d; /* Neutral gray for balance */
+        --success-color: #28a745; /* Green for success messages */
+        --danger-color: #dc3545; /* Red for error messages */
+        --warning-color: #ffc107; /* Yellow for warnings */
+        --info-color: #17a2b8; /* Light blue for info messages */
+        --light-color: #f8f9fa; /* Light background */
+        --dark-color: #343a40; /* Dark text for readability */
+        --white-color: #ffffff; /* Clean white background */
+        --font-family: 'Helvetica Neue', Arial, sans-serif; /* Modern font family */
     }
 
     body {
@@ -161,46 +161,48 @@ $conn->close();
         color: var(--dark-color);
         margin: 0;
         padding: 20px;
-        text-align: center; /* Align everything center */
     }
 
+    /* Header styling */
     h1 {
+        text-align: center;
         color: var(--primary-color);
         margin-bottom: 20px;
-        font-size: 28px;
+        font-size: 2em; /* Larger font size for better visibility */
     }
 
+    /* Form styling */
     form {
-        margin: 0 auto 20px;
-        display: inline-block;
-        text-align: left; /* Form content aligned left */
+        margin-bottom: 20px;
     }
 
     label {
         font-weight: bold;
         color: var(--dark-color);
-        display: block;
-        margin-bottom: 5px;
+        display: block; /* Ensures proper spacing between label and input */
+        margin-bottom: 5px; /* Space below the label */
     }
 
-    input[type="text"] {
+    input[type="text"], 
+    input[type="email"], 
+    input[type="number"] { /* Adding email and number input types */
         width: 100%;
         padding: 10px;
-        margin-bottom: 15px;
+        margin: 10px 0;
         border: 1px solid var(--secondary-color);
         border-radius: 4px;
-        font-size: 16px;
-        box-sizing: border-box;
+        box-sizing: border-box; /* Ensures padding is included in width */
     }
 
     input[type="submit"] {
-        padding: 10px 20px;
+        width: 100%;
+        padding: 10px;
         background-color: var(--primary-color);
         color: var(--white-color);
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        font-size: 16px;
+        transition: background-color 0.3s;
     }
 
     input[type="submit"]:hover {
@@ -209,127 +211,83 @@ $conn->close();
 
     .error {
         color: var(--danger-color);
+        text-align: center;
         margin: 10px 0;
-        font-weight: bold;
     }
 
+    /* Tabs Styling */
     .tabs {
-        display: inline-flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        display: flex;
+        border-bottom: 1px solid var(--secondary-color);
         margin-bottom: 20px;
-        gap: 5px;
+        justify-content: space-around;
     }
 
     .tabs button {
-        padding: 10px 20px;
-        border: 1px solid var(--secondary-color);
-        background-color: var(--white-color);
+        flex: 1;
+        padding: 10px;
+        border: none;
+        background-color: var(--light-color);
         cursor: pointer;
-        font-size: 14px;
-        border-radius: 4px;
+        transition: background-color 0.3s, color 0.3s;
     }
 
     .tabs button:hover,
     .tabs button.active {
         background-color: var(--primary-color);
         color: var(--white-color);
-        border-color: var(--primary-color);
     }
 
+    /* Tab content will show or hide according to the active tab */
     .tab-content {
         display: none;
-        text-align: center;
     }
 
     .tab-content.active {
         display: block;
     }
 
+    /* Table Styling */
     table {
-        margin: 20px auto;
+        width: 100%;
         border-collapse: collapse;
-        width: 80%;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for sophistication */
     }
 
     table th,
     table td {
-        padding: 12px;
+        padding: 10px;
         border: 1px solid var(--secondary-color);
         text-align: left;
-        word-wrap: break-word;
     }
 
     table th {
-        background-color: var(--primary-color);
+        background-color: var(--secondary-color);
         color: var(--white-color);
+        font-weight: bold; /* Bold headers for clarity */
     }
 
-    .report ul {
-        list-style-type: disc;
-        padding-left: 20px;
-        text-align: left;
-        display: inline-block;
-        margin: 0 auto;
-    }
-
-    .report ul li {
-        margin-bottom: 5px;
-    }
-
-    /* Responsive Design */
+    /* Responsive Styles */
     @media (max-width: 768px) {
-        h1 {
-            font-size: 24px;
-        }
-
-        input[type="text"] {
-            font-size: 14px;
-        }
-
-        input[type="submit"] {
-            font-size: 14px;
-            padding: 10px 20px;
-        }
-
-        table th,
-        table td {
-            padding: 8px;
-            font-size: 14px;
-        }
-
-        .tabs button {
-            font-size: 12px;
-        }
-    }
-
-    @media (max-width: 480px) {
         body {
-            padding: 10px;
+            padding: 10px; /* Reduced padding on smaller screens */
         }
 
         h1 {
-            font-size: 20px;
+            font-size: 1.5em; /* Adjusted font size for smaller screens */
         }
 
-        input[type="text"] {
-            font-size: 12px;
-        }
-
-        input[type="submit"] {
-            font-size: 12px;
-            padding: 8px 15px;
+        input[type="text"], 
+        input[type="email"], 
+        input[type="number"] {
+            width: 90%; /* Slightly reduced width */
         }
 
         table th,
         table td {
-            padding: 6px;
-            font-size: 12px;
-        }
-
-        .tabs button {
-            font-size: 10px;
             padding: 8px;
+            font-size: 14px; /* Smaller font size for readability */
         }
     }
 </style>
