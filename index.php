@@ -290,7 +290,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
                     <input type="text" name="username" placeholder="Username" required>
                 </div>
                 <div class="input-group">
-                    <input type="password" name="password" placeholder="Password" required>
+                    <input style="width: 100%;" type="password" name="password" placeholder="Password" required>
                 </div>
                 <div class="cf-turnstile" data-sitekey="<?php echo htmlspecialchars($config['TURNSTILE_SITE_KEY']); ?>" data-theme="light"></div>
                 <button type="submit">Login</button>
