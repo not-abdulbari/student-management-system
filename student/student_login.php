@@ -143,35 +143,48 @@ $conn->close();
     <title>Parent - View Student Marks, Attendance, Grades, Report & University Results</title>
 <style>
     :root {
-        --primary-color: #4CAF50; /* Green */
-        --secondary-color: #607D8B; /* Blue Grey */
-        --success-color: #8BC34A; /* Light Green */
-        --danger-color: #F44336; /* Red */
-        --warning-color: #FFC107; /* Amber */
-        --info-color: #03A9F4; /* Light Blue */
-        --light-color: #ECEFF1; /* Light Grey */
-        --dark-color: #212121; /* Dark Grey */
+        --primary-color: #673AB7; /* Deep Purple */
+        --secondary-color: #03A9F4; /* Light Blue */
+        --success-color: #4CAF50; /* Green */
+        --danger-color: #E91E63; /* Pink */
+        --warning-color: #FF9800; /* Orange */
+        --info-color: #00BCD4; /* Cyan */
+        --light-color: #F5F5F5; /* Light Grey */
+        --dark-color: #212121; /* Almost Black */
         --white-color: #FFFFFF; /* White */
-        --font-family: 'Roboto', Arial, sans-serif;
+        --font-family: 'Poppins', Arial, sans-serif;
+        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s ease-in-out;
     }
 
     body {
         font-family: var(--font-family);
-        background-color: var(--light-color);
+        background: linear-gradient(135deg, var(--light-color), var(--secondary-color));
         color: var(--dark-color);
         margin: 0;
         padding: 20px;
-        text-align: center; /* Align all elements to the center */
+        text-align: center; /* Align everything center */
     }
 
     h1 {
         color: var(--primary-color);
         margin-bottom: 20px;
+        font-size: 36px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     form {
-        margin: 0 auto 20px; /* Center form */
-        display: inline-block; /* Make the form inline-block for alignment */
+        margin: 0 auto 20px;
+        display: inline-block;
+        background: var(--white-color);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: var(--box-shadow);
+        transition: var(--transition);
+    }
+
+    form:hover {
+        transform: scale(1.02);
     }
 
     label {
@@ -182,32 +195,43 @@ $conn->close();
     }
 
     input[type="text"] {
-        padding: 10px;
-        margin-bottom: 10px;
+        width: 80%;
+        padding: 12px;
+        margin-bottom: 15px;
         border: 1px solid var(--secondary-color);
         border-radius: 4px;
         font-size: 16px;
-        text-align: center; /* Align text inside input to center */
+        text-align: center;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: var(--transition);
+    }
+
+    input[type="text"]:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 8px rgba(103, 58, 183, 0.5);
     }
 
     input[type="submit"] {
-        padding: 10px 20px;
-        background-color: var(--primary-color);
+        padding: 12px 30px;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
         color: var(--white-color);
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        transition: background-color 0.3s;
         font-size: 16px;
+        transition: var(--transition);
     }
 
     input[type="submit"]:hover {
-        background-color: var(--dark-color);
+        background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        box-shadow: var(--box-shadow);
     }
 
     .error {
         color: var(--danger-color);
         margin: 10px 0;
+        font-weight: bold;
     }
 
     .tabs {
@@ -216,26 +240,36 @@ $conn->close();
         justify-content: center;
         margin-bottom: 20px;
         gap: 5px;
+        padding: 10px;
+        background: var(--white-color);
+        border-radius: 8px;
+        box-shadow: var(--box-shadow);
     }
 
     .tabs button {
-        padding: 10px;
+        padding: 10px 20px;
         border: 1px solid var(--secondary-color);
         background-color: var(--light-color);
         cursor: pointer;
-        transition: background-color 0.3s, color 0.3s;
         font-size: 14px;
+        border-radius: 4px;
+        transition: var(--transition);
     }
 
     .tabs button:hover,
     .tabs button.active {
-        background-color: var(--primary-color);
+        background: var(--primary-color);
         color: var(--white-color);
+        border-color: var(--primary-color);
     }
 
     .tab-content {
         display: none;
         text-align: center;
+        background: var(--white-color);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: var(--box-shadow);
     }
 
     .tab-content.active {
@@ -243,29 +277,48 @@ $conn->close();
     }
 
     table {
-        margin: 0 auto 20px; /* Center the table */
+        margin: 20px auto;
         border-collapse: collapse;
-        width: 80%;
+        width: 90%;
+        background: var(--white-color);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: var(--box-shadow);
     }
 
     table th,
     table td {
-        padding: 10px;
+        padding: 12px;
         border: 1px solid var(--secondary-color);
-        text-align: center; /* Align table content to center */
+        text-align: center;
         word-wrap: break-word;
+        transition: var(--transition);
     }
 
     table th {
-        background-color: var(--secondary-color);
+        background: var(--primary-color);
+        color: var(--white-color);
+    }
+
+    table td {
+        background: var(--light-color);
+    }
+
+    table tr:hover td {
+        background: var(--success-color);
         color: var(--white-color);
     }
 
     .report ul {
         list-style-type: disc;
         padding-left: 20px;
-        text-align: left; /* Keep list aligned left for readability */
-        display: inline-block; /* Center the list as a block */
+        text-align: left;
+        display: inline-block;
+        margin: 0 auto;
+        background: var(--white-color);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: var(--box-shadow);
     }
 
     .report ul li {
@@ -275,25 +328,27 @@ $conn->close();
     /* Responsive Design */
     @media (max-width: 768px) {
         h1 {
-            font-size: 24px;
+            font-size: 28px;
         }
 
         input[type="text"] {
+            width: 90%;
             font-size: 14px;
         }
 
         input[type="submit"] {
             font-size: 14px;
-        }
-
-        .tabs button {
-            font-size: 12px;
+            padding: 10px 20px;
         }
 
         table th,
         table td {
             padding: 8px;
             font-size: 14px;
+        }
+
+        .tabs button {
+            font-size: 12px;
         }
     }
 
@@ -303,7 +358,7 @@ $conn->close();
         }
 
         h1 {
-            font-size: 20px;
+            font-size: 24px;
         }
 
         input[type="text"] {
@@ -312,7 +367,7 @@ $conn->close();
 
         input[type="submit"] {
             font-size: 12px;
-            padding: 8px;
+            padding: 8px 15px;
         }
 
         table th,
@@ -324,6 +379,10 @@ $conn->close();
         .tabs button {
             font-size: 10px;
             padding: 8px;
+        }
+
+        .report ul {
+            padding: 15px;
         }
     }
 </style>
