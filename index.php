@@ -292,7 +292,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
                 <div class="input-group">
                     <input type="password" name="password" placeholder="Password" required>
                 </div>
-                <div class="cf-turnstile" data-sitekey="<?php echo htmlspecialchars($config['TURNSTILE_SITE_KEY']); ?>"></div>
+                <div class="cf-turnstile" data-sitekey="<?php echo htmlspecialchars($config['TURNSTILE_SITE_KEY']); ?>" data-theme="light"></div>
                 <button type="submit">Login</button>
             </form>
         </div>
@@ -305,7 +305,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
                 <div class="input-group">
                     <input type="text" name="dob" placeholder="Date of Birth (DD-MM-YYYY)" required>
                 </div>
-                <div class="cf-turnstile" data-sitekey="<?php echo htmlspecialchars($config['TURNSTILE_SITE_KEY']); ?>"></div>
+                <div class="cf-turnstile" data-sitekey="<?php echo htmlspecialchars($config['TURNSTILE_SITE_KEY']); ?>" data-theme="light"></div>
                 <button type="submit">Login</button>
             </form>
         </div>
