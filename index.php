@@ -3,21 +3,21 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Load hCaptcha configuration
+// Load Turnstile configuration
 $config = include 'config.php';
 
 // Handle Institution Login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
-    $hcaptcha_response = $_POST['h-captcha-response'] ?? '';
-    if (empty($hcaptcha_response)) {
-        echo json_encode(['status' => 'error', 'message' => 'Please complete the hCaptcha.']);
+    $turnstile_response = $_POST['cf-turnstile-response'] ?? '';
+    if (empty($turnstile_response)) {
+        echo json_encode(['status' => 'error', 'message' => 'Please complete the Turnstile verification.']);
         exit();
     }
 
-    // Verify hCaptcha
+    // Verify Turnstile response
     $data = [
-        'secret' => $config['HCAPTCHA_SECRET_KEY'],
-        'response' => $hcaptcha_response,
+        'secret' => $config['TURNSTILE_SECRET_KEY'],
+        'response' => $turnstile_response,
     ];
     $options = [
         'http' => [
@@ -27,11 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
         ],
     ];
     $context = stream_context_create($options);
-    $response = file_get_contents('https://hcaptcha.com/siteverify', false, $context);
+    $response = file_get_contents('https://challenges.cloudflare.com/turnstile/v0/siteverify', false, $context);
     $result = json_decode($response, true);
 
     if (!$result['success']) {
-        echo json_encode(['status' => 'error', 'message' => 'hCaptcha verification failed.']);
+        echo json_encode(['status' => 'error', 'message' => 'Turnstile verification failed.']);
         exit();
     }
 
@@ -60,16 +60,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['username'])) {
 
 // Handle Student Login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
-    $hcaptcha_response = $_POST['h-captcha-response'] ?? '';
-    if (empty($hcaptcha_response)) {
-        echo json_encode(['status' => 'error', 'message' => 'Please complete the hCaptcha.']);
+    $turnstile_response = $_POST['cf-turnstile-response'] ?? '';
+    if (empty($turnstile_response)) {
+        echo json_encode(['status' => 'error', 'message' => 'Please complete the Turnstile verification.']);
         exit();
     }
 
-    // Verify hCaptcha
+    // Verify Turnstile response
     $data = [
-        'secret' => $config['HCAPTCHA_SECRET_KEY'],
-        'response' => $hcaptcha_response,
+        'secret' => $config['TURNSTILE_SECRET_KEY'],
+        'response' => $turnstile_response,
     ];
     $options = [
         'http' => [
@@ -79,11 +79,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
         ],
     ];
     $context = stream_context_create($options);
-    $response = file_get_contents('https://hcaptcha.com/siteverify', false, $context);
+    $response = file_get_contents('https://challenges.cloudflare.com/turnstile/v0/siteverify', false, $context);
     $result = json_decode($response, true);
 
     if (!$result['success']) {
-        echo json_encode(['status' => 'error', 'message' => 'hCaptcha verification failed.']);
+        echo json_encode(['status' => 'error', 'message' => 'Turnstile verification failed.']);
         exit();
     }
 
@@ -127,10 +127,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <title>CAHCET LMS - Login</title>
     <style>
-        /* Modern Professional Theme */
+               /* Modern Professional Theme */
         body {
             margin: 0;
             padding: 0;
@@ -270,12 +270,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
             font-weight: bold;
             margin-top: 10px;
         }
+
     </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="header">
-        <img src="assets/789asdfkl.webp" alt="Sunridge University LMS Portal Image">
+        <img src="assets/789asdfkl.webp" alt="Sunridge University LMS Portal">
     </div>
     <div class="banner">
         <marquee behavior="scroll" direction="left">
@@ -290,12 +290,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
                     <input type="text" name="username" placeholder="Username" required>
                 </div>
                 <div class="input-group">
-                    <div class="eye-icon">
-                    <input type="password" name="password" id="password" placeholder="Password" required>
-                        <i class="fas fa-eye-slash icon"></i>
-                    </div>
+                    <input type="password" name="password" placeholder="Password" required>
                 </div>
-                <div class="h-captcha" data-sitekey="<?php echo $config['HCAPTCHA_SITE_KEY']; ?>"></div>
+                <div class="cf-turnstile" data-sitekey="<?php echo htmlspecialchars($config['TURNSTILE_SITE_KEY']); ?>"></div>
                 <button type="submit">Login</button>
             </form>
         </div>
@@ -308,82 +305,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roll_no'])) {
                 <div class="input-group">
                     <input type="text" name="dob" placeholder="Date of Birth (DD-MM-YYYY)" required>
                 </div>
-                <div class="h-captcha" data-sitekey="<?php echo $config['HCAPTCHA_SITE_KEY']; ?>"></div>
+                <div class="cf-turnstile" data-sitekey="<?php echo htmlspecialchars($config['TURNSTILE_SITE_KEY']); ?>"></div>
                 <button type="submit">Login</button>
             </form>
         </div>
-        <div class="notice_board">
-            <h2>Notice Board</h2>
-            <marquee behavior="scroll" direction="left" scrollamount="3">
-                <p>Important: Faculty and Student Login Details are available on the portal.</p>
-                <p>Note: The system will be down for maintenance from 2:00 AM to 4:00 AM tomorrow.</p>
-                <p>Reminder: Mark your attendance before the deadline to avoid penalties.</p>
-                <p>New: Updated student portal is now live with improved navigation.</p>
-                <p>Announcement: End semester exams schedule has been published.</p>
-            </marquee>
-        </div>
     </div>
-    <script>
-        document.querySelector('.icon').addEventListener('click', function () {
-            let passwordInput = document.getElementById('password');
-            let icon = this;
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-                icon.classList.remove("fa-eye-slash");
-                icon.classList.add("fa-eye");
-            } else {
-                passwordInput.type = "password";
-                icon.classList.remove("fa-eye");
-                icon.classList.add("fa-eye-slash");
-            }
-        });
-        $(document).ready(function () {
-            // Handle Institution Login
-            $('#loginForm').on('submit', function (e) {
-                e.preventDefault(); // Prevent form submission
-                $.ajax({
-                    url: '',
-                    type: 'POST',
-                    data: $(this).serialize(),
-                    success: function (response) {
-                        let res = JSON.parse(response);
-                        if (res.status === 'error') {
-                            alert(res.message); // Show alert for invalid credentials
-                            window.location.reload(); // Reload the page after user clicks OK
-                        } else if (res.status === 'success') {
-                            window.location.href = res.redirect; // Redirect on success
-                        }
-                    },
-                    error: function () {
-                        alert('An unexpected error occurred. Please try again.');
-                        window.location.reload(); // Reload the page in case of an error
-                    }
-                });
-            });
-
-            // Handle Student Login
-            $('#studentLoginForm').on('submit', function (e) {
-                e.preventDefault(); // Prevent form submission
-                $.ajax({
-                    url: '',
-                    type: 'POST',
-                    data: $(this).serialize(),
-                    success: function (response) {
-                        let res = JSON.parse(response);
-                        if (res.status === 'error') {
-                            alert(res.message); // Show alert for invalid credentials
-                            window.location.reload(); // Reload the page after user clicks OK
-                        } else if (res.status === 'success') {
-                            window.location.href = res.redirect; // Redirect on success
-                        }
-                    },
-                    error: function () {
-                        alert('An unexpected error occurred. Please try again.');
-                        window.location.reload(); // Reload the page in case of an error
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 </html>
+
