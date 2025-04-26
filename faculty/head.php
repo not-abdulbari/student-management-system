@@ -1,13 +1,5 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header('Location: ../index.php');
-    exit;
-}
-if (!function_exists('getCurrentDateTime')) {
-    function getCurrentDateTime() {
-        return date('Y-m-d H:i:s');<?php
+        
 session_start();
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
