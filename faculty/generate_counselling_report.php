@@ -158,7 +158,7 @@ $conn->close();
             margin-bottom: 10px;
         }
         .student-info-table td {
-            padding: 3px;
+            padding: 1px;
         }
         .reason-section {
             margin-bottom: 12px;
@@ -185,7 +185,7 @@ $conn->close();
         }
         .attendance-table th, .attendance-table td {
             border: 1px solid black;
-            padding: 3px;
+            padding: 1px;
             text-align: center;
         }
         .marks-section {
@@ -199,7 +199,7 @@ $conn->close();
         }
         .marks-table th, .marks-table td {
             border: 1px solid black;
-            padding: 3px;
+            padding: 1px;
             text-align: left;
         }
         .arrears-section {
@@ -278,7 +278,7 @@ $conn->close();
             display: flex;
             justify-content: space-around;
             font-size: 14px;
-            margin-top: 20px; /* Add some space above the signature row */
+            
             padding-bottom: 10mm; /* Add padding at the bottom for print margin */
         }
         .signature-col {
@@ -286,7 +286,7 @@ $conn->close();
         }
         .signature-line {
             border-top: 1px solid black;
-            margin-top: 10px;
+            
             padding-top: 5px;
         }
         @media print {
