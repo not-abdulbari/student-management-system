@@ -212,11 +212,10 @@ $conn->close();
         }
         .specified-reason-row {
             display: flex;
-            align-items: baseline;
             margin-bottom: 5px;
         }
         .specified-reason-label {
-            width: 160px;
+
             display: inline-block;
             vertical-align: top;
         }
