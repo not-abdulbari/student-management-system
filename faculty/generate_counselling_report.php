@@ -103,7 +103,7 @@ $conn->close();
             margin: 10mm;
         }
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Times New Roman", serif;
             margin: 0;
             padding: 0;
             line-height: 1.2;
@@ -421,19 +421,19 @@ $conn->close();
         <div class="specified-reason-section">
             <b>4. Specified Reason:</b><br>
             <div class="specified-reason-row">
-                <label class="specified-reason-label">Student</label>:
+                <label class="specified-reason-label">Student                        </label>:
                 <input type="text" class="specified-reason-input" value="    <?= htmlspecialchars($student_result['name']) ?>">
             </div>
             <div class="specified-reason-row">
-                <label class="specified-reason-label">Parent’s / Guardian Name : </label>
+                <label class="specified-reason-label">Parent’s / Guardian Name        </label>:
                 <input type="text" class="specified-reason-input">
             </div>
             <div class="specified-reason-row">
-                <label class="specified-reason-label">Parent’s / Guardian Occupation : </label>:
+                <label class="specified-reason-label">Parent’s / Guardian Occupation   </label>:
                 <input type="text" class="specified-reason-input">
             </div>
             <div class="specified-reason-row">
-                <label class="specified-reason-label">Parent’s / Guardian Comment : </label>:
+                <label class="specified-reason-label">Parent’s / Guardian Comment      </label>:
                 <input type="text" class="specified-reason-input">
             </div>
         </div>
