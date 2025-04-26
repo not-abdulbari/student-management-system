@@ -309,10 +309,10 @@ $conn->close();
                 MELVISHARAM - 632509
             </div>
         </div>
-        <div class="dept-info">
+        <div class="dept-info" style="margin-top: -10px; ">
             DEPARTMENT OF <?= htmlspecialchars(strtoupper($branch)) ?>
         </div>
-        <p style="text-align: center; margin-top: -8px; ">____________________________________________________________________________</p>
+        <p style="text-align: center; margin-top: -10px; ">____________________________________________________________________________</p>
             <div style="text-align: right; font-size: 10px;">CAHCET / AD / SSC / <?= htmlspecialchars(strtoupper(substr($branch, 0, 4))) ?> / COUN - 01</div>
             <div style="text-align: center">COUNSELLING FORM</div>
 
