@@ -142,7 +142,7 @@ $conn->close();
         .form-title-row {
             display: flex;
             justify-content: space-between;
-            font-size: 14px;
+            font-size: 13px;
             margin-bottom: 12px;
         }
         .form-title {
@@ -154,7 +154,7 @@ $conn->close();
         .student-info-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 14px;
+            font-size: 13px;
             margin-bottom: 10px;
         }
         .student-info-table td {
@@ -162,7 +162,7 @@ $conn->close();
         }
         .reason-section {
             margin-bottom: 12px;
-            font-size: 14px;
+            font-size: 13px;
         }
         .reason-checkboxes {
             display: flex;
@@ -175,12 +175,12 @@ $conn->close();
         }
         .academic-performance {
             margin-bottom: 8px;
-            font-size: 14px;
+            font-size: 13px;
         }
         .attendance-table {
             width: 40%;
             border-collapse: collapse;
-            font-size: 14px;
+            font-size: 13px;
             margin-left: 15px;
         }
         .attendance-table th, .attendance-table td {
@@ -190,12 +190,12 @@ $conn->close();
         }
         .marks-section {
             margin-bottom: 8px;
-            font-size: 14px;
+            font-size: 13px;
         }
         .marks-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 14px;
+            font-size: 13px;
         }
         .marks-table th, .marks-table td {
             border: 1px solid black;
@@ -204,11 +204,11 @@ $conn->close();
         }
         .arrears-section {
             margin-bottom: 15px;
-            font-size: 14px;
+            font-size: 13px;
         }
         .specified-reason-section {
             margin-bottom: 15px;
-            font-size: 14px;
+            font-size: 13px;
         }
         .specified-reason-row {
             display: flex;
@@ -230,7 +230,7 @@ $conn->close();
         .specified-reason-textarea {
 
             padding: 3px;
-            font-size: 14px;
+            font-size: 13px;
             box-sizing: border-box;
             height: 40px;
         }
@@ -239,12 +239,12 @@ $conn->close();
         .class-advisor-comment-section,
         .contact-numbers-section {
             margin-bottom: 15px;
-            font-size: 14px;
+            font-size: 13px;
         }
         .comment-textarea {
             width: 100%;
             padding: 3px;
-            font-size: 14px;
+            font-size: 13px;
             box-sizing: border-box;
             height: 60px;
         }
@@ -260,7 +260,7 @@ $conn->close();
         .contact-input {
             width: 200px;
             padding: 3px;
-            font-size: 14px;
+            font-size: 13px;
             box-sizing: border-box;
         }
         .signature-label {
@@ -271,13 +271,13 @@ $conn->close();
         .signature-input {
             width: 150px;
             padding: 3px;
-            font-size: 14px;
+            font-size: 13px;
             box-sizing: border-box;
         }
         .signature-row-bottom {
             display: flex;
             justify-content: space-around;
-            font-size: 14px;
+            font-size: 13px;
             
             padding-bottom: 10mm; /* Add padding at the bottom for print margin */
         }
