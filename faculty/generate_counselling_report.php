@@ -329,19 +329,19 @@ $conn->close();
             </tr>
             <tr>
                 <td>Name of the Student</td>
-                <td>:     <?= htmlspecialchars($student_result['name']) ?></td>
+                <td>:     <?=     htmlspecialchars($student_result['name']) ?></td>
                 <td>Batch</td>
-                <td>:     <?= htmlspecialchars($batch) ?></td>
+                <td>:     <?=     htmlspecialchars($batch) ?></td>
             </tr>
             <tr>
                 <td>Register Number</td>
-                <td>:     <?= htmlspecialchars($student_result['reg_no']) ?></td>
+                <td>:     <?=        htmlspecialchars($student_result['reg_no']) ?></td>
                 <td></td>
                 <td></td>
             </tr>
             <tr>
                 <td>Year / Sem / Sec</td>
-                <td colspan="3">:     <?= htmlspecialchars($year . ' / ' . $semester . ' / ' . $section) ?></td>
+                <td colspan="3">:     <?=     htmlspecialchars($year . ' / ' . $semester . ' / ' . $section) ?></td>
             </tr>
         </table>
 
@@ -426,15 +426,15 @@ $conn->close();
                 <input type="text" class="specified-reason-input" value="    <?= htmlspecialchars($student_result['name']) ?>">
             </div>
             <div class="specified-reason-row">
-                <label class="specified-reason-label">Parent’s / Guardian Name</label>:
+                <label class="specified-reason-label">Parent’s / Guardian Name : </label>
                 <input type="text" class="specified-reason-input">
             </div>
             <div class="specified-reason-row">
-                <label class="specified-reason-label">Parent’s / Guardian Occupation</label>:
+                <label class="specified-reason-label">Parent’s / Guardian Occupation : </label>:
                 <input type="text" class="specified-reason-input">
             </div>
             <div class="specified-reason-row">
-                <label class="specified-reason-label">Parent’s / Guardian Comment</label>:
+                <label class="specified-reason-label">Parent’s / Guardian Comment : </label>:
                 <input type="text" class="specified-reason-input">
             </div>
         </div>
