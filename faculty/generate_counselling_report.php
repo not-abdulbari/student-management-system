@@ -313,18 +313,18 @@ $conn->close();
         <div class="dept-info">
             DEPARTMENT OF <?= htmlspecialchars(strtoupper($branch)) ?>
         </div>
-        <div class="form-title-row">
-            <div>CAHCET / AD / SSC / <?= htmlspecialchars(strtoupper(substr($branch, 0, 4))) ?> / COUN - 01</div>
-            <div class="form-title">COUNSELLING FORM</div>
-            <div>Date : <?= htmlspecialchars(date('d-m-Y')) ?></div>
-        </div>
+            <div style="text-align: right; font-size: 10px;">CAHCET / AD / SSC / <?= htmlspecialchars(strtoupper(substr($branch, 0, 4))) ?> / COUN - 01</div>
+            <div style="text-align: center">COUNSELLING FORM</div>
 
+            <div>Date : <?= htmlspecialchars(date('d-m-Y')) ?></div>
+   
+        <div style="text-align: right";>Date : <?= htmlspecialchars(date('d-m-Y')) ?></div>
         <table class="student-info-table">
             <tr>
                 <td>Name of the Counsellor</td>
                 <td>:     <?= htmlspecialchars($facultyName) ?></td>
                 <td>CAY</td>
-                <td>:     <?= htmlspecialchars($cay) ?></td>
+                <div>Date : <?= htmlspecialchars(date('d-m-Y')) ?></div>
             </tr>
             <tr>
                 <td>Name of the Student</td>
