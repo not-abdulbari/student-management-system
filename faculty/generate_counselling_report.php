@@ -347,10 +347,10 @@ $conn->close();
         <div class="reason-section">
             <b>1. Reason for Counseling:</b>
             <div class="reason-checkboxes">
-                <p>▢ Lack of Attendance / Late Coming</p>
-                <p>▢ Poor Performance in CAT / Model Examination / University Examination</p>
-                <p>▢ Indiscipline</p>
-                <p>▢ Others Specify: </p>
+                <label>▢ Lack of Attendance / Late Coming</label>
+                <label>▢ Poor Performance in CAT / Model Examination / University Examination</label>
+                <label>▢ Indiscipline</label>
+                <label>▢ Others Specify: </label>
             </div>
         </div>
 
