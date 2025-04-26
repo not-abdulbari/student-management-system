@@ -132,12 +132,16 @@ $conn->close();
         .college-info {
             text-align: center;
             font-size: 18px;
+                font-weight: bold;
+
         }
         .dept-info {
             text-align: center;
             font-size: 16px;
             margin-top: -5px;
             margin-bottom: 10px;
+                font-weight: bold;
+
         }
         .form-title-row {
             display: flex;
