@@ -282,7 +282,7 @@ $conn->close();
             display: flex;
             justify-content: space-around;
             font-size: 13px;
-            
+            margin-top: -20px;
             padding-bottom: 10mm; /* Add padding at the bottom for print margin */
         }
         .signature-col {
