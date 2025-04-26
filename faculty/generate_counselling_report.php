@@ -229,7 +229,7 @@ $conn->close();
             font-family: inherit; /* Inherit font family from parent */
         }
         .specified-reason-textarea {
-            width: calc(100% - 165px);
+
             padding: 3px;
             font-size: 14px;
             box-sizing: border-box;
@@ -313,10 +313,10 @@ $conn->close();
         <div class="dept-info">
             DEPARTMENT OF <?= htmlspecialchars(strtoupper($branch)) ?>
         </div>
+        
             <div style="text-align: right; font-size: 10px;">CAHCET / AD / SSC / <?= htmlspecialchars(strtoupper(substr($branch, 0, 4))) ?> / COUN - 01</div>
             <div style="text-align: center">COUNSELLING FORM</div>
 
-            <div>Date : <?= htmlspecialchars(date('d-m-Y')) ?></div>
    
         <div style="text-align: right";>Date : <?= htmlspecialchars(date('d-m-Y')) ?></div>
         <table class="student-info-table">
@@ -324,7 +324,8 @@ $conn->close();
                 <td>Name of the Counsellor</td>
                 <td>:     <?= htmlspecialchars($facultyName) ?></td>
                 <td>CAY</td>
-                <div>Date : <?= htmlspecialchars(date('d-m-Y')) ?></div>
+                <td>:     <?= htmlspecialchars($cay) ?></td>
+
             </tr>
             <tr>
                 <td>Name of the Student</td>
