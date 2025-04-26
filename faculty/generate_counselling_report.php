@@ -299,7 +299,7 @@ $conn->close();
 </head>
 <body>
     <div class="container">
-        <div class="header-top">
+        <div class="header-top" style = "text-align: center;">
             <?php
             $logo_path = '../assets/24349bb44aaa1a8c.jpg'; // Replace with the actual path to your logo
             if (file_exists($logo_path)): ?>
@@ -322,35 +322,35 @@ $conn->close();
         <table class="student-info-table">
             <tr>
                 <td>Name of the Counsellor</td>
-                <td>: <?= htmlspecialchars($facultyName) ?></td>
+                <td>:     <?= htmlspecialchars($facultyName) ?></td>
                 <td>CAY</td>
-                <td>: <?= htmlspecialchars($cay) ?></td>
+                <td>:     <?= htmlspecialchars($cay) ?></td>
             </tr>
             <tr>
                 <td>Name of the Student</td>
-                <td>: <?= htmlspecialchars($student_result['name']) ?></td>
+                <td>:     <?= htmlspecialchars($student_result['name']) ?></td>
                 <td>Batch</td>
-                <td>: <?= htmlspecialchars($batch) ?></td>
+                <td>:     <?= htmlspecialchars($batch) ?></td>
             </tr>
             <tr>
                 <td>Register Number</td>
-                <td>: <?= htmlspecialchars($student_result['reg_no']) ?></td>
+                <td>:     <?= htmlspecialchars($student_result['reg_no']) ?></td>
                 <td></td>
                 <td></td>
             </tr>
             <tr>
                 <td>Year / Sem / Sec</td>
-                <td colspan="3">: <?= htmlspecialchars($year . ' / ' . $semester . ' / ' . $section) ?></td>
+                <td colspan="3">:     <?= htmlspecialchars($year . ' / ' . $semester . ' / ' . $section) ?></td>
             </tr>
         </table>
 
         <div class="reason-section">
             <b>1. Reason for Counseling:</b>
             <div class="reason-checkboxes">
-                <label><input type="checkbox" name="reason[]" value="Lack of Attendance / Late Coming">Lack of Attendance / Late Coming</label>
-                <label><input type="checkbox" name="reason[]" value="Poor Performance in CAT / Model Examination / University Examination">Poor Performance in CAT / Model Examination / University Examination</label>
-                <label><input type="checkbox" name="reason[]" value="Indiscipline">Indiscipline</label>
-                <label><input type="checkbox" name="reason[]" value="Others Specify">Others Specify: </label>
+                <p>▢ Lack of Attendance / Late Coming</p>
+                <p>▢ Poor Performance in CAT / Model Examination / University Examination</p>
+                <p>▢ Indiscipline</p>
+                <p>▢ Others Specify: </p>
             </div>
         </div>
 
@@ -366,11 +366,11 @@ $conn->close();
                         <th>Total</th>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td><?= htmlspecialchars($attendance_percentage) ?>%</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </table>
             </div>
@@ -422,7 +422,7 @@ $conn->close();
             <b>4. Specified Reason:</b><br>
             <div class="specified-reason-row">
                 <label class="specified-reason-label">Student</label>:
-                <input type="text" class="specified-reason-input" value="<?= htmlspecialchars($student_result['name']) ?>">
+                <input type="text" class="specified-reason-input" value="    <?= htmlspecialchars($student_result['name']) ?>">
             </div>
             <div class="specified-reason-row">
                 <label class="specified-reason-label">Parent’s / Guardian Name</label>:
