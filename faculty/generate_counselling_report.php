@@ -313,7 +313,7 @@ $conn->close();
         <div class="dept-info">
             DEPARTMENT OF <?= htmlspecialchars(strtoupper($branch)) ?>
         </div>
-        <p style="text-align: right;">_______________________________________________________________________________________________________________</p>
+        <p style="text-align: right;">____________________________________________________________________________</p>
             <div style="text-align: right; font-size: 10px;">CAHCET / AD / SSC / <?= htmlspecialchars(strtoupper(substr($branch, 0, 4))) ?> / COUN - 01</div>
             <div style="text-align: center">COUNSELLING FORM</div>
 
