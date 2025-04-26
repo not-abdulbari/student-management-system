@@ -472,14 +472,11 @@ $conn->close();
         <div class="container">
         </div>
         <div class="signature-row-bottom">
-            <div class="signature-col">
-                <div class="signature-line">Counsellor</div>
+                <div>Counsellor</div>
             </div>
-            <div class="signature-col">
-                <div class="signature-line">Class Advisor</div>
+                <div>Class Advisor</div>
             </div>
-            <div class="signature-col">
-                <div class="signature-line">HOD</div>
+                <div>HOD</div>
             </div>
         </div>
     </div>
