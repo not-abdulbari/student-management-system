@@ -472,13 +472,7 @@ $conn->close();
         <div class="container">
         </div>
         <div class="signature-row-bottom">
-                <div>Counsellor</div>
-            </div>
-                <div>Class Advisor</div>
-            </div>
-                <div>HOD</div>
-            </div>
-        </div>
+                <div>Counsellor                Class Advisor                HOD</div>
     </div>
 
     <script>
