@@ -131,22 +131,22 @@ $conn->close();
         }
         .college-info {
             text-align: center;
-            font-size: 12px;
+            font-size: 18px;
         }
         .dept-info {
             text-align: center;
-            font-size: 11px;
+            font-size: 16px;
             margin-top: -5px;
             margin-bottom: 10px;
         }
         .form-title-row {
             display: flex;
             justify-content: space-between;
-            font-size: 10px;
-            margin-bottom: 8px;
+            font-size: 14px;
+            margin-bottom: 12px;
         }
         .form-title {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: bold;
             text-align: center;
             text-decoration: underline;
@@ -154,15 +154,15 @@ $conn->close();
         .student-info-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 10px;
+            font-size: 14px;
             margin-bottom: 10px;
         }
         .student-info-table td {
             padding: 3px;
         }
         .reason-section {
-            margin-bottom: 8px;
-            font-size: 10px;
+            margin-bottom: 12px;
+            font-size: 14px;
         }
         .reason-checkboxes {
             display: flex;
@@ -175,12 +175,12 @@ $conn->close();
         }
         .academic-performance {
             margin-bottom: 8px;
-            font-size: 10px;
+            font-size: 14px;
         }
         .attendance-table {
             width: 40%;
             border-collapse: collapse;
-            font-size: 10px;
+            font-size: 14px;
             margin-left: 15px;
         }
         .attendance-table th, .attendance-table td {
@@ -190,12 +190,12 @@ $conn->close();
         }
         .marks-section {
             margin-bottom: 8px;
-            font-size: 10px;
+            font-size: 14px;
         }
         .marks-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 9px;
+            font-size: 14px;
         }
         .marks-table th, .marks-table td {
             border: 1px solid black;
@@ -204,11 +204,11 @@ $conn->close();
         }
         .arrears-section {
             margin-bottom: 15px;
-            font-size: 10px;
+            font-size: 14px;
         }
         .specified-reason-section {
             margin-bottom: 15px;
-            font-size: 10px;
+            font-size: 14px;
         }
         .specified-reason-row {
             display: flex;
@@ -231,7 +231,7 @@ $conn->close();
         .specified-reason-textarea {
             width: calc(100% - 165px);
             padding: 3px;
-            font-size: 10px;
+            font-size: 14px;
             box-sizing: border-box;
             height: 40px;
         }
@@ -240,12 +240,12 @@ $conn->close();
         .class-advisor-comment-section,
         .contact-numbers-section {
             margin-bottom: 15px;
-            font-size: 10px;
+            font-size: 14px;
         }
         .comment-textarea {
             width: 100%;
             padding: 3px;
-            font-size: 10px;
+            font-size: 14px;
             box-sizing: border-box;
             height: 60px;
         }
@@ -261,7 +261,7 @@ $conn->close();
         .contact-input {
             width: 200px;
             padding: 3px;
-            font-size: 10px;
+            font-size: 14px;
             box-sizing: border-box;
         }
         .signature-label {
@@ -272,13 +272,13 @@ $conn->close();
         .signature-input {
             width: 150px;
             padding: 3px;
-            font-size: 10px;
+            font-size: 14px;
             box-sizing: border-box;
         }
         .signature-row-bottom {
             display: flex;
             justify-content: space-around;
-            font-size: 10px;
+            font-size: 14px;
             margin-top: 20px; /* Add some space above the signature row */
             padding-bottom: 10mm; /* Add padding at the bottom for print margin */
         }
@@ -415,7 +415,7 @@ $conn->close();
         </div>
 
         <div class="arrears-section">
-            <b>Total No. of Arrears:</b> <input type="text" placeholder="" style="width: 100px; font-size: 10px; padding: 2px;">
+            <b>Total No. of Arrears:</b>
         </div>
 
         <div class="specified-reason-section">
