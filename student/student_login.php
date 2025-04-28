@@ -161,11 +161,11 @@ $conn->close();
         color: var(--dark-color);
         margin: 0;
         padding: 20px;
+        text-align: center; /* Center-align text content */
     }
 
     /* Header styling */
     h1 {
-        text-align: center;
         color: var(--primary-color);
         margin-bottom: 20px;
         font-size: 2em; /* Larger font size for better visibility */
@@ -173,7 +173,11 @@ $conn->close();
 
     /* Form styling */
     form {
+        display: inline-block; /* Center the form */
+        text-align: left; /* Align form content to the left */
         margin-bottom: 20px;
+        max-width: 400px; /* Restrict form width */
+        width: 100%; /* Ensure responsiveness */
     }
 
     label {
@@ -185,7 +189,7 @@ $conn->close();
 
     input[type="text"], 
     input[type="email"], 
-    input[type="number"] { /* Adding email and number input types */
+    input[type="number"] {
         width: 100%;
         padding: 10px;
         margin: 10px 0;
@@ -211,16 +215,15 @@ $conn->close();
 
     .error {
         color: var(--danger-color);
-        text-align: center;
         margin: 10px 0;
     }
 
     /* Tabs Styling */
     .tabs {
         display: flex;
+        justify-content: center; /* Center the tabs */
         border-bottom: 1px solid var(--secondary-color);
         margin-bottom: 20px;
-        justify-content: space-around;
     }
 
     .tabs button {
@@ -241,6 +244,7 @@ $conn->close();
     /* Tab content will show or hide according to the active tab */
     .tab-content {
         display: none;
+        text-align: center; /* Center tab content */
     }
 
     .tab-content.active {
@@ -249,9 +253,10 @@ $conn->close();
 
     /* Table Styling */
     table {
-        width: 100%;
+        margin: 0 auto 20px; /* Center the table */
+        width: 90%; /* Ensure table is responsive */
+        max-width: 600px; /* Restrict maximum width */
         border-collapse: collapse;
-        margin-bottom: 20px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for sophistication */
     }
 
@@ -278,10 +283,8 @@ $conn->close();
             font-size: 1.5em; /* Adjusted font size for smaller screens */
         }
 
-        input[type="text"], 
-        input[type="email"], 
-        input[type="number"] {
-            width: 90%; /* Slightly reduced width */
+        form {
+            max-width: 100%; /* Use full width for form on small screens */
         }
 
         table th,
